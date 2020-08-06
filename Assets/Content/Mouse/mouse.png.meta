@@ -212,6 +212,9 @@ TextureImporter:
   - first:
       213: 2729430893454627153
     second: mouse_29
+  - first:
+      213: 4649518351009173513
+    second: mouse_33
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -999,6 +1002,27 @@ TextureImporter:
       bones: []
       spriteID: d5538f13bf9c1a6c0800000000000000
       internalID: -4133800902237080227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mouse_33
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 224
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 900df885e48668040800000000000000
+      internalID: 4649518351009173513
       vertices: []
       indices: 
       edges: []

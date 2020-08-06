@@ -22,12 +22,18 @@ namespace HackedDesign
 
     [System.Serializable]
     public class Level {
-        public string name = "blue";
+        public string name = "intro";
+        public string missionLevel = "hotdog";
+        public string corp = "Arisana";
+        public string target = "Z.Bana";
+        public string difficulty = "Easy";
         public int length = 2;
         public int security = 3;
         public int tech = 4;
         public int openGuards = 2;
         public int drones = 2;
+        public string[] dialogue;
+        public int currentDialogue;
         // boss
         // end condition
     }

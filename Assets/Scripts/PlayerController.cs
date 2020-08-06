@@ -46,10 +46,11 @@ namespace HackedDesign
         private bool stealth = false;
         const float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool dead = false;
+        private bool sit = false;
 
         public bool Stealthed { get { return stealth; } }
 
-
+        public bool Sit { get { return sit;} set { sit = value;}}
 
         // Start is called before the first frame update
         void Awake()
@@ -184,6 +185,7 @@ namespace HackedDesign
             animator.SetBool("crouch", this.crouch);
             animator.SetBool("stealth", this.stealth);
             animator.SetBool("dead", this.dead);
+            animator.SetBool("sit", this.sit);
             muzzleAnimator.SetBool("shoot", this.fire);
 
         }

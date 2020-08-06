@@ -39,6 +39,22 @@ namespace HackedDesign
 
         }
 
+        public void LoadMissionLevel(Level level)
+        {
+            DestroyEnvironment();
+
+            var template = FindTemplate(level.missionLevel);
+            if (template == null)
+            {
+                Logger.LogError(this, "invalid level template");
+                return;
+            }
+
+            RenderStart(template);
+            RenderCorridor(level, template);
+            RenderEnd(level, template);
+        }
+
         public void DestroyEnvironment()
         {
             for (int i = 0; i < environmentParent.childCount; i++)

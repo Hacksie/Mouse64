@@ -16,6 +16,7 @@ namespace HackedDesign
 
         [Header("Data")]
         [SerializeField] private GameData gameData;
+        [SerializeField] private Level[] levels;
 
         [Header("UI")]
         [SerializeField] private GameObject gameCanvas = null;
@@ -24,6 +25,8 @@ namespace HackedDesign
         [SerializeField] private UI.StartMenuPresenter startMenuPanel = null;
         [SerializeField] private UI.HudPresenter hudPanel = null;
         [SerializeField] private UI.DeadPresenter deadPanel = null;
+        [SerializeField] private UI.DialogPresenter dialogPanel = null;
+        [SerializeField] private UI.MissionPresenter missionPanel = null;
 
         public static GameManager Instance { get; private set; }
 
@@ -32,6 +35,8 @@ namespace HackedDesign
         public PlayerController Player { get { return playerController; } private set { playerController = value; } }
 
         public EntityPool EntityPool { get { return entityPool; } private set { entityPool = value; } }
+
+
 
 
         private IState currentState;
@@ -61,6 +66,7 @@ namespace HackedDesign
 
         private void Awake()
         {
+            Data.currentLevel = levels[0];
             CheckBindings();
             Initialization();
             gameCanvas.SetActive(true);
@@ -74,7 +80,7 @@ namespace HackedDesign
         private void FixedUpdate() => CurrentState.FixedUpdate();
 
         public void SetMainMenu() => CurrentState = new MainMenuState(this.mainMenuPanel);
-        public void SetMissionSelect() => CurrentState = new MissionSelectState(this.playerController, this.entityPool, this.levelRenderer);
+        public void SetMissionSelect() => CurrentState = new MissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel);
         //public void SetLoading() => CurrentState = new LevelLoadingState(this.levelRenderer, this.entityPool);
         public void SetPlaying() => CurrentState = new PlayingState(this.playerController, this.entityPool, this.levelRenderer, this.hudPanel);
         public void SetStartMenu() => CurrentState = new StartMenuState(this.hudPanel, this.startMenuPanel);
@@ -138,8 +144,8 @@ namespace HackedDesign
             this.hudPanel.Hide();
             this.startMenuPanel.Hide();
             this.deadPanel.Hide();
-
+            this.dialogPanel.Hide();
+            this.missionPanel.Hide();
         }
-
     }
 }

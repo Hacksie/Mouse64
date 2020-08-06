@@ -86,7 +86,6 @@ Transform:
   m_Children:
   - {fileID: 851876957666338233}
   - {fileID: 851876957931070574}
-  - {fileID: 597547126002442365}
   - {fileID: 3269434808088802377}
   - {fileID: 5879806566028511574}
   - {fileID: 1410002006672047467}
@@ -601,7 +600,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 851876956512781667}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6720613881508906298
 MonoBehaviour:
@@ -640,96 +639,15 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 0.5
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: 2.2712755, y: 2.5843482, z: 0}
-  - {x: 4.036565, y: 2.572753, z: 0}
-  - {x: 4.022062, y: 2.716462, z: 0}
-  - {x: 2.3987207, y: 2.716462, z: 0}
-  - {x: 2.329149, y: 3.2962267, z: 0}
-  - {x: 4.0452523, y: 3.3194172, z: 0}
-  - {x: 4.036565, y: 3.4452047, z: 0}
-  - {x: 2.2364898, y: 3.3872283, z: 0}
---- !u!1 &3049550789333372809
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 597547126002442365}
-  - component: {fileID: 5689516304453853375}
-  m_Layer: 0
-  m_Name: New Sprite
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &597547126002442365
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049550789333372809}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 2.5, y: 0.275, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 851876956512781667}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!212 &5689516304453853375
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049550789333372809}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -5834746170925877697, guid: 416c0b5b10aaec94298dea9bca541545, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  - {x: 2.197589, y: 3.1277869, z: 0}
+  - {x: 2.3077812, y: 2.9232116, z: 0}
+  - {x: 4.018143, y: 2.9319751, z: 0}
+  - {x: 4.022062, y: 3.0664732, z: 0}
+  - {x: 2.3526666, y: 3.0848951, z: 0}
+  - {x: 2.329149, y: 3.609395, z: 0}
+  - {x: 3.9807763, y: 3.6786394, z: 0}
+  - {x: 4.036565, y: 3.8320596, z: 0}
+  - {x: 2.2180681, y: 3.8201373, z: 0}
 --- !u!1 &3594912245854614682
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,7 +677,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 851876956512781667}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7830866336877953818
 MonoBehaviour:
@@ -798,14 +716,14 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 0.5
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: 1.1943048, y: 3.0396943, z: 0}
-  - {x: 1.639554, y: 2.7990334, z: 0}
-  - {x: 2.1791415, y: 2.7450747, z: 0}
-  - {x: 2.2266798, y: 3.417405, z: 0}
-  - {x: 4.007319, y: 3.564857, z: 0}
-  - {x: 2.0928075, y: 3.554456, z: 0}
-  - {x: 1.3453895, y: 3.6835663, z: 0}
-  - {x: 1.1323419, y: 3.5328724, z: 0}
+  - {x: 1.1943048, y: 3.408127, z: 0}
+  - {x: 1.7132407, y: 3.20431, z: 0}
+  - {x: 2.1883523, y: 3.1411402, z: 0}
+  - {x: 2.1898367, y: 3.841103, z: 0}
+  - {x: 4.0257406, y: 3.9332902, z: 0}
+  - {x: 1.9362231, y: 3.9228888, z: 0}
+  - {x: 1.6032926, y: 4.015156, z: 0}
+  - {x: 1.2705042, y: 3.9473593, z: 0}
 --- !u!1 &3747482401403592391
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,6 +734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1410002006672047467}
   - component: {fileID: 9017644767247872806}
+  - component: {fileID: 7282842337370230605}
   m_Layer: 0
   m_Name: Freeform Light 2D (2)
   m_TagString: Untagged
@@ -835,7 +754,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 851876956512781667}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9017644767247872806
 MonoBehaviour:
@@ -874,7 +793,26 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 0.5
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: 2.4935193, y: 2.8251088, z: 0}
-  - {x: 4.000114, y: 2.8251088, z: 0}
-  - {x: 4.027747, y: 3.1987727, z: 0}
-  - {x: 2.50273, y: 3.1987722, z: 0}
+  - {x: 2.4935193, y: 3.17512, z: 0}
+  - {x: 3.9632711, y: 3.193542, z: 0}
+  - {x: 3.9816933, y: 3.5672057, z: 0}
+  - {x: 2.50273, y: 3.5672052, z: 0}
+--- !u!95 &7282842337370230605
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3747482401403592391}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0e5934a9fd643744dae62ac66bf88a17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
