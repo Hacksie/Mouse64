@@ -7,16 +7,16 @@ namespace HackedDesign
     public class Guard : Entity
     {
         [Header("Game Objects")]
-        [SerializeField] private Collider2D collider = null;
+        [SerializeField] private new Collider2D collider = null;
         [SerializeField] private GameObject alertSprite = null;
         [SerializeField] private Animator muzzleAnimator = null;
 
         [Header("Settings")]
-        [SerializeField] private float lookAngle = 0;
         [SerializeField] private float unstealthAlertDistance = 6;
         [SerializeField] private float crouchAlertDistance = 4.5f;
-        [SerializeField] private float stealthAlertDistance = 3;
         [SerializeField] private float shootTime = 1f;
+        [SerializeField] private int minDamage = 30;
+        [SerializeField] private int maxDamage = 60;
 
         private Vector2 direction;
         private float alertTime = 0;
@@ -35,7 +35,7 @@ namespace HackedDesign
             Kill();
         }
 
-        private void Kill()
+        protected virtual void Kill()
         {
             this.state = EntityState.Dead;
             collider.enabled = false;
@@ -69,7 +69,7 @@ namespace HackedDesign
             {
                 var sqrDistance = (transform.position - GameManager.Instance.Player.transform.position).sqrMagnitude;
 
-                if (sqrDistance <= (unstealthAlertDistance * unstealthAlertDistance))
+                if (sqrDistance <= (GameManager.Instance.Player.Crouched ? (crouchAlertDistance * crouchAlertDistance) : (unstealthAlertDistance * unstealthAlertDistance)))
                 {
                     state = EntityState.Attack;
                     alertTime = Time.time;
@@ -88,21 +88,26 @@ namespace HackedDesign
                 transform.right = new Vector2(direction.x, 0);
             }
 
-            if((Time.time - alertTime) >= shootTime)
+            if ((Time.time - alertTime) >= shootTime)
             {
                 alertTime = Time.time;
-                fire = true;
-                GameManager.Instance.TakeDamage(40);
-                Logger.Log(this, "Shoot!");
+                Shoot();
             }
-
 
             var sqrDistance = (transform.position - GameManager.Instance.Player.transform.position).sqrMagnitude;
 
-            if (sqrDistance > (GameManager.Instance.Player.Stealthed ? (stealthAlertDistance * stealthAlertDistance) : (unstealthAlertDistance * unstealthAlertDistance)))
+            if (sqrDistance > (GameManager.Instance.Player.Crouched ? (crouchAlertDistance * crouchAlertDistance) : (unstealthAlertDistance * unstealthAlertDistance)))
             {
                 state = EntityState.Idle;
             }
+        }
+
+        protected virtual void Shoot()
+        {
+            fire = true;
+            GameManager.Instance.TakeDamage(Random.Range(minDamage, maxDamage));
+            AudioManager.Instance.PlayGunshot();
+            Logger.Log(this, "Shoot!");
         }
 
         protected override void Animate()
@@ -110,20 +115,5 @@ namespace HackedDesign
             base.Animate();
             muzzleAnimator.SetBool("shoot", this.fire);
         }
-
-        // private void UpdateCrosshair()
-        // {
-        //     lookAngle += (inputAxis.y * Time.deltaTime * rotateSpeed);
-        //     lookAngle = Mathf.Clamp(lookAngle, minAngle, maxAngle);
-
-        //     float newAngle = lookAngle;
-
-        //     if (transform.right.x < 0)
-        //     {
-        //         newAngle = 180 - lookAngle;
-        //     }
-
-        //     crosshairAnchor.rotation = Quaternion.Euler(0, 0, newAngle);
-        // }        
     }
 }

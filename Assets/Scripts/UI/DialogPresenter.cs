@@ -6,7 +6,7 @@ namespace HackedDesign.UI
 {
     public class DialogPresenter : AbstractPresenter
     {
-        [SerializeField] UnityEngine.UI.Text dialogText;
+        [SerializeField] UnityEngine.UI.Text dialogText = null;
 
         public override void Repaint()
         {

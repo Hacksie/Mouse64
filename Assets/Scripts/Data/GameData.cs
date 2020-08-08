@@ -9,14 +9,16 @@ namespace HackedDesign
         [Header("Save Properties")]
         [SerializeField] private int gameVersion = 0;
         [SerializeField] private int gameSlot = 0;
-        [SerializeField] public float health = 100;
+        [SerializeField] public int health = 100;
         [SerializeField] public float energy = 100;
         [SerializeField] public int bullets = 10;
         [SerializeField] public float timer = 180;
         [SerializeField] public int alert = 0;
         [SerializeField] public int maxAlert = 10;
+        [SerializeField] public int score = 0;
         //[SerializeField] public string currentLevelName = "blue";
         //[SerializeField] public int currentLevelLength = 2;
+        [SerializeField] public int currentLevelIndex = 0;
         [SerializeField] public Level currentLevel;
     }
 
@@ -32,8 +34,10 @@ namespace HackedDesign
         public int tech = 4;
         public int openGuards = 2;
         public int drones = 2;
+        public int window = 180;
         public string[] dialogue;
         public int currentDialogue;
+        public bool completed = false;
         // boss
         // end condition
     }

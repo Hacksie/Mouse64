@@ -10,47 +10,39 @@ namespace HackedDesign
         [SerializeField] private Animator animator = null;
         [SerializeField] private Animator muzzleAnimator = null;
         [SerializeField] private Transform crosshairAnchor = null;
-        [SerializeField] private Transform leg1 = null;
-        [SerializeField] private Transform leg2 = null;
 
         [Header("Settings")]
         [SerializeField] private float fireRate = 0.5f;
-        [SerializeField] private float gravity = 1f;
-        [SerializeField] private float fallMultiplier = 5f;
         [SerializeField] private float runSpeed = 3;
         [SerializeField] private float crouchSpeed = 3;
-        [SerializeField] private float jumpSpeed = 1.5f;
         [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
         [SerializeField] private float stealthRate = 1f;
-
-        [SerializeField] private float groundedDistance = 0.5f;
         [SerializeField] private float lookAngle = 0;
         [SerializeField] private float maxAngle = 75.0f;
         [SerializeField] private float minAngle = -25.0f;
         [SerializeField] private float rotateSpeed = 180.0f;
         [SerializeField] private float shootDistance = 4.0f;
         [SerializeField] private LayerMask shootMask;
-        [SerializeField] private float unstealthTriggerWidth = 6;
-        [SerializeField] private float stealthTriggerWidth = 3;
 
         private Vector2 direction;
         private Vector2 inputAxis;
         private new Rigidbody2D rigidbody;
         private Vector2 currentVelocity = Vector2.zero;
-        private bool jump = false;
         private bool shoot = false;
         private float lastFire = 0;
         private bool fire = false;
         private bool crouch = false;
-        private bool grounded = true;
         private bool stealth = false;
-        const float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool dead = false;
         private bool sit = false;
+
+        public bool Crouched { get { return crouch; }}
 
         public bool Stealthed { get { return stealth; } }
 
         public bool Sit { get { return sit;} set { sit = value;}}
+
+        public bool Dead { get { return dead;} set { dead = value;}}
 
         // Start is called before the first frame update
         void Awake()
@@ -59,26 +51,14 @@ namespace HackedDesign
             rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public void FixedUpdateBehaviour()
+        public void Reset()
         {
-
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, groundedRadius);
-
-            Vector2 size = leg2.position - leg1.position;
-            size.y -= groundedRadius;
-
-
-            Physics2D.OverlapBoxAll(leg1.position, size, 0);
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                if (colliders[i].gameObject != gameObject)
-                {
-                    grounded = true;
-                }
-            }
+            this.inputAxis = Vector2.zero;
+            direction = Vector2.zero;
+            transform.right = Vector2.right;
         }
 
-        // Update is called once per frame
+         // Update is called once per frame
         public void UpdateBehavior()
         {
             if (inputAxis.sqrMagnitude > Vector2.kEpsilon)
@@ -95,20 +75,6 @@ namespace HackedDesign
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, targetVelocity, ref currentVelocity, movementSmoothing);
 
-
-
-            rigidbody.gravityScale = gravity;
-            if (rigidbody.velocity.y < 0)
-            {
-                rigidbody.gravityScale = gravity * fallMultiplier;
-            }
-
-            if (jump && grounded)
-            {
-                grounded = false;
-                rigidbody.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
-            }
-
             UpdateShoot();
             UpdateStealth();
             UpdateCrosshair();
@@ -120,6 +86,7 @@ namespace HackedDesign
             {
                 lastFire = Time.time;
                 fire = true;
+                AudioManager.Instance.PlayGunshot();
 
                 CheckHit();
             }
@@ -143,8 +110,6 @@ namespace HackedDesign
                 {
                     Logger.LogError(this, "No IEntity interface to hit");
                 }
-
-                //shotPosition.position = hit.point;
             }
         }
 
@@ -194,29 +159,18 @@ namespace HackedDesign
         {
             if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
             {
+                this.inputAxis = Vector2.zero;
                 return;
             }
-
             inputAxis = context.ReadValue<Vector2>();
         }
 
         public void JumpEvent(InputAction.CallbackContext context)
         {
-            // if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
-            // {
-            //     jump = false;
-            //     return;
-            // }
-
             if (context.performed)
             {
-                this.dead = true;
                 GameManager.Instance.SetDead();
             }
-            // else if (context.canceled)
-            // {
-            //     jump = false;
-            // }
         }
 
         public void CrouchEvent(InputAction.CallbackContext context)
@@ -280,6 +234,5 @@ namespace HackedDesign
                 GameManager.Instance.CurrentState.Start();
             }
         }
-
     }
 }

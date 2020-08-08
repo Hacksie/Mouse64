@@ -15,8 +15,8 @@ namespace HackedDesign
         [SerializeField] private bool invulnerability = true;
 
         [Header("Data")]
-        [SerializeField] private GameData gameData;
-        [SerializeField] private Level[] levels;
+        [SerializeField] private GameData gameData = null;
+        [SerializeField] private Level[] levels = null;
 
         [Header("UI")]
         [SerializeField] private GameObject gameCanvas = null;
@@ -27,6 +27,8 @@ namespace HackedDesign
         [SerializeField] private UI.DeadPresenter deadPanel = null;
         [SerializeField] private UI.DialogPresenter dialogPanel = null;
         [SerializeField] private UI.MissionPresenter missionPanel = null;
+        [SerializeField] private UI.MissionCompletePresenter missionCompletePanel = null;
+        
 
         public static GameManager Instance { get; private set; }
 
@@ -36,27 +38,24 @@ namespace HackedDesign
 
         public EntityPool EntityPool { get { return entityPool; } private set { entityPool = value; } }
 
-
-
-
         private IState currentState;
 
         public IState CurrentState
         {
             get
             {
-                return currentState;
+                return this.currentState;
             }
             private set
             {
                 if (currentState != null)
                 {
-                    currentState.End();
+                    this.currentState.End();
                 }
-                currentState = value;
-                if (currentState != null)
+                this.currentState = value;
+                if (this.currentState != null)
                 {
-                    currentState.Begin();
+                    this.currentState.Begin();
                 }
             }
         }
@@ -66,7 +65,7 @@ namespace HackedDesign
 
         private void Awake()
         {
-            Data.currentLevel = levels[0];
+            Data.currentLevel = levels[Data.currentLevelIndex];
             CheckBindings();
             Initialization();
             gameCanvas.SetActive(true);
@@ -81,11 +80,26 @@ namespace HackedDesign
 
         public void SetMainMenu() => CurrentState = new MainMenuState(this.mainMenuPanel);
         public void SetMissionSelect() => CurrentState = new MissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel);
+        public void SetMissionComplete() => CurrentState = new MissionCompleteState(this.playerController, this.missionCompletePanel);
         //public void SetLoading() => CurrentState = new LevelLoadingState(this.levelRenderer, this.entityPool);
         public void SetPlaying() => CurrentState = new PlayingState(this.playerController, this.entityPool, this.levelRenderer, this.hudPanel);
         public void SetStartMenu() => CurrentState = new StartMenuState(this.hudPanel, this.startMenuPanel);
         public void SetDead() => CurrentState = new DeadState(this.playerController, this.deadPanel);
         public void SetQuit() => Application.Quit();
+
+        public void Reset()
+        {
+            Data.bullets = 10;
+            Data.health = 100;
+            Data.energy = 100;
+            Data.alert = 0;
+            this.playerController.Reset();
+        }
+
+        public void NextLevel()
+        {
+            Data.currentLevel = levels[++Data.currentLevelIndex];
+        }
 
         public bool ConsumeBullet()
         {
@@ -118,7 +132,7 @@ namespace HackedDesign
             }
         }
 
-        public void TakeDamage(float amount)
+        public void TakeDamage(int amount)
         {
             Data.health -= amount;
             if(!invulnerability && Data.health <= 0)
@@ -146,6 +160,7 @@ namespace HackedDesign
             this.deadPanel.Hide();
             this.dialogPanel.Hide();
             this.missionPanel.Hide();
+            this.missionCompletePanel.Hide();
         }
     }
 }

@@ -7,11 +7,10 @@ namespace HackedDesign
     public class EntityPool : MonoBehaviour
     {
         [SerializeField] private Transform entityPool = null;
-        [SerializeField] private GameObject[] securityPrefab;
-        [SerializeField] private GameObject[] techPrefab;
-        [SerializeField] private GameObject[] guardPrefab;
-        [SerializeField] private GameObject[] suitPrefab;
-        [SerializeField] private GameObject[] npcPrefab;
+        [SerializeField] private GameObject[] securityPrefab = null;
+        [SerializeField] private GameObject[] techPrefab = null;
+        [SerializeField] private GameObject[] guardPrefab = null;
+        [SerializeField] private GameObject[] suitPrefab = null;
         [SerializeField] private List<IEntity> pool = new List<IEntity>();
 
         public List<IEntity> Pool { get { return this.pool; }}
@@ -27,6 +26,8 @@ namespace HackedDesign
             {
                 Destroy(entityPool.GetChild(i).gameObject);
             }
+
+            this.pool.Clear();
         }
 
         public IEntity SpawnSecurity(Vector3 position)

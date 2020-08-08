@@ -23,6 +23,7 @@ namespace HackedDesign
 
         public void Begin()
         {
+            GameManager.Instance.Reset();
             this.player.Sit = true;
             this.player.transform.position = new Vector3(2, 0.275f, 0);
             this.pool.DestroyEntities();
@@ -63,7 +64,7 @@ namespace HackedDesign
 
         public void FixedUpdate()
         {
-            this.player.FixedUpdateBehaviour();
+            //this.player.FixedUpdateBehaviour();
         }
 
         public void LateUpdate()

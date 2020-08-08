@@ -23,6 +23,7 @@ namespace HackedDesign
         {
             this.pool.DestroyEntities();
             this.levelRenderer.LoadLevel(GameManager.Instance.Data.currentLevel);
+            GameManager.Instance.Data.timer = GameManager.Instance.Data.currentLevel.window;
             this.hudPresenter.Show();
         }
 
@@ -43,7 +44,7 @@ namespace HackedDesign
 
         public void FixedUpdate()
         {
-            this.player.FixedUpdateBehaviour();
+            //this.player.FixedUpdateBehaviour();
         }
 
         public void LateUpdate()

@@ -17,6 +17,7 @@ namespace HackedDesign
 
         public void Begin()
         {
+            this.player.Dead = true;
             this.deadPresenter.Show();
         }
 

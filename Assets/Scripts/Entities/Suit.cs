@@ -4,8 +4,14 @@ using UnityEngine;
 
 namespace HackedDesign
 {
-    public class Suit : Entity
+    public class Suit : Guard
     {
+        protected override void Kill()
+        {
+            base.Kill();
+            GameManager.Instance.Data.currentLevel.completed = true;
+            Logger.Log(this, "completed");
 
+        }
     }
 }

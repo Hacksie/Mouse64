@@ -372,11 +372,12 @@ MonoBehaviour:
   collider: {fileID: 304659158267243270}
   alertSprite: {fileID: 2249486018927605060}
   muzzleAnimator: {fileID: 7552021362218715498}
-  lookAngle: 0
   unstealthAlertDistance: 3
-  crouchAlertDistance: 4.5
+  crouchAlertDistance: 2
   stealthAlertDistance: 1
-  shootTime: 1
+  shootTime: 0.8
+  minDamage: 25
+  maxDamage: 50
 --- !u!61 &304659158267243270
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Lazer Wall
+  m_Controller: {fileID: 9100000, guid: 1ecad4e71dd01204fb8a4a73649c3ea8, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f6f2a6147e7db5b4f9ccdf1214c9a513, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 93725d934da87bc4bab1c0813fe5850b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: eab51ad6c267b234fae458010b54342a, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f313d5b7ed5c51e479aa04920715ab88, type: 2}

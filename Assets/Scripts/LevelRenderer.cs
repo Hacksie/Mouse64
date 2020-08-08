@@ -8,13 +8,13 @@ namespace HackedDesign
 {
     public class LevelRenderer : MonoBehaviour
     {
-        [SerializeField] private Transform environmentParent;
-        [SerializeField] private LevelTemplate[] levelTemplates;
+        [SerializeField] private Transform environmentParent = null;
+        [SerializeField] private LevelTemplate[] levelTemplates = null;
 
         public void LoadLevel(Level level)
         {
             DestroyEnvironment();
-            if (level.length < 2)
+            if (level.length < 3)
             {
                 Logger.Log(this, "Level length less than 2");
                 return;
@@ -29,12 +29,13 @@ namespace HackedDesign
 
             RenderStart(template);
             RenderCorridor(level, template);
+            RenderBoss(level, template);
             RenderEnd(level, template);
             if (template.random)
             {
                 RenderSecurity(level, template);
                 RenderOpenGuards(level, template);
-                //RenderSuit(level, template);
+                RenderSuit(level, template);
             }
 
         }
@@ -70,14 +71,14 @@ namespace HackedDesign
 
         public void RenderStart(LevelTemplate template)
         {
-            Instantiate(template.entry, Vector3.zero, Quaternion.identity, environmentParent);
+            Instantiate(template.entryTile, Vector3.zero, Quaternion.identity, environmentParent);
         }
 
         public void RenderCorridor(Level level, LevelTemplate template)
         {
             if (template.random)
             {
-                for (int i = 1; i < (level.length - 1); i++)
+                for (int i = 1; i < (level.length - 2); i++)
                 {
                     int index = Random.Range(0, template.randomTiles.Length);
                     Instantiate(template.randomTiles[index], CalcPosition(i, template), Quaternion.identity, environmentParent);
@@ -92,15 +93,23 @@ namespace HackedDesign
             }
         }
 
+        public void RenderBoss(Level level, LevelTemplate template)
+        {
+            if (template.random)
+            {
+                Instantiate(template.bossTile, CalcPosition(level.length - 2, template), Quaternion.identity, environmentParent);
+            }
+        }
+
         public void RenderEnd(Level level, LevelTemplate template)
         {
             if (template.random)
             {
-                Instantiate(template.end, CalcPosition(level.length - 1, template), Quaternion.identity, environmentParent);
+                Instantiate(template.exitTile, CalcPosition(level.length - 1, template), Quaternion.identity, environmentParent);
             }
             else
             {
-                Instantiate(template.end, CalcPosition(template.fixedTiles.Length + 1, template), Quaternion.identity, environmentParent);
+                Instantiate(template.exitTile, CalcPosition(template.fixedTiles.Length + 1, template), Quaternion.identity, environmentParent);
             }
         }
 
@@ -113,7 +122,7 @@ namespace HackedDesign
                 Logger.LogError(this, "Not enough corridor to spawn security");
             }
 
-            float step = (level.length - 2) / (float)level.security;
+            float step = (level.length - 3) / (float)level.security;
             float min = 1;
             float max = min + step;
 
@@ -151,11 +160,11 @@ namespace HackedDesign
         }
         public void RenderSuit(Level level, LevelTemplate template)
         {
-            int pos = Mathf.RoundToInt(Random.Range(level.length - 1, level.length) * template.tileSize);
+            float min = level.length - 2;
+            float max = level.length - 1;
+            int pos = Mathf.RoundToInt(Random.Range(min, max) * template.tileSize);
             Logger.Log(this, "Spawning suit");
             GameManager.Instance.EntityPool.SpawnSuit(new Vector3(pos, 0.275f, 0));
-
-
         }
 
         private Vector3 CalcPosition(float length, LevelTemplate template)
@@ -175,8 +184,9 @@ namespace HackedDesign
         public string name;
         public int tileSize = 4;
         public bool random = true;
-        public GameObject entry;
-        public GameObject end;
+        public GameObject entryTile;
+        public GameObject bossTile;
+        public GameObject exitTile;
         public GameObject[] randomTiles;
         public GameObject[] fixedTiles;
     }
