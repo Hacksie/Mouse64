@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Screen
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: -6662830832694087935, guid: 2706f58aa73d9f34287d74dab6a90430, type: 3}
-  - {fileID: -3738248765058800048, guid: baa2499fb393e97459703ac4b3cbdb2e, type: 3}
-  - {fileID: -1872780198207938230, guid: baa2499fb393e97459703ac4b3cbdb2e, type: 3}
-  - {fileID: 547323165289124986, guid: baa2499fb393e97459703ac4b3cbdb2e, type: 3}
+  - {fileID: -8180312117611356127, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+  - {fileID: -5436255929890761385, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+  - {fileID: -2231796659318992047, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+  - {fileID: -4554386960479461837, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
   m_MinSpeed: 2
   m_MaxSpeed: 2
   m_AnimationStartTime: 0

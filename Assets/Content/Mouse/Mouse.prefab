@@ -96,7 +96,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7769018692109162714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 1.735, z: 0}
+  m_LocalPosition: {x: 1.45, y: 1.735, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7769018692280798218}
@@ -475,17 +475,11 @@ MonoBehaviour:
   animator: {fileID: 7769018692280798231}
   muzzleAnimator: {fileID: 7769018693194180150}
   crosshairAnchor: {fileID: 7769018692665259059}
-  leg1: {fileID: 7769018692666290837}
-  leg2: {fileID: 7769018692162234628}
   fireRate: 0.5
-  gravity: 1
-  fallMultiplier: 5
   runSpeed: 2.5
   crouchSpeed: 1.75
-  jumpSpeed: 1.5
   movementSmoothing: 0.025
   stealthRate: 10
-  groundedDistance: 0.5
   lookAngle: 0
   maxAngle: 50
   minAngle: -25
@@ -494,8 +488,6 @@ MonoBehaviour:
   shootMask:
     serializedVersion: 2
     m_Bits: 256
-  unstealthTriggerWidth: 3
-  stealthTriggerWidth: 1
 --- !u!1 &7769018692425419928
 GameObject:
   m_ObjectHideFlags: 0

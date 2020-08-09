@@ -38,6 +38,8 @@ namespace HackedDesign
 
         public EntityPool EntityPool { get { return entityPool; } private set { entityPool = value; } }
 
+        public LevelRenderer LevelRenderer { get { return levelRenderer;} private set { levelRenderer = value; }}
+
         private IState currentState;
 
         public IState CurrentState

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Small Screen
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 7445843171320946558, guid: 6f0e59c90a7722d4b8105e96786fdb3c, type: 3}
-  - {fileID: -7481536085315630839, guid: 6f0e59c90a7722d4b8105e96786fdb3c, type: 3}
-  - {fileID: -1311990305075717116, guid: 6f0e59c90a7722d4b8105e96786fdb3c, type: 3}
-  - {fileID: 8797202198560419949, guid: 6f0e59c90a7722d4b8105e96786fdb3c, type: 3}
+  - {fileID: 1862701594974666337, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+  - {fileID: -643172208032534154, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+  - {fileID: 271821559693655694, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+  - {fileID: -124772053130453694, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
   m_MinSpeed: 2
   m_MaxSpeed: 2
   m_AnimationStartTime: 0

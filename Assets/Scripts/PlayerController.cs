@@ -10,6 +10,7 @@ namespace HackedDesign
         [SerializeField] private Animator animator = null;
         [SerializeField] private Animator muzzleAnimator = null;
         [SerializeField] private Transform crosshairAnchor = null;
+        
 
         [Header("Settings")]
         [SerializeField] private float fireRate = 0.5f;
@@ -56,6 +57,7 @@ namespace HackedDesign
             this.inputAxis = Vector2.zero;
             direction = Vector2.zero;
             transform.right = Vector2.right;
+            rigidbody.velocity = Vector2.zero;
         }
 
          // Update is called once per frame
@@ -71,7 +73,7 @@ namespace HackedDesign
                 transform.right = new Vector2(direction.x, 0);
             }
 
-            Vector2 targetVelocity = targetVelocity = new Vector2(inputAxis.x * (crouch ? crouchSpeed : runSpeed), rigidbody.velocity.y);
+            Vector2 targetVelocity = new Vector2(inputAxis.x * (crouch ? crouchSpeed : runSpeed), rigidbody.velocity.y);
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, targetVelocity, ref currentVelocity, movementSmoothing);
 

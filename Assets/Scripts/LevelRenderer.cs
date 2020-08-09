@@ -167,12 +167,14 @@ namespace HackedDesign
             GameManager.Instance.EntityPool.SpawnSuit(new Vector3(pos, 0.275f, 0));
         }
 
-        private Vector3 CalcPosition(float length, LevelTemplate template)
+  
+
+        public Vector3 CalcPosition(float length, LevelTemplate template)
         {
             return Vector3.zero;
         }
 
-        private Vector3 CalcPosition(int length, LevelTemplate template)
+        public Vector3 CalcPosition(int length, LevelTemplate template)
         {
             return new Vector3(length * template.tileSize, 0, 0);
         }

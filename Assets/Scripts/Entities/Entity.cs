@@ -10,6 +10,9 @@ namespace HackedDesign
         protected Animator animator = null;
         protected bool fire = false;
 
+        protected Vector2 velocity;
+        protected Vector2 direction;
+
         protected void Awake()
         {
             this.animator = GetComponent<Animator>();
@@ -54,6 +57,14 @@ namespace HackedDesign
                     animator.SetBool("alert", false);
                     animator.SetBool("dead", false);
                     break;
+                case EntityState.Patrol:
+                    animator.SetFloat("velocity", Mathf.Abs(velocity.x));
+                    animator.SetBool("shoot", fire);
+                    animator.SetBool("crouch", false);
+                    animator.SetBool("stealth", false);
+                    animator.SetBool("alert", false);
+                    animator.SetBool("dead", false);
+                    break;                
                 case EntityState.Attack:
                     animator.SetFloat("velocity", 0);
                     animator.SetBool("alert", true);
@@ -78,6 +89,7 @@ namespace HackedDesign
     public enum EntityState
     {
         Idle,
+        Patrol,
         Attack,
         Dead
     }
