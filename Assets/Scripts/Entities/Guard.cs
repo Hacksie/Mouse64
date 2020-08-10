@@ -10,19 +10,25 @@ namespace HackedDesign
         [SerializeField] private new Collider2D collider = null;
         [SerializeField] private GameObject alertSprite = null;
         [SerializeField] private Animator muzzleAnimator = null;
+        [SerializeField] private Transform crosshairAnchor = null;
 
 
         [Header("Settings")]
         [SerializeField] private float unstealthAlertDistance = 6;
         [SerializeField] private float crouchAlertDistance = 4.5f;
+        [SerializeField] private float reactionTime = 1f;
         [SerializeField] private float shootTime = 1f;
         [SerializeField] private int minDamage = 30;
         [SerializeField] private int maxDamage = 60;
         [SerializeField] private float patrolTime = 10f;
         [SerializeField] private float patrolSpeed = 2f;
         [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
+        [SerializeField] private LayerMask shootMask;
+
         protected EntityState defaultState = EntityState.Idle;
-        protected float alertTime = 0;
+        protected float reactionTimer = 0;
+        protected bool reaction = false;
+        protected float shootTimer = 0;
         protected float patrolTimer = 0;
         protected float patrolMin = 0;
         protected float patrolMax = 0;
@@ -37,8 +43,8 @@ namespace HackedDesign
             this.direction.x = Random.value > 0.5 ? -1 : 1;
             base.Awake();
             this.collider = this.collider ?? GetComponent<Collider2D>();
-            this.patrolMin = GameManager.Instance.LevelRenderer.CalcPosition(1, GameManager.Instance.LevelRenderer.FindTemplate(GameManager.Instance.Data.currentLevel.name)).x;
-            this.patrolMax = GameManager.Instance.LevelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length - 2, GameManager.Instance.LevelRenderer.FindTemplate(GameManager.Instance.Data.currentLevel.name)).x;
+            this.patrolMin = GameManager.Instance.LevelRenderer.CalcPosition(1).x;
+            this.patrolMax = GameManager.Instance.LevelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length - 2).x;
             rigidbody = GetComponent<Rigidbody2D>();
             //this.levelLength = GameManager.Instance.LevelRenderer.LevelCorridorWorldLength(GameManager.Instance.Data.currentLevel);
         }
@@ -81,6 +87,8 @@ namespace HackedDesign
         private void UpdateIdle()
         {
             fire = false;
+            reaction = false;
+            reactionTimer = 0;
             alertSprite?.SetActive(false);
             velocity = Vector2.zero;
 
@@ -91,12 +99,11 @@ namespace HackedDesign
 
             if (!GameManager.Instance.Player.Stealthed)
             {
-                var sqrDistance = (transform.position - GameManager.Instance.Player.transform.position).sqrMagnitude;
-
-                if (sqrDistance <= (GameManager.Instance.Player.Crouched ? (crouchAlertDistance * crouchAlertDistance) : (unstealthAlertDistance * unstealthAlertDistance)))
+                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                if (hit.collider != null && hit.collider.CompareTag("Player"))
                 {
                     state = EntityState.Attack;
-                    alertTime = Time.time;
+                    reactionTimer = Time.time;
                 }
             }
         }
@@ -104,6 +111,8 @@ namespace HackedDesign
         private void UpdatePatrol()
         {
             fire = false;
+            reaction = false;
+            reactionTimer = 0;
             alertSprite?.SetActive(false);
 
             if (transform.position.x <= patrolMin)
@@ -124,15 +133,13 @@ namespace HackedDesign
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
 
-
             if (!GameManager.Instance.Player.Stealthed)
             {
-                var sqrDistance = (transform.position - GameManager.Instance.Player.transform.position).sqrMagnitude;
-
-                if (sqrDistance <= (GameManager.Instance.Player.Crouched ? (crouchAlertDistance * crouchAlertDistance) : (unstealthAlertDistance * unstealthAlertDistance)))
+                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                if (hit.collider != null && hit.collider.CompareTag("Player"))
                 {
                     state = EntityState.Attack;
-                    alertTime = Time.time;
+                    reactionTimer = Time.time;
                 }
             }
         }
@@ -149,18 +156,24 @@ namespace HackedDesign
                 transform.right = new Vector2(direction.x, 0);
             }
 
-            if ((Time.time - alertTime) >= shootTime)
+            if (!reaction && (Time.time - reactionTimer) >= reactionTime)
             {
-                alertTime = Time.time;
+                shootTimer = Time.time;
+                reaction = true;
+                Shoot();
+            }
+
+            if (reaction && (Time.time - shootTimer) >= shootTime)
+            {
+                shootTimer = Time.time;
                 Shoot();
             }
 
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
 
-            var sqrDistance = (transform.position - GameManager.Instance.Player.transform.position).sqrMagnitude;
-
-            if (sqrDistance > (GameManager.Instance.Player.Crouched ? (crouchAlertDistance * crouchAlertDistance) : (unstealthAlertDistance * unstealthAlertDistance)))
+            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+            if (hit.collider == null || !hit.collider.CompareTag("Player"))
             {
                 state = defaultState;
             }
@@ -168,10 +181,14 @@ namespace HackedDesign
 
         protected virtual void Shoot()
         {
-            fire = true;
-            GameManager.Instance.TakeDamage(Random.Range(minDamage, maxDamage));
-            AudioManager.Instance.PlayGunshot();
-            Logger.Log(this, "Shoot!");
+            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, unstealthAlertDistance, shootMask);
+            if (hit.collider != null && hit.collider.CompareTag("Player"))
+            {
+                fire = true;
+                GameManager.Instance.TakeDamage(Random.Range(minDamage, maxDamage));
+                AudioManager.Instance.PlayGunshot();
+                Logger.Log(this, "Shoot!");
+            }
         }
 
         protected override void Animate()

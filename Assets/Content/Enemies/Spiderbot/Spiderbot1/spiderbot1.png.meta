@@ -101,6 +101,45 @@ TextureImporter:
   - first:
       213: 3278505778618583085
     second: spiderbot1_32
+  - first:
+      213: 9106160342825936653
+    second: spiderbot1_0
+  - first:
+      213: 8593871094447151125
+    second: spiderbot1_1
+  - first:
+      213: -1860734499237572766
+    second: spiderbot1_2
+  - first:
+      213: 6826974699013128932
+    second: spiderbot1_3
+  - first:
+      213: -3037928769952273740
+    second: spiderbot1_4
+  - first:
+      213: -3563840049349881123
+    second: spiderbot1_5
+  - first:
+      213: -8922965526855576294
+    second: spiderbot1_6
+  - first:
+      213: -7994643725921141257
+    second: spiderbot1_7
+  - first:
+      213: -3209014753225667740
+    second: spiderbot1_8
+  - first:
+      213: -4307879726240173574
+    second: spiderbot1_9
+  - first:
+      213: -3948592437414754612
+    second: spiderbot1_10
+  - first:
+      213: -6339310005998344651
+    second: spiderbot1_11
+  - first:
+      213: -5522050538125951877
+    second: spiderbot1_12
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -214,8 +253,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75d524b7b4ca2aca0800000000000000
-      internalID: -6007049512768348841
+      spriteID: d07a3e5d5949f5e70800000000000000
+      internalID: 9106160342825936653
       vertices: []
       indices: 
       edges: []
@@ -235,8 +274,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b1225d6746183570800000000000000
-      internalID: 8446525597165953456
+      spriteID: 51815066a30934770800000000000000
+      internalID: 8593871094447151125
       vertices: []
       indices: 
       edges: []
@@ -256,8 +295,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 748dc28bb63348110800000000000000
-      internalID: 1262190333315045447
+      spriteID: 26f41afd4d75d26e0800000000000000
+      internalID: -1860734499237572766
       vertices: []
       indices: 
       edges: []
@@ -266,8 +305,8 @@ TextureImporter:
       name: spiderbot1_3
       rect:
         serializedVersion: 2
-        x: 96
-        y: 224
+        x: 0
+        y: 192
         width: 32
         height: 32
       alignment: 7
@@ -277,8 +316,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cafca2dc858d51060800000000000000
-      internalID: 6923677878062862252
+      spriteID: 4e2c14161594ebe50800000000000000
+      internalID: 6826974699013128932
       vertices: []
       indices: 
       edges: []
@@ -287,8 +326,8 @@ TextureImporter:
       name: spiderbot1_4
       rect:
         serializedVersion: 2
-        x: 128
-        y: 224
+        x: 32
+        y: 192
         width: 32
         height: 32
       alignment: 7
@@ -298,8 +337,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25a53b6e9db3d6ff0800000000000000
-      internalID: -41311014512010670
+      spriteID: 4ba2e0e11eb17d5d0800000000000000
+      internalID: -3037928769952273740
       vertices: []
       indices: 
       edges: []
@@ -308,8 +347,8 @@ TextureImporter:
       name: spiderbot1_5
       rect:
         serializedVersion: 2
-        x: 160
-        y: 224
+        x: 64
+        y: 192
         width: 32
         height: 32
       alignment: 7
@@ -319,8 +358,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a537d5c7326a8550800000000000000
-      internalID: 6163847031691883942
+      spriteID: dd2903e6b52ba8ec0800000000000000
+      internalID: -3563840049349881123
       vertices: []
       indices: 
       edges: []
@@ -329,7 +368,7 @@ TextureImporter:
       name: spiderbot1_6
       rect:
         serializedVersion: 2
-        x: 0
+        x: 160
         y: 192
         width: 32
         height: 32
@@ -340,8 +379,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29a66697276e58070800000000000000
-      internalID: 8108140083487861394
+      spriteID: a1597b411224b2480800000000000000
+      internalID: -8922965526855576294
       vertices: []
       indices: 
       edges: []
@@ -350,8 +389,8 @@ TextureImporter:
       name: spiderbot1_7
       rect:
         serializedVersion: 2
-        x: 32
-        y: 192
+        x: 0
+        y: 160
         width: 32
         height: 32
       alignment: 7
@@ -361,8 +400,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f695562e441785c0800000000000000
-      internalID: -4213376600498661639
+      spriteID: 7fd3aa283e15d0190800000000000000
+      internalID: -7994643725921141257
       vertices: []
       indices: 
       edges: []
@@ -371,8 +410,8 @@ TextureImporter:
       name: spiderbot1_8
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
+        x: 32
+        y: 160
         width: 32
         height: 32
       alignment: 7
@@ -382,8 +421,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 419fe9b6dada35e30800000000000000
-      internalID: 4491124213765044500
+      spriteID: 46b0ff2851a4773d0800000000000000
+      internalID: -3209014753225667740
       vertices: []
       indices: 
       edges: []
@@ -392,8 +431,8 @@ TextureImporter:
       name: spiderbot1_9
       rect:
         serializedVersion: 2
-        x: 96
-        y: 192
+        x: 64
+        y: 160
         width: 32
         height: 32
       alignment: 7
@@ -403,8 +442,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 942b1b2125be4b150800000000000000
-      internalID: 5887589350613561929
+      spriteID: af1f85e86365734c0800000000000000
+      internalID: -4307879726240173574
       vertices: []
       indices: 
       edges: []
@@ -413,8 +452,8 @@ TextureImporter:
       name: spiderbot1_10
       rect:
         serializedVersion: 2
-        x: 128
-        y: 192
+        x: 96
+        y: 160
         width: 32
         height: 32
       alignment: 7
@@ -424,8 +463,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9bc50f0dcdcb22910800000000000000
-      internalID: 1811217656740601017
+      spriteID: cc689154918c339c0800000000000000
+      internalID: -3948592437414754612
       vertices: []
       indices: 
       edges: []
@@ -434,8 +473,8 @@ TextureImporter:
       name: spiderbot1_11
       rect:
         serializedVersion: 2
-        x: 160
-        y: 192
+        x: 128
+        y: 160
         width: 32
         height: 32
       alignment: 7
@@ -445,8 +484,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22ea09679ff512970800000000000000
-      internalID: 8728363077861420578
+      spriteID: 536a36bf22f3608a0800000000000000
+      internalID: -6339310005998344651
       vertices: []
       indices: 
       edges: []
@@ -455,111 +494,6 @@ TextureImporter:
       name: spiderbot1_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 160
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dbb4dd7ddf6a46450800000000000000
-      internalID: 6081169006035553213
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_13
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 160
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3d2af12cd2b72f3f0800000000000000
-      internalID: -868496341668486445
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_14
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 160
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 05693de839dd77610800000000000000
-      internalID: 1619006216889144912
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_15
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 160
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4d5dd2407aae98df0800000000000000
-      internalID: -177352707253873196
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_16
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 160
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9a44afdabc2d3e40800000000000000
-      internalID: 5637711489665354395
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_17
-      rect:
-        serializedVersion: 2
         x: 160
         y: 160
         width: 32
@@ -571,323 +505,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1dc63bddf86337910800000000000000
-      internalID: 1833869464797670609
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_18
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ee8583e92ed5ef110800000000000000
-      internalID: 1296576970627766510
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_19
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 128
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 223abef7a536e0670800000000000000
-      internalID: 8506845986493801250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_20
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 128
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9195cdc86765efe40800000000000000
-      internalID: 5692082046212266265
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_21
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 128
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eeb6d5135f42464c0800000000000000
-      internalID: -4295267509090817042
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_22
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a4cd8689d6aaed700800000000000000
-      internalID: 567077990780427338
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_23
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 128
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: de712c872e047ba90800000000000000
-      internalID: -7298293329697826835
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_24
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b45b1ece84e8df250800000000000000
-      internalID: 5980092324080891211
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_25
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af4f6265d824b2bc0800000000000000
-      internalID: -3806875885208406790
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_26
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 96
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3a63a0f7cfa88a7f0800000000000000
-      internalID: -601077733186193757
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_27
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 96
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f4b24a77c49255cc0800000000000000
-      internalID: -3723024108550345905
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_28
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 96
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a085400c77d64eb0800000000000000
-      internalID: -4735861030553026391
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_29
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 96
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c657379a210a6510800000000000000
-      internalID: 1543047104765056704
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_30
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b2cb968eb6e206600800000000000000
-      internalID: 459418202987412523
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_31
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 56ea78e0a757f1570800000000000000
-      internalID: 8439593393805831781
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: spiderbot1_32
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d2840a8a2a79f7d20800000000000000
-      internalID: 3278505778618583085
+      spriteID: b7c7f3bea4cbd53b0800000000000000
+      internalID: -5522050538125951877
       vertices: []
       indices: 
       edges: []

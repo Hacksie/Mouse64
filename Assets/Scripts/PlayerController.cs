@@ -101,7 +101,7 @@ namespace HackedDesign
         private void CheckHit()
         {
             RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, shootDistance, shootMask);
-            if (hit.collider != null)
+            if (hit.collider != null && hit.collider.CompareTag("Entity"))
             {
                 IEntity e = hit.collider.GetComponent<IEntity>();
                 if (e != null)

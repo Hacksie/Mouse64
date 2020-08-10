@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7769018691499164528}
   - component: {fileID: 7769018691499164531}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7769018692109162725}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CamTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7769018692162234628}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Leg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7769018692280798231}
   - component: {fileID: 7769018692280798225}
   - component: {fileID: 7769018692280798230}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mouse
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -481,13 +481,13 @@ MonoBehaviour:
   movementSmoothing: 0.025
   stealthRate: 10
   lookAngle: 0
-  maxAngle: 50
-  minAngle: -25
+  maxAngle: 60
+  minAngle: -35
   rotateSpeed: 180
   shootDistance: 4
   shootMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
 --- !u!1 &7769018692425419928
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7769018692425419931}
   - component: {fileID: 7769018692425419930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,7 +581,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7769018692440440649}
   - component: {fileID: 7769018692440440648}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,7 +652,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7769018692665259059}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CrosshairAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -683,7 +683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7769018692666290837}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Leg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 7769018693194180148}
   - component: {fileID: 7769018693194180151}
   - component: {fileID: 7769018693194180150}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Muzzleflash
   m_TagString: Untagged
   m_Icon: {fileID: 0}

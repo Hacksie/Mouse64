@@ -22,7 +22,7 @@ namespace HackedDesign
         public void Begin()
         {
             this.pool.DestroyEntities();
-            this.levelRenderer.LoadLevel(GameManager.Instance.Data.currentLevel);
+            this.levelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
             GameManager.Instance.Data.timer = GameManager.Instance.Data.currentLevel.window;
             this.hudPresenter.Show();
         }

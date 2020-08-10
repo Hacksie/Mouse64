@@ -1,0 +1,18 @@
+Take a seat, friend.
+You look down on your luck.
+Another victim of the corp
+hegemony?
+<color="#999999">You nod.</color>
+Who did you work for?
+<color="#999999">You flash your Arisana ID.</color>
+Hungry?
+<color="#999999">You nod again.</color>
+Toppings?
+<color="#999999">You shrug.</color>
+The works, then.
+<color="#999999">He slides you the hotdog.</color>
+<color="#999999">A corp address and a name is</color>
+<color="#999999">scrawled on the napkin.</color>
+<color="#999999">Tucked underneath it</color>
+<color="#999999">is a loaded 9mm</color>
+Have a good evening, friend.

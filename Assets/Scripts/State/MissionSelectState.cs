@@ -24,11 +24,12 @@ namespace HackedDesign
         public void Begin()
         {
             GameManager.Instance.Reset();
+            //GameManager.Instance.Data.currentLevel = levels[Data.currentLevelIndex];
             this.player.Sit = true;
             this.player.transform.position = new Vector3(2, 0.275f, 0);
             this.pool.DestroyEntities();
             //GameManager.Instance.Data.currentLevel.name = "hotdog";
-            this.levelRenderer.LoadMissionLevel(GameManager.Instance.Data.currentLevel);
+            this.levelRenderer.LoadMissionSelectLevel();
             this.dialogPresenter.Show();
         }
 
@@ -41,7 +42,7 @@ namespace HackedDesign
 
         public void Update()
         {
-            if(GameManager.Instance.Data.currentLevel.currentDialogue >= GameManager.Instance.Data.currentLevel.dialogue.Length)
+            if(GameManager.Instance.Data.currentLevel.currentDialogue >= GameManager.Instance.Data.currentLevel.dialogue.Count)
             {
                 this.dialogPresenter.Hide();
                 this.missionPresenter.Show();

@@ -20,7 +20,7 @@ namespace HackedDesign
         public void Begin()
         {
             this.entityPool.DestroyEntities();
-            this.levelRenderer.LoadLevel(GameManager.Instance.Data.currentLevel);
+            this.levelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
             
         }
 

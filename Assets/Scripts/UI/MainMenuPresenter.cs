@@ -64,6 +64,21 @@ namespace HackedDesign.UI
             }
         }
 
+        public void Slot0Event()
+        {
+            GameManager.Instance.currentSlot = 0;
+        }
+
+        public void Slot1Event()
+        {
+            GameManager.Instance.currentSlot = 1;
+        }
+
+        public void Slot2Event()
+        {
+            GameManager.Instance.currentSlot = 2;
+        }
+
 
         public void OptionsEvent()
         {
@@ -87,6 +102,12 @@ namespace HackedDesign.UI
 
         public void StartEvent()
         {
+            if (GameManager.Instance.gameSlots[GameManager.Instance.currentSlot] == null || GameManager.Instance.gameSlots[GameManager.Instance.currentSlot].newGame)
+            {
+                Logger.Log(this, "New game");
+                GameManager.Instance.NewGame();
+            }
+
             GameManager.Instance.SetMissionSelect();
         }
 

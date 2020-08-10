@@ -10,7 +10,7 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            if (GameManager.Instance.Data.currentLevel.currentDialogue < GameManager.Instance.Data.currentLevel.dialogue.Length)
+            if (GameManager.Instance.Data.currentLevel.currentDialogue < GameManager.Instance.Data.currentLevel.dialogue.Count)
             {
                 dialogText.text = GameManager.Instance.Data.currentLevel.dialogue[GameManager.Instance.Data.currentLevel.currentDialogue];
             }

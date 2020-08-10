@@ -1,5 +1,6 @@
 
 using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,13 +9,20 @@ namespace HackedDesign
 {
     public class GameManager : MonoBehaviour
     {
+        public const string gameVersion = "1.0";
         [Header("Game")]
         [SerializeField] private PlayerController playerController = null;
         [SerializeField] private LevelRenderer levelRenderer = null;
         [SerializeField] private EntityPool entityPool = null;
         [SerializeField] private bool invulnerability = true;
 
+
         [Header("Data")]
+        [SerializeField] public float easyAdj = 0.0f;
+        [SerializeField] public float mediumAdj = 0.2f;
+        [SerializeField] public float hardAdj = 0.4f;
+        [SerializeField] public int currentSlot = 0;
+        [SerializeField] public List<GameData> gameSlots = new List<GameData>(3);
         [SerializeField] private GameData gameData = null;
         [SerializeField] private Level[] levels = null;
 
@@ -28,17 +36,17 @@ namespace HackedDesign
         [SerializeField] private UI.DialogPresenter dialogPanel = null;
         [SerializeField] private UI.MissionPresenter missionPanel = null;
         [SerializeField] private UI.MissionCompletePresenter missionCompletePanel = null;
-        
+
 
         public static GameManager Instance { get; private set; }
 
-        public GameData Data { get { return gameData; } private set { gameData = value; } }
+        public GameData Data { get { return this.gameSlots[this.currentSlot]; } private set { this.gameSlots[this.currentSlot] = value; } }
 
         public PlayerController Player { get { return playerController; } private set { playerController = value; } }
 
         public EntityPool EntityPool { get { return entityPool; } private set { entityPool = value; } }
 
-        public LevelRenderer LevelRenderer { get { return levelRenderer;} private set { levelRenderer = value; }}
+        public LevelRenderer LevelRenderer { get { return levelRenderer; } private set { levelRenderer = value; } }
 
         private IState currentState;
 
@@ -63,11 +71,15 @@ namespace HackedDesign
         }
 
 
-        private GameManager() => Instance = this;
+        private GameManager()
+        {
+            Instance = this;
+
+        }
 
         private void Awake()
         {
-            Data.currentLevel = levels[Data.currentLevelIndex];
+            LoadSlots();
             CheckBindings();
             Initialization();
             gameCanvas.SetActive(true);
@@ -89,13 +101,59 @@ namespace HackedDesign
         public void SetDead() => CurrentState = new DeadState(this.playerController, this.deadPanel);
         public void SetQuit() => Application.Quit();
 
+        public void LoadSlots()
+        {
+            this.gameSlots = new List<GameData>() { null, null, null };
+        }
+
+        public void SaveGame()
+        {
+            Logger.Log(this, "Saving state");
+            string json = JsonUtility.ToJson(Data);
+            string path = Path.Combine(Application.persistentDataPath, $"SaveFile{currentSlot}.json");
+            File.WriteAllText(path, json);
+            Logger.Log(this, "Saved ", path);
+        }
+
+        public void LoadGame()
+        {
+
+        }
+
+        public void NewGame()
+        {
+            this.gameSlots[this.currentSlot] = new GameData()
+            {
+                newGame = false,
+                gameVersion = gameVersion,
+                gameSlot = this.currentSlot,
+                health = 100,
+                energy = 100,
+                bullets = 10,
+                timer = 64,
+                alert = 0,
+                score = 0,
+                currentLevelIndex = 0,
+                currentLevel = levels[0]
+            };
+
+            
+
+            //this.gameSlots[this.currentSlot].currentLevel.dialogue = new List<string>(levels[0].dialogue);
+
+            this.playerController.Reset();
+
+        }
+
         public void Reset()
         {
             Data.bullets = 10;
             Data.health = 100;
             Data.energy = 100;
             Data.alert = 0;
+            Data.timer = 64;
             this.playerController.Reset();
+
         }
 
         public void NextLevel()
@@ -127,20 +185,40 @@ namespace HackedDesign
 
         public void IncreaseAlert()
         {
-            if (Data.alert < Data.maxAlert)
+            if (Data.alert < Data.currentLevel.maxAlert)
             {
-                Logger.Log(this, "Alert increased!");
                 Data.alert++;
+
+                var position = entityPool.FindGuardSpawn(this.playerController.transform.position);
+
+                var c = Data.currentLevel.alertSpawn;
+                c = c == LevelAlertSpawn.Any ? (LevelAlertSpawn)Random.Range(0, 2) : c;
+
+                switch (c)
+                {
+                    case LevelAlertSpawn.Drone:
+                        entityPool.SpawnDrone(position);
+                        break;
+                    case LevelAlertSpawn.Guard:
+                    default:
+                        entityPool.SpawnGuard(position);
+                        break;
+                }
             }
         }
 
         public void TakeDamage(int amount)
         {
             Data.health -= amount;
-            if(!invulnerability && Data.health <= 0)
+            if (!invulnerability && Data.health <= 0)
             {
                 SetDead();
             }
+        }
+
+        public void FindSpawns()
+        {
+
         }
 
         private void CheckBindings()
