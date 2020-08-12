@@ -10,7 +10,6 @@ namespace HackedDesign
         [SerializeField] private Animator animator = null;
         [SerializeField] private Animator muzzleAnimator = null;
         [SerializeField] private Transform crosshairAnchor = null;
-        
 
         [Header("Settings")]
         [SerializeField] private float fireRate = 0.5f;
@@ -23,7 +22,9 @@ namespace HackedDesign
         [SerializeField] private float minAngle = -25.0f;
         [SerializeField] private float rotateSpeed = 180.0f;
         [SerializeField] private float shootDistance = 4.0f;
-        [SerializeField] private LayerMask shootMask;
+        [SerializeField] private float interactDistance = 0.5f;
+        [SerializeField] private LayerMask shootMask = 0;
+        [SerializeField] private LayerMask interactMask = 0;
 
         private Vector2 direction;
         private Vector2 inputAxis;
@@ -34,16 +35,17 @@ namespace HackedDesign
         private bool fire = false;
         private bool crouch = false;
         private bool stealth = false;
+        private bool interact = false;
         private bool dead = false;
         private bool sit = false;
 
-        public bool Crouched { get { return crouch; }}
+        public bool Crouched { get { return crouch; } }
 
         public bool Stealthed { get { return stealth; } }
 
-        public bool Sit { get { return sit;} set { sit = value;}}
+        public bool Sit { get { return sit; } set { sit = value; } }
 
-        public bool Dead { get { return dead;} set { dead = value;}}
+        public bool Dead { get { return dead; } set { dead = value; } }
 
         // Start is called before the first frame update
         void Awake()
@@ -60,7 +62,7 @@ namespace HackedDesign
             rigidbody.velocity = Vector2.zero;
         }
 
-         // Update is called once per frame
+        // Update is called once per frame
         public void UpdateBehavior()
         {
             if (inputAxis.sqrMagnitude > Vector2.kEpsilon)
@@ -77,42 +79,80 @@ namespace HackedDesign
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, targetVelocity, ref currentVelocity, movementSmoothing);
 
+            UpdateInteract();
             UpdateShoot();
             UpdateStealth();
             UpdateCrosshair();
         }
 
+        private void UpdateInteract()
+        {
+            if (interact)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, interactDistance, interactMask);
+                if (hit.collider != null && (hit.collider.CompareTag("Door") || hit.collider.CompareTag("Entity")))
+                {
+                    IEntity e = hit.collider.GetComponent<IEntity>();
+                    if (e != null)
+                    {
+                        e.Hit();
+                    }
+                    else
+                    {
+                        Logger.LogError(this, "No IEntity interface to hit");
+                    }
+                }
+            }
+        }
+
+
         private void UpdateShoot()
         {
-            if (shoot && (Time.time - lastFire > fireRate) && GameManager.Instance.ConsumeBullet())
+            if (shoot)
             {
-                lastFire = Time.time;
-                fire = true;
-                AudioManager.Instance.PlayGunshot();
+                var hitEntity = GetMeleeHit();
 
-                CheckHit();
+                if (hitEntity == null && (Time.time - lastFire > fireRate) && GameManager.Instance.ConsumeBullet())
+                {
+                    lastFire = Time.time;
+                    fire = true;
+                    AudioManager.Instance.PlayGunshot();
+                    hitEntity = GetShootHit();
+                }
+
+                if (hitEntity != null)
+                {
+                    hitEntity.Hit();
+                }
             }
             else
             {
                 fire = false;
             }
+
         }
 
-        private void CheckHit()
+        private IEntity GetMeleeHit()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, interactDistance, shootMask);
+            if (hit.collider != null && hit.collider.CompareTag("Entity"))
+            {
+                return hit.collider.GetComponent<IEntity>(); ;
+
+            }
+            return null;
+        }
+
+        private IEntity GetShootHit()
         {
             RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, shootDistance, shootMask);
             if (hit.collider != null && hit.collider.CompareTag("Entity"))
             {
-                IEntity e = hit.collider.GetComponent<IEntity>();
-                if (e != null)
-                {
-                    e.Hit();
-                }
-                else
-                {
-                    Logger.LogError(this, "No IEntity interface to hit");
-                }
+                return hit.collider.GetComponent<IEntity>();
+
             }
+
+            return null;
         }
 
         public void LateUpdateBehaviour()
@@ -147,7 +187,6 @@ namespace HackedDesign
         private void Animate()
         {
             animator.SetFloat("velocity", Mathf.Abs(inputAxis.x));
-            //animator.SetBool("jump", !grounded);
             animator.SetBool("shoot", this.shoot);
             animator.SetBool("crouch", this.crouch);
             animator.SetBool("stealth", this.stealth);
@@ -226,6 +265,25 @@ namespace HackedDesign
             else if (context.canceled)
             {
                 this.stealth = false;
+            }
+        }
+
+        public void InteractEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                this.interact = false;
+                return;
+            }
+
+            if (context.performed)
+            {
+                Logger.Log(this, "interact");
+                this.interact = true;
+            }
+            else if (context.canceled)
+            {
+                this.interact = false;
             }
         }
 

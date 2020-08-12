@@ -9,20 +9,23 @@ namespace HackedDesign
         private LevelRenderer levelRenderer;
         private UI.DialogPresenter dialogPresenter;
         private UI.MissionPresenter missionPresenter;
+        private UI.LevelPresenter levelPresenter;
 
         public bool PlayerActionAllowed => false;
 
-        public MissionSelectState(PlayerController player, EntityPool entityPool, LevelRenderer levelRenderer, UI.DialogPresenter dialogPresenter, UI.MissionPresenter missionPresenter)
+        public MissionSelectState(PlayerController player, EntityPool entityPool, LevelRenderer levelRenderer, UI.DialogPresenter dialogPresenter, UI.MissionPresenter missionPresenter, UI.LevelPresenter levelPresenter)
         {
             this.player = player;
             this.pool = entityPool;
             this.levelRenderer = levelRenderer;
             this.dialogPresenter = dialogPresenter;
             this.missionPresenter = missionPresenter;
+            this.levelPresenter = levelPresenter;
         }
 
         public void Begin()
         {
+            GameManager.Instance.SaveGame();
             GameManager.Instance.Reset();
             //GameManager.Instance.Data.currentLevel = levels[Data.currentLevelIndex];
             this.player.Sit = true;
@@ -47,25 +50,23 @@ namespace HackedDesign
                 this.dialogPresenter.Hide();
                 this.missionPresenter.Show();
                 this.missionPresenter.Repaint();
+                this.levelPresenter.Hide();
             }
             else 
             {
                 this.dialogPresenter.Show();
+                this.levelPresenter.Show();
                 this.missionPresenter.Hide();
                 this.dialogPresenter.Repaint();
+                this.levelPresenter.Repaint();
             }
             
             this.player.UpdateBehavior();
-            // foreach (var e in this.pool.Pool)
-            // {
-            //     e.UpdateBehaviour();
-            // }
-            //GameManager.Instance.Data.timer -= Time.deltaTime;
         }
 
         public void FixedUpdate()
         {
-            //this.player.FixedUpdateBehaviour();
+            
         }
 
         public void LateUpdate()
@@ -89,7 +90,7 @@ namespace HackedDesign
 
         public void Start()
         {
-            GameManager.Instance.SetStartMenu();
+            //GameManager.Instance.SetStartMenu();
         }
     }
 }

@@ -11,7 +11,6 @@ namespace HackedDesign
             base.Kill();
             GameManager.Instance.Data.currentLevel.completed = true;
             Logger.Log(this, "completed");
-
         }
     }
 }

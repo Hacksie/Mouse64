@@ -22,10 +22,7 @@ namespace HackedDesign.UI
             }
         }
 
-        protected void Toggle()
-        {
-            gameObject.SetActive(!gameObject.activeInHierarchy);
-        }
+        protected void Toggle() => gameObject.SetActive(!gameObject.activeInHierarchy);
 
         public abstract void Repaint();
     }

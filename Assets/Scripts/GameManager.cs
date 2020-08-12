@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace HackedDesign
 {
@@ -15,15 +15,15 @@ namespace HackedDesign
         [SerializeField] private LevelRenderer levelRenderer = null;
         [SerializeField] private EntityPool entityPool = null;
         [SerializeField] private bool invulnerability = true;
+        [SerializeField] private Light2D globalLight = null;
 
 
         [Header("Data")]
-        [SerializeField] public float easyAdj = 0.0f;
-        [SerializeField] public float mediumAdj = 0.2f;
-        [SerializeField] public float hardAdj = 0.4f;
+        [SerializeField] public float easyAdj = 1.0f;
+        [SerializeField] public float mediumAdj = 0.8f;
+        [SerializeField] public float hardAdj = 0.6f;
         [SerializeField] public int currentSlot = 0;
         [SerializeField] public List<GameData> gameSlots = new List<GameData>(3);
-        [SerializeField] private GameData gameData = null;
         [SerializeField] private Level[] levels = null;
 
         [Header("UI")]
@@ -36,16 +36,14 @@ namespace HackedDesign
         [SerializeField] private UI.DialogPresenter dialogPanel = null;
         [SerializeField] private UI.MissionPresenter missionPanel = null;
         [SerializeField] private UI.MissionCompletePresenter missionCompletePanel = null;
+        [SerializeField] private UI.LevelPresenter levelPanel = null;
 
 
         public static GameManager Instance { get; private set; }
 
         public GameData Data { get { return this.gameSlots[this.currentSlot]; } private set { this.gameSlots[this.currentSlot] = value; } }
-
         public PlayerController Player { get { return playerController; } private set { playerController = value; } }
-
         public EntityPool EntityPool { get { return entityPool; } private set { entityPool = value; } }
-
         public LevelRenderer LevelRenderer { get { return levelRenderer; } private set { levelRenderer = value; } }
 
         private IState currentState;
@@ -70,12 +68,7 @@ namespace HackedDesign
             }
         }
 
-
-        private GameManager()
-        {
-            Instance = this;
-
-        }
+        private GameManager() => Instance = this;
 
         private void Awake()
         {
@@ -93,9 +86,8 @@ namespace HackedDesign
         private void FixedUpdate() => CurrentState.FixedUpdate();
 
         public void SetMainMenu() => CurrentState = new MainMenuState(this.mainMenuPanel);
-        public void SetMissionSelect() => CurrentState = new MissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel);
+        public void SetMissionSelect() => CurrentState = new MissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel, this.levelPanel);
         public void SetMissionComplete() => CurrentState = new MissionCompleteState(this.playerController, this.missionCompletePanel);
-        //public void SetLoading() => CurrentState = new LevelLoadingState(this.levelRenderer, this.entityPool);
         public void SetPlaying() => CurrentState = new PlayingState(this.playerController, this.entityPool, this.levelRenderer, this.hudPanel);
         public void SetStartMenu() => CurrentState = new StartMenuState(this.hudPanel, this.startMenuPanel);
         public void SetDead() => CurrentState = new DeadState(this.playerController, this.deadPanel);
@@ -103,21 +95,38 @@ namespace HackedDesign
 
         public void LoadSlots()
         {
-            this.gameSlots = new List<GameData>() { null, null, null };
+            this.gameSlots = new List<GameData>(3) { null, null, null };
+            this.gameSlots[0] = LoadSaveFile(0);
+            this.gameSlots[1] = LoadSaveFile(1);
+            this.gameSlots[2] = LoadSaveFile(2);
         }
 
         public void SaveGame()
         {
-            Logger.Log(this, "Saving state");
+            Data.saveName = System.DateTime.Now.ToString("yyyyddMM HHmm");
+            Logger.Log(this, "Saving state", Data.saveName);
             string json = JsonUtility.ToJson(Data);
             string path = Path.Combine(Application.persistentDataPath, $"SaveFile{currentSlot}.json");
             File.WriteAllText(path, json);
             Logger.Log(this, "Saved ", path);
         }
 
-        public void LoadGame()
+        GameData LoadSaveFile(int slot)
         {
+            var path = Path.Combine(Application.persistentDataPath, $"SaveFile{slot}.json");
+            Logger.Log(name, "Attempting to load ", path);
+            if (File.Exists(path))
+            {
+                Logger.Log(name, "Loading ", path);
+                var contents = File.ReadAllText(path);
+                return JsonUtility.FromJson<GameData>(contents);
+            }
+            else
+            {
+                Logger.Log(name, "Save file does not exist ", path);
+            }
 
+            return null;
         }
 
         public void NewGame()
@@ -129,7 +138,7 @@ namespace HackedDesign
                 gameSlot = this.currentSlot,
                 health = 100,
                 energy = 100,
-                bullets = 10,
+                bullets = 6,
                 timer = 64,
                 alert = 0,
                 score = 0,
@@ -137,28 +146,37 @@ namespace HackedDesign
                 currentLevel = levels[0]
             };
 
-            
-
-            //this.gameSlots[this.currentSlot].currentLevel.dialogue = new List<string>(levels[0].dialogue);
-
             this.playerController.Reset();
-
         }
 
         public void Reset()
         {
-            Data.bullets = 10;
-            Data.health = 100;
+            Data.bullets = 6;
+            Data.health = 0;
             Data.energy = 100;
             Data.alert = 0;
             Data.timer = 64;
             this.playerController.Reset();
-
         }
 
         public void NextLevel()
         {
             Data.currentLevel = levels[++Data.currentLevelIndex];
+        }
+
+        public float DifficultyAdjustment()
+        {
+            switch (Data.currentLevel.difficulty)
+            {
+                case "Easy":
+                    return easyAdj;
+                case "Medium":
+                    return mediumAdj;
+                case "Hard":
+                    return hardAdj;
+            }
+
+            return 1;
         }
 
         public bool ConsumeBullet()
@@ -216,11 +234,6 @@ namespace HackedDesign
             }
         }
 
-        public void FindSpawns()
-        {
-
-        }
-
         private void CheckBindings()
         {
             this.playerController = this.playerController ?? FindObjectOfType<PlayerController>();
@@ -241,6 +254,7 @@ namespace HackedDesign
             this.dialogPanel.Hide();
             this.missionPanel.Hide();
             this.missionCompletePanel.Hide();
+            this.levelPanel.Hide();
         }
     }
 }

@@ -6,9 +6,8 @@ namespace HackedDesign
     {
         public void OnTriggerEnter2D(Collider2D other)
         {
-            if(GameManager.Instance.Data.currentLevel.completed && other.CompareTag("Player"))
+            if(GameManager.Instance.CurrentState.PlayerActionAllowed && GameManager.Instance.Data.currentLevel.completed && other.CompareTag("Player"))
             {
-                Logger.Log(this, "Exit trigger!");
                 GameManager.Instance.SetMissionComplete();
             }
         }

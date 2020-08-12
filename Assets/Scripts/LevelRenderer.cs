@@ -8,11 +8,15 @@ namespace HackedDesign
 {
     public class LevelRenderer : MonoBehaviour
     {
+        [Header("Game Objects")]
         [SerializeField] private Transform environmentParent = null;
-        [SerializeField] private GameObject[] missionSelectTiles = null;
-
+        [Header("Prefabs")]
+        [SerializeField] private GameObject[] missionSelectStartTiles = null;
+        [SerializeField] private GameObject[] missionSelectEndTiles = null;
         [SerializeField] private LevelTemplate[] levelTemplates = null;
+        [Header("Settings")]
         [SerializeField] private int tileSize = 4;
+        
 
         public void LoadRandomLevel(Level level)
         {
@@ -23,7 +27,7 @@ namespace HackedDesign
                 return;
             }
 
-            var template = GetRandomTemplate(level.name);
+            var template = GetRandomTemplate();
             if (template == null)
             {
                 Logger.LogError(this, "invalid level template");
@@ -47,10 +51,8 @@ namespace HackedDesign
         {
             DestroyEnvironment();
 
-            for (int i = 0; i < missionSelectTiles.Length; i++)
-            {
-                Instantiate(missionSelectTiles[i], CalcPosition(i), Quaternion.identity, environmentParent);
-            }
+            Instantiate(missionSelectStartTiles[Random.Range(0, missionSelectStartTiles.Length)], CalcPosition(0), Quaternion.identity, environmentParent);
+            Instantiate(missionSelectEndTiles[Random.Range(0, missionSelectEndTiles.Length)], CalcPosition(1), Quaternion.identity, environmentParent);
         }
 
         public void DestroyEnvironment()
@@ -61,7 +63,7 @@ namespace HackedDesign
             }
         }
 
-        public LevelTemplate GetRandomTemplate(string name)
+        public LevelTemplate GetRandomTemplate()
         {
             return levelTemplates[Random.Range(0, levelTemplates.Length)];
         }
@@ -82,16 +84,12 @@ namespace HackedDesign
 
         public void RenderBossTile(Level level, LevelTemplate template)
         {
-
             Instantiate(template.bossTile, CalcPosition(level.length - 2), Quaternion.identity, environmentParent);
-
         }
 
         public void RenderEndTile(Level level, LevelTemplate template)
         {
-
             Instantiate(template.exitTile, CalcPosition(level.length - 1), Quaternion.identity, environmentParent);
-
         }
 
         public void RenderDoors(Level level, LevelTemplate template)
@@ -106,7 +104,7 @@ namespace HackedDesign
                 var index = Random.Range(0, spawns.Count);
 
                 Instantiate(template.doorway, spawns[index].transform.position, Quaternion.identity, environmentParent);
-
+                GameManager.Instance.EntityPool.SpawnDoor(spawns[index].transform.position);
                 spawns.RemoveAt(index);
             }
         }
@@ -118,6 +116,7 @@ namespace HackedDesign
             if ((level.length - 2) < level.security)
             {
                 Logger.LogError(this, "Not enough corridor to spawn security");
+                return;
             }
 
             float step = (level.length - 3) / (float)level.security;
@@ -139,6 +138,7 @@ namespace HackedDesign
             if ((level.length - 2) < level.openGuards)
             {
                 Logger.LogError(this, "Not enough corridor to spawn guard");
+                return;
             }
 
             float step = (level.length - 2) / (float)level.openGuards;
@@ -162,6 +162,7 @@ namespace HackedDesign
             if ((level.length - 2) < level.drones)
             {
                 Logger.LogError(this, "Not enough corridor to spawn drone");
+                return;
             }
 
             float step = (level.length - 2) / (float)level.drones;
@@ -186,7 +187,6 @@ namespace HackedDesign
             Logger.Log(this, "Spawning suit");
             GameManager.Instance.EntityPool.SpawnSuit(new Vector3(pos, 0.275f, 0));
         }
-
 
         public Vector3 CalcPosition(int position)
         {

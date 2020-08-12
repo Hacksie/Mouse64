@@ -35,11 +35,22 @@ namespace HackedDesign
         public void Update()
         {
             this.player.UpdateBehavior();
-            foreach(var e in this.pool.Pool)
+            foreach (var e in this.pool.Pool)
             {
                 e.UpdateBehaviour();
-            }            
-            GameManager.Instance.Data.timer -= Time.deltaTime;
+            }
+
+            if (GameManager.Instance.Data.timer > 0)
+            {
+                GameManager.Instance.Data.timer -= Time.deltaTime;
+            }
+            else 
+            {
+                Logger.LogWarning("PlayingState", "Time run out");
+                //GameManager.Instance.EntityPool.S
+            }
+
+            
         }
 
         public void FixedUpdate()
@@ -50,7 +61,7 @@ namespace HackedDesign
         public void LateUpdate()
         {
             this.player.LateUpdateBehaviour();
-            foreach(var e in this.pool.Pool)
+            foreach (var e in this.pool.Pool)
             {
                 e.UpdateLateBehaviour();
             }
@@ -60,12 +71,12 @@ namespace HackedDesign
 
         public void Interact()
         {
-            
+
         }
 
         public void Select()
         {
-            
+
         }
 
         public void Start()

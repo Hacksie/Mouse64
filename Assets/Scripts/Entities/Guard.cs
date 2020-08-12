@@ -16,14 +16,19 @@ namespace HackedDesign
         [Header("Settings")]
         [SerializeField] private float unstealthAlertDistance = 6;
         [SerializeField] private float crouchAlertDistance = 4.5f;
+        [SerializeField] private float behindReductionDistance = 0.5f;
         [SerializeField] private float reactionTime = 1f;
         [SerializeField] private float shootTime = 1f;
         [SerializeField] private int minDamage = 30;
         [SerializeField] private int maxDamage = 60;
-        [SerializeField] private float patrolTime = 10f;
         [SerializeField] private float patrolSpeed = 2f;
         [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
-        [SerializeField] private LayerMask shootMask;
+        [SerializeField] private LayerMask shootMask = 0;
+        [SerializeField] private float interactDistance = 0.5f;
+        [SerializeField] private float doorOpenChance = 0.2f;
+        [SerializeField] private LayerMask interactMask = 0;
+        [SerializeField] private bool seeStealthed = false;
+        [SerializeField] private float bulletDropChance = 0.0f;
 
         protected EntityState defaultState = EntityState.Idle;
         protected float reactionTimer = 0;
@@ -105,6 +110,12 @@ namespace HackedDesign
                     state = EntityState.Attack;
                     reactionTimer = Time.time;
                 }
+                RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
+                if (behindHit.collider != null && behindHit.collider.CompareTag("Player"))
+                {
+                    state = EntityState.Attack;
+                    reactionTimer = Time.time;
+                }
             }
         }
 
@@ -124,10 +135,36 @@ namespace HackedDesign
                 direction.x = -1;
             }
 
+
+            RaycastHit2D doorHit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, interactDistance, interactMask);
+
+            if (doorHit.collider != null && doorHit.collider.CompareTag("Door"))
+            {
+                // Random chance to open the door
+                if (Random.value <= doorOpenChance)
+                {
+                    Logger.Log(this, "chooses to open door");
+                    IEntity e = doorHit.collider.GetComponent<IEntity>();
+                    if (e != null)
+                    {
+                        e.Hit();
+                    }
+                    else
+                    {
+                        Logger.LogError(this, "No IEntity interface to hit");
+                    }
+                }
+                else
+                {
+                    direction.x *= -1;
+                }
+            }
+
             if (direction.x != 0)
             {
                 transform.right = new Vector2(direction.x, 0);
             }
+
 
             velocity = new Vector2(direction.x * patrolSpeed, 0);
 
@@ -137,6 +174,12 @@ namespace HackedDesign
             {
                 RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
                 if (hit.collider != null && hit.collider.CompareTag("Player"))
+                {
+                    state = EntityState.Attack;
+                    reactionTimer = Time.time;
+                }
+                RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
+                if (behindHit.collider != null && behindHit.collider.CompareTag("Player"))
                 {
                     state = EntityState.Attack;
                     reactionTimer = Time.time;
@@ -156,14 +199,14 @@ namespace HackedDesign
                 transform.right = new Vector2(direction.x, 0);
             }
 
-            if (!reaction && (Time.time - reactionTimer) >= reactionTime)
+            if (!reaction && (Time.time - reactionTimer) >= (GameManager.Instance.DifficultyAdjustment() * reactionTime))
             {
                 shootTimer = Time.time;
                 reaction = true;
                 Shoot();
             }
 
-            if (reaction && (Time.time - shootTimer) >= shootTime)
+            if (reaction && (Time.time - shootTimer) >= (GameManager.Instance.DifficultyAdjustment() * shootTime))
             {
                 shootTimer = Time.time;
                 Shoot();
@@ -171,6 +214,11 @@ namespace HackedDesign
 
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
+
+            if(GameManager.Instance.Player.Stealthed)
+            {
+                state = defaultState;
+            }
 
             RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
             if (hit.collider == null || !hit.collider.CompareTag("Player"))

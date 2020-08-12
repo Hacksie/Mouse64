@@ -12,6 +12,7 @@ namespace HackedDesign
         [SerializeField] private GameObject[] guardPrefab = null;
         [SerializeField] private GameObject[] suitPrefab = null;
         [SerializeField] private GameObject[] dronePrefab = null;
+        [SerializeField] private GameObject[] doorPrefab = null;
         [SerializeField] private List<IEntity> pool = new List<IEntity>();
 
         public List<IEntity> Pool { get { return this.pool; } }
@@ -69,6 +70,14 @@ namespace HackedDesign
         public IEntity SpawnSuit(Vector3 position)
         {
             GameObject go = Instantiate(suitPrefab[Random.Range(0, suitPrefab.Length)], position, Quaternion.identity, entityPool);
+            IEntity entity = go.GetComponent<IEntity>();
+            pool.Add(entity);
+            return entity;
+        }
+
+        public IEntity SpawnDoor(Vector3 position)
+        {
+            GameObject go = Instantiate(doorPrefab[Random.Range(0, doorPrefab.Length)], position, Quaternion.identity, entityPool);
             IEntity entity = go.GetComponent<IEntity>();
             pool.Add(entity);
             return entity;

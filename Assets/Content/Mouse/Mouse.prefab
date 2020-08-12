@@ -269,7 +269,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.6}
+  m_Size: {x: 0.75, y: 1.6}
   m_EdgeRadius: 0
 --- !u!95 &7769018692280798231
 Animator:
@@ -395,7 +395,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7769018692280798230}
         m_TargetAssemblyTypeName: HackedDesign.PlayerController, Assembly-CSharp
-        m_MethodName: JumpEvent
+        m_MethodName: InteractEvent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -485,7 +485,11 @@ MonoBehaviour:
   minAngle: -35
   rotateSpeed: 180
   shootDistance: 4
+  interactDistance: 0.75
   shootMask:
+    serializedVersion: 2
+    m_Bits: 768
+  interactMask:
     serializedVersion: 2
     m_Bits: 768
 --- !u!1 &7769018692425419928

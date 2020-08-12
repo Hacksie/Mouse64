@@ -45,13 +45,11 @@ namespace HackedDesign
 
         protected virtual void Animate()
         {
-            //Logger.Log(this, state.ToString());
             switch (state)
             {
                 case EntityState.Idle:
                     animator.SetFloat("velocity", 0);
-
-                    animator.SetBool("shoot", fire);
+                    animator.SetBool("shoot", this.fire);
                     animator.SetBool("crouch", false);
                     animator.SetBool("stealth", false);
                     animator.SetBool("alert", false);
@@ -59,7 +57,7 @@ namespace HackedDesign
                     break;
                 case EntityState.Patrol:
                     animator.SetFloat("velocity", Mathf.Abs(velocity.x));
-                    animator.SetBool("shoot", fire);
+                    animator.SetBool("shoot", this.fire);
                     animator.SetBool("crouch", false);
                     animator.SetBool("stealth", false);
                     animator.SetBool("alert", false);
@@ -68,7 +66,7 @@ namespace HackedDesign
                 case EntityState.Attack:
                     animator.SetFloat("velocity", 0);
                     animator.SetBool("alert", true);
-                    animator.SetBool("shoot", fire);
+                    animator.SetBool("shoot", this.fire);
                     animator.SetBool("crouch", false);
                     animator.SetBool("stealth", false);
                     animator.SetBool("dead", false);
@@ -80,7 +78,6 @@ namespace HackedDesign
                     animator.SetBool("crouch", false);
                     animator.SetBool("stealth", false);
                     animator.SetBool("dead", true);
-                    //muzzleAnimator.SetBool("shoot", this.fire);                
                     break;
             }
         }

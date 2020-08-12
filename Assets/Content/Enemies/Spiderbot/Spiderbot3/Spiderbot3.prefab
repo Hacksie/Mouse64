@@ -46,7 +46,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 0.23113209, b: 0.23113209, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
@@ -88,7 +88,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &460630959403213830
 Transform:
   m_ObjectHideFlags: 0
@@ -518,19 +518,25 @@ MonoBehaviour:
   collider: {fileID: 2715732456009162818}
   alertSprite: {fileID: 4520947970909765120}
   muzzleAnimator: {fileID: 5279431313954112046}
-  crosshairAnchor: {fileID: 0}
+  crosshairAnchor: {fileID: 5370871072840441486}
   unstealthAlertDistance: 3
   crouchAlertDistance: 2
+  behindReductionDistance: 0.5
   reactionTime: 1
-  shootTime: 0.8
-  minDamage: 25
-  maxDamage: 50
-  patrolTime: 10
-  patrolSpeed: 1
+  shootTime: 0.5
+  minDamage: 13
+  maxDamage: 25
+  patrolSpeed: 2
   movementSmoothing: 0.05
   shootMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
+  interactDistance: 0.5
+  doorOpenChance: 0
+  interactMask:
+    serializedVersion: 2
+    m_Bits: 512
+  seeStealthed: 1
 --- !u!61 &2715732456009162818
 BoxCollider2D:
   m_ObjectHideFlags: 0

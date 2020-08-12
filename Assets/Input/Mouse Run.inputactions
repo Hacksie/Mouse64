@@ -30,7 +30,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jump",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "c5aa5e4c-86f3-4868-ba11-2ce09db1429e",
                     "expectedControlType": "Button",
@@ -286,7 +286,7 @@
                 {
                     "name": "",
                     "id": "86ca6354-6e45-48cc-887a-89b49080658c",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -297,11 +297,22 @@
                 {
                     "name": "",
                     "id": "3bc3e45d-ec7f-461b-8688-59ca923571a8",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Jump",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf55693b-1384-4b66-8ab3-6f8ab474d3e9",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -319,7 +330,7 @@
                 {
                     "name": "",
                     "id": "cf5cdbc9-d082-42a8-ac67-136830f18208",
-                    "path": "<XInputController>/buttonSouth",
+                    "path": "<XInputController>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Touch;Gamepad",

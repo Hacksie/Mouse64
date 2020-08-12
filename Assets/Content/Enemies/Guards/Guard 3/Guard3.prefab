@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8287264932991931770
 Transform:
   m_ObjectHideFlags: 0
@@ -366,16 +366,22 @@ MonoBehaviour:
   crosshairAnchor: {fileID: 3088586808279211592}
   unstealthAlertDistance: 3
   crouchAlertDistance: 2
+  behindReductionDistance: 0.5
   reactionTime: 1
   shootTime: 0.8
   minDamage: 25
   maxDamage: 50
-  patrolTime: 10
   patrolSpeed: 1
   movementSmoothing: 0.05
   shootMask:
     serializedVersion: 2
     m_Bits: 1536
+  interactDistance: 0.5
+  doorOpenChance: 0.2
+  interactMask:
+    serializedVersion: 2
+    m_Bits: 512
+  seeStealthed: 0
 --- !u!61 &8627591376609447506
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -389,7 +395,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.8}
+  m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -400,7 +406,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.6}
+  m_Size: {x: 0.5, y: 1.1}
   m_EdgeRadius: 0
 --- !u!95 &1715746539679511958
 Animator:

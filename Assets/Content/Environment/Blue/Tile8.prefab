@@ -129,12 +129,12 @@ Tilemap:
   - first: {x: 2, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 11
+      m_TileIndex: 12
       m_TileSpriteIndex: 12
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 0
   - first: {x: 3, y: 1, z: 0}
     second:
       serializedVersion: 2
@@ -216,7 +216,17 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
-  m_AnimatedTiles: {}
+  m_AnimatedTiles:
+  - first: {x: 2, y: 1, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: -8180312117611356127, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+      - {fileID: -5436255929890761385, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+      - {fileID: -2231796659318992047, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+      - {fileID: -4554386960479461837, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+      m_AnimationSpeed: 2
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -240,10 +250,10 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: f750111891834ed4cbc71aa90cf567ec, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 89186b375b2bb5c4c825c898728570b0, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: cd424df128bb8a64aa98834ba786f77b, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 092d5a4b772ee214c9d35edc862c65a3, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 1aa287f858c202b4a8a9a2d2f4f064f7, type: 2}
   - m_RefCount: 1
@@ -276,7 +286,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 1
-    m_Data: {fileID: -8180312117611356127, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
+    m_Data: {fileID: -4554386960479461837, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 8235175053419559364, guid: fda20bd8dd430e347802d76c3111f739, type: 3}
   - m_RefCount: 1
