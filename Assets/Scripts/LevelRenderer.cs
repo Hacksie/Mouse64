@@ -16,10 +16,13 @@ namespace HackedDesign
         [SerializeField] private LevelTemplate[] levelTemplates = null;
         [Header("Settings")]
         [SerializeField] private int tileSize = 4;
-        
+
+        private List<int> entitySpawns;
+
 
         public void LoadRandomLevel(Level level)
         {
+            Random.InitState(GameManager.Instance.Data.seed);
             DestroyEnvironment();
             if (level.length < 3)
             {
@@ -43,12 +46,16 @@ namespace HackedDesign
             RenderSecurity(level, template);
             RenderOpenGuards(level, template);
             RenderDrones(level, template);
+            RenderGCannon(level, template);
+            RenderRCannon(level, template);
+            RenderWCannon(level, template);
             RenderSuit(level, template);
 
         }
 
         public void LoadMissionSelectLevel()
         {
+            Random.InitState(GameManager.Instance.Data.seed);
             DestroyEnvironment();
 
             Instantiate(missionSelectStartTiles[Random.Range(0, missionSelectStartTiles.Length)], CalcPosition(0), Quaternion.identity, environmentParent);
@@ -108,6 +115,12 @@ namespace HackedDesign
                 spawns.RemoveAt(index);
             }
         }
+
+        // public void CalcSpawns(Level level, LevelTemplate template)
+        // {
+        //     entitySpawns = new List<int>(level.length * tileSize);
+
+        // }
 
         public void RenderSecurity(Level level, LevelTemplate template)
         {
@@ -174,6 +187,80 @@ namespace HackedDesign
                 int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
                 Logger.Log(this, "Spawning drone:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
                 GameManager.Instance.EntityPool.SpawnDrone(new Vector3(pos, 0.275f, 0));
+                min += step;
+                max += step;
+            }
+        }
+
+        // TODO: Fix the spawns for cameras and cannons so that there isn't overlap. Don't use * 4, use 1 and add an offset
+
+        public void RenderGCannon(Level level, LevelTemplate template)
+        {
+            List<int> taken = new List<int>(level.gcannon);
+
+            if ((level.length - 2) < level.gcannon)
+            {
+                Logger.LogError(this, "Not enough corridor to spawn gcannon");
+                return;
+            }
+
+            float step = (level.length - 2) / (float)level.gcannon;
+            float min = 1;
+            float max = min + step;
+
+            for (int i = 0; i < level.gcannon; i++)
+            {
+                int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
+                Logger.Log(this, "Spawning gcannon:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
+                GameManager.Instance.EntityPool.SpawnGCannon(new Vector3(pos + 0.5f, 0.275f, 0));
+                min += step;
+                max += step;
+            }
+        }
+
+        public void RenderRCannon(Level level, LevelTemplate template)
+        {
+            List<int> taken = new List<int>(level.rcannon);
+
+            if ((level.length - 2) < level.rcannon)
+            {
+                Logger.LogError(this, "Not enough corridor to spawn rcannon");
+                return;
+            }
+
+            float step = (level.length - 2) / (float)level.rcannon;
+            float min = 1;
+            float max = min + step;
+
+            for (int i = 0; i < level.rcannon; i++)
+            {
+                int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
+                Logger.Log(this, "Spawning rcannon:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
+                GameManager.Instance.EntityPool.SpawnRCannon(new Vector3(pos + 0.5f, 3.5f, 0));
+                min += step;
+                max += step;
+            }
+        }
+
+        public void RenderWCannon(Level level, LevelTemplate template)
+        {
+            List<int> taken = new List<int>(level.wcannon);
+
+            if ((level.length - 2) < level.wcannon)
+            {
+                Logger.LogError(this, "Not enough corridor to spawn wcannon");
+                return;
+            }
+
+            float step = (level.length - 2) / (float)level.wcannon;
+            float min = 1;
+            float max = min + step;
+
+            for (int i = 0; i < level.wcannon; i++)
+            {
+                int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
+                Logger.Log(this, "Spawning wcannon:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
+                GameManager.Instance.EntityPool.SpawnWCannon(new Vector3(pos + 0.5f, 2.5f, 0));
                 min += step;
                 max += step;
             }

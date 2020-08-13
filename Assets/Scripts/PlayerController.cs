@@ -45,7 +45,7 @@ namespace HackedDesign
 
         public bool Sit { get { return sit; } set { sit = value; } }
 
-        public bool Dead { get { return dead; } set { dead = value; } }
+        public bool Dead { get { return dead; } set { dead = value; rigidbody.velocity = Vector3.zero; } }
 
         // Start is called before the first frame update
         void Awake()
@@ -56,10 +56,21 @@ namespace HackedDesign
 
         public void Reset()
         {
+            this.animator.Play("mouse idle");
+            this.transform.position = new Vector3(2, 0.275f, 0);
             this.inputAxis = Vector2.zero;
             direction = Vector2.zero;
             transform.right = Vector2.right;
             rigidbody.velocity = Vector2.zero;
+            fire = false;
+            shoot = false;
+            lastFire = 0;
+            crouch = false;
+            stealth = false;
+            interact = false;
+            dead = false;
+            sit = false;
+            lookAngle = 0;
         }
 
         // Update is called once per frame
@@ -89,17 +100,21 @@ namespace HackedDesign
         {
             if (interact)
             {
-                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, interactDistance, interactMask);
-                if (hit.collider != null && (hit.collider.CompareTag("Door") || hit.collider.CompareTag("Entity")))
+                RaycastHit2D[] hits = Physics2D.RaycastAll(crosshairAnchor.transform.position, crosshairAnchor.right, interactDistance, interactMask);
+
+                foreach (var hit in hits)
                 {
-                    IEntity e = hit.collider.GetComponent<IEntity>();
-                    if (e != null)
+                    if (hit.collider != null && (hit.collider.CompareTag("Door") || hit.collider.CompareTag("Entity") || hit.collider.CompareTag("Interactable")))
                     {
-                        e.Hit();
-                    }
-                    else
-                    {
-                        Logger.LogError(this, "No IEntity interface to hit");
+                        IEntity e = hit.collider.GetComponent<IEntity>();
+                        if (e != null)
+                        {
+                            e.Hit();
+                        }
+                        else
+                        {
+                            Logger.LogError(this, "No IEntity interface to hit");
+                        }
                     }
                 }
             }
@@ -112,8 +127,9 @@ namespace HackedDesign
             {
                 var hitEntity = GetMeleeHit();
 
-                if (hitEntity == null && (Time.time - lastFire > fireRate) && GameManager.Instance.ConsumeBullet())
+                if (hitEntity == null && (Time.time - lastFire > fireRate) && GameManager.Instance.Data.bullets > 0)
                 {
+                    GameManager.Instance.ConsumeBullet(1);
                     lastFire = Time.time;
                     fire = true;
                     AudioManager.Instance.PlayGunshot();
@@ -162,8 +178,11 @@ namespace HackedDesign
 
         private void UpdateStealth()
         {
-            // TODO: Maybe have a regen facility after a certain period off stealth?
-            if (!stealth || !GameManager.Instance.ConsumeStealth(stealthRate * Time.deltaTime))
+            if (stealth && GameManager.Instance.Data.energy > 0)
+            {
+                GameManager.Instance.ConsumeStealth(stealthRate * Time.deltaTime);
+            }
+            else
             {
                 stealth = false;
             }

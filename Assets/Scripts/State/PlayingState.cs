@@ -21,10 +21,13 @@ namespace HackedDesign
 
         public void Begin()
         {
+            GameManager.Instance.Reset();
+            //this.player.Reset();
             this.pool.DestroyEntities();
             this.levelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
             GameManager.Instance.Data.timer = GameManager.Instance.Data.currentLevel.window;
             this.hudPresenter.Show();
+            AudioManager.Instance.PlayRandomGameMusic();
         }
 
         public void End()
@@ -46,7 +49,8 @@ namespace HackedDesign
             }
             else 
             {
-                Logger.LogWarning("PlayingState", "Time run out");
+                GameManager.Instance.TimeUp();
+                //Logger.LogWarning("PlayingState", "Time run out");
                 //GameManager.Instance.EntityPool.S
             }
 

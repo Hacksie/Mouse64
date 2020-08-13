@@ -16,6 +16,10 @@ namespace HackedDesign
         [SerializeField] private EntityPool entityPool = null;
         [SerializeField] private bool invulnerability = true;
         [SerializeField] private Light2D globalLight = null;
+        [SerializeField] private Color defaultLightColor = Color.gray;
+        [SerializeField] private Color alertLightColor = Color.red;
+        [SerializeField] private int alertGuards = 10;
+        [SerializeField] private int maxLevels = 24;
 
 
         [Header("Data")]
@@ -25,6 +29,8 @@ namespace HackedDesign
         [SerializeField] public int currentSlot = 0;
         [SerializeField] public List<GameData> gameSlots = new List<GameData>(3);
         [SerializeField] private Level[] levels = null;
+        [SerializeField] private string[] corpList = null;
+        [SerializeField] private string[] nameList = null;
 
         [Header("UI")]
         [SerializeField] private GameObject gameCanvas = null;
@@ -103,7 +109,7 @@ namespace HackedDesign
 
         public void SaveGame()
         {
-            Data.saveName = System.DateTime.Now.ToString("yyyyddMM HHmm");
+            Data.saveName = System.DateTime.Now.ToString("yyddMM HHmm");
             Logger.Log(this, "Saving state", Data.saveName);
             string json = JsonUtility.ToJson(Data);
             string path = Path.Combine(Application.persistentDataPath, $"SaveFile{currentSlot}.json");
@@ -143,8 +149,13 @@ namespace HackedDesign
                 alert = 0,
                 score = 0,
                 currentLevelIndex = 0,
+                seed = (int)System.DateTime.Now.Ticks,
                 currentLevel = levels[0]
             };
+
+            Data.currentLevel.corp = GetRandomCorp();
+            Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
+
 
             this.playerController.Reset();
         }
@@ -156,12 +167,35 @@ namespace HackedDesign
             Data.energy = 100;
             Data.alert = 0;
             Data.timer = 64;
+            this.globalLight.color = defaultLightColor;
             this.playerController.Reset();
         }
 
         public void NextLevel()
         {
-            Data.currentLevel = levels[++Data.currentLevelIndex];
+            ++Data.currentLevelIndex;
+
+            if (Data.currentLevelIndex >= levels.Length)
+            {
+                Logger.LogError(this, "game over");
+            }
+            else if (Data.currentLevelIndex == (levels.Length - 1))
+            {
+                Data.currentLevel = levels[Data.currentLevelIndex];
+                Data.seed = (int)System.DateTime.Now.Ticks;
+
+                Data.currentLevel.corp = "Arisana";
+                Data.currentLevel.target = "G.Booker";
+            }
+            else
+            {
+                Data.currentLevel = levels[Data.currentLevelIndex];
+                Data.seed = (int)System.DateTime.Now.Ticks;
+
+                Data.currentLevel.corp = GetRandomCorp();
+                Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
+            }
+
         }
 
         public float DifficultyAdjustment()
@@ -179,26 +213,40 @@ namespace HackedDesign
             return 1;
         }
 
-        public bool ConsumeBullet()
+        public string GetRandomCorp()
         {
-            if (Data.bullets > 0)
-            {
-                Data.bullets--;
-                return true;
-            }
-
-            return false;
+            return this.corpList[Random.Range(0, this.corpList.Length)];
         }
 
-        public bool ConsumeStealth(float amount)
+        public string GetRandomName()
         {
-            if (Data.energy > 0)
+            return this.nameList[Random.Range(0, this.nameList.Length)];
+        }
+
+        public void ConsumeBullet(int amount)
+        {
+            Data.bullets = Mathf.Clamp(Data.bullets - amount, 0, Data.maxBullets);
+        }
+
+        public void ConsumeStealth(float amount)
+        {
+            Data.energy = Mathf.Clamp(Data.energy - amount, 0, Data.maxEnergy);
+        }
+
+        public void TimeUp()
+        {
+            if (Data.alertTriggered)
             {
-                Data.energy = Mathf.Max(0, Data.energy - amount);
-                return true;
+                return;
             }
 
-            return false;
+            this.globalLight.color = alertLightColor;
+            Data.alertTriggered = true;
+            for (int i = 0; i < this.alertGuards; i++)
+            {
+                var position = entityPool.FindGuardSpawn(this.playerController.transform.position);
+                entityPool.SpawnGuard(position);
+            }
         }
 
         public void IncreaseAlert()

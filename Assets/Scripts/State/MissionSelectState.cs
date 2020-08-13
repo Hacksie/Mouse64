@@ -34,6 +34,7 @@ namespace HackedDesign
             //GameManager.Instance.Data.currentLevel.name = "hotdog";
             this.levelRenderer.LoadMissionSelectLevel();
             this.dialogPresenter.Show();
+            AudioManager.Instance.PlayMissionSelectMusic();
         }
 
         public void End()
@@ -47,12 +48,13 @@ namespace HackedDesign
         {
             if(GameManager.Instance.Data.currentLevel.currentDialogue >= GameManager.Instance.Data.currentLevel.dialogue.Count)
             {
+                GameManager.Instance.SaveGame();
                 this.dialogPresenter.Hide();
                 this.missionPresenter.Show();
                 this.missionPresenter.Repaint();
                 this.levelPresenter.Hide();
             }
-            else 
+            else
             {
                 this.dialogPresenter.Show();
                 this.levelPresenter.Show();

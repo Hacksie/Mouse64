@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 namespace HackedDesign.UI
 {
@@ -22,6 +23,8 @@ namespace HackedDesign.UI
         [SerializeField] private UnityEngine.UI.Text[] slotTexts = null;
         [SerializeField] private GameObject quitButton = null;
         [SerializeField] private GameObject screenButton = null;
+        [SerializeField] private UnityEngine.UI.Dropdown resolutionsDropdown = null;
+        [SerializeField] private GameObject defaultButton = null;
 
         [SerializeField] private string URL = "https://hackeddesign.itch.io/";
         private MainMenuState state = MainMenuState.Default;
@@ -36,16 +39,23 @@ namespace HackedDesign.UI
             masterSlider.value = master - 100;
             fxSlider.value = fx - 100;
             musicSlider.value = music - 100;
-            if (Application.platform == RuntimePlatform.WebGLPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+            if (Application.platform == RuntimePlatform.WebGLPlayer) // || Application.platform == RuntimePlatform.WindowsEditor)
             {
                 quitButton?.SetActive(false);
                 screenButton?.SetActive(false);
             }
+            PopulateOptionsValues();
+            EventSystem.current.SetSelectedGameObject(defaultButton);
+        }
+
+        private void PopulateOptionsValues()
+        {
+            resolutionsDropdown.ClearOptions();
+            resolutionsDropdown.AddOptions(Screen.resolutions.ToList().ConvertAll(r => new UnityEngine.UI.Dropdown.OptionData(r.width + "x" + r.height)));
         }
 
         public override void Repaint()
         {
-
             for (int i = 0; i < slotTexts.Length; i++)
             {
                 slotTexts[i].text = (GameManager.Instance.gameSlots[i] == null || GameManager.Instance.gameSlots[i].newGame) ? "empty" : GameManager.Instance.gameSlots[i].saveName;
@@ -92,7 +102,6 @@ namespace HackedDesign.UI
                     screenPanel.SetActive(false);
                     creditsPanel.SetActive(false);
                     break;
-
             }
         }
 
@@ -110,7 +119,6 @@ namespace HackedDesign.UI
         {
             GameManager.Instance.currentSlot = 2;
         }
-
 
         public void OptionsEvent()
         {

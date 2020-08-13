@@ -13,12 +13,17 @@ namespace HackedDesign
         [SerializeField] public int gameSlot = 0;
         [SerializeField] public int health = 100;
         [SerializeField] public float energy = 100;
+        [SerializeField] public float maxEnergy = 100;
         [SerializeField] public int bullets = 6;
+        [SerializeField] public int maxBullets = 6;
         [SerializeField] public float timer = 64;
         [SerializeField] public int alert = 0;
         [SerializeField] public int score = 0;
         [SerializeField] public int currentLevelIndex = 0;
         [SerializeField] public Level currentLevel;
+        [SerializeField] public int seed = 0;
+        [SerializeField] public bool alertTriggered = false;
+        
     }
 
     [System.Serializable]
@@ -32,6 +37,9 @@ namespace HackedDesign
         public int tech = 4;
         public int openGuards = 2;
         public int drones = 2;
+        public int gcannon = 2;
+        public int wcannon = 2;
+        public int rcannon = 2;
         public int doors = 8;
         public int window = 64;
         public LevelAlertSpawn alertSpawn;

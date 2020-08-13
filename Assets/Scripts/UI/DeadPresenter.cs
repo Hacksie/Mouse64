@@ -11,6 +11,11 @@ namespace HackedDesign.UI
             
         }
 
+        public void ResetEvent()
+        {
+            GameManager.Instance.SetPlaying();
+        }
+
         public void QuitEvent()
         {
             GameManager.Instance.SetMainMenu();

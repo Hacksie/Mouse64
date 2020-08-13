@@ -12,7 +12,6 @@ namespace HackedDesign
         [SerializeField] private Animator muzzleAnimator = null;
         [SerializeField] private Transform crosshairAnchor = null;
 
-
         [Header("Settings")]
         [SerializeField] private float unstealthAlertDistance = 6;
         [SerializeField] private float crouchAlertDistance = 4.5f;
@@ -29,6 +28,7 @@ namespace HackedDesign
         [SerializeField] private LayerMask interactMask = 0;
         [SerializeField] private bool seeStealthed = false;
         [SerializeField] private float bulletDropChance = 0.0f;
+        [SerializeField] private bool directional = true;
 
         protected EntityState defaultState = EntityState.Idle;
         protected float reactionTimer = 0;
@@ -40,8 +40,6 @@ namespace HackedDesign
         protected new Rigidbody2D rigidbody;
         protected Vector2 currentVelocity = Vector2.zero;
 
-
-
         protected new void Awake()
         {
             defaultState = state;
@@ -51,7 +49,6 @@ namespace HackedDesign
             this.patrolMin = GameManager.Instance.LevelRenderer.CalcPosition(1).x;
             this.patrolMax = GameManager.Instance.LevelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length - 2).x;
             rigidbody = GetComponent<Rigidbody2D>();
-            //this.levelLength = GameManager.Instance.LevelRenderer.LevelCorridorWorldLength(GameManager.Instance.Data.currentLevel);
         }
 
         public override void Hit()
@@ -64,6 +61,16 @@ namespace HackedDesign
         {
             this.state = EntityState.Dead;
             collider.enabled = false;
+
+            if(Random.value < bulletDropChance)
+            {
+                DropBullet();
+            }
+        }
+
+        private void DropBullet()
+        {
+            GameManager.Instance.EntityPool.SpawnBullet(transform.position);
         }
 
         public override void UpdateBehaviour()
@@ -102,19 +109,31 @@ namespace HackedDesign
                 transform.right = new Vector2(direction.x, 0);
             }
 
-            if (!GameManager.Instance.Player.Stealthed)
+            if (this.seeStealthed || !GameManager.Instance.Player.Stealthed)
             {
-                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
-                if (hit.collider != null && hit.collider.CompareTag("Player"))
+                if (directional)
                 {
-                    state = EntityState.Attack;
-                    reactionTimer = Time.time;
+                    RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                    if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    {
+                        state = EntityState.Attack;
+                        reactionTimer = Time.time;
+                    }
+                    RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
+                    if (behindHit.collider != null && behindHit.collider.CompareTag("Player"))
+                    {
+                        state = EntityState.Attack;
+                        reactionTimer = Time.time;
+                    }
                 }
-                RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
-                if (behindHit.collider != null && behindHit.collider.CompareTag("Player"))
+                else
                 {
-                    state = EntityState.Attack;
-                    reactionTimer = Time.time;
+                    RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, GameManager.Instance.Player.transform.position - this.transform.position, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                    if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    {
+                        state = EntityState.Attack;
+                        reactionTimer = Time.time;
+                    }
                 }
             }
         }
@@ -134,7 +153,6 @@ namespace HackedDesign
             {
                 direction.x = -1;
             }
-
 
             RaycastHit2D doorHit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, interactDistance, interactMask);
 
@@ -170,19 +188,31 @@ namespace HackedDesign
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
 
-            if (!GameManager.Instance.Player.Stealthed)
+            if (this.seeStealthed || !GameManager.Instance.Player.Stealthed)
             {
-                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
-                if (hit.collider != null && hit.collider.CompareTag("Player"))
+                if (this.directional)
                 {
-                    state = EntityState.Attack;
-                    reactionTimer = Time.time;
+                    RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                    if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    {
+                        state = EntityState.Attack;
+                        reactionTimer = Time.time;
+                    }
+                    RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
+                    if (behindHit.collider != null && behindHit.collider.CompareTag("Player"))
+                    {
+                        state = EntityState.Attack;
+                        reactionTimer = Time.time;
+                    }
                 }
-                RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
-                if (behindHit.collider != null && behindHit.collider.CompareTag("Player"))
+                else
                 {
-                    state = EntityState.Attack;
-                    reactionTimer = Time.time;
+                    RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, GameManager.Instance.Player.transform.position - this.transform.position, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                    if (hit.collider != null && hit.collider.CompareTag("Player"))
+                    {
+                        state = EntityState.Attack;
+                        reactionTimer = Time.time;
+                    }
                 }
             }
         }
@@ -215,28 +245,62 @@ namespace HackedDesign
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
 
-            if(GameManager.Instance.Player.Stealthed)
+            if (!this.seeStealthed && GameManager.Instance.Player.Stealthed)
             {
-                state = defaultState;
+                state = this.defaultState;
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
-            if (hit.collider == null || !hit.collider.CompareTag("Player"))
+
+            if (directional)
             {
-                state = defaultState;
+                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                if (hit.collider == null || !hit.collider.CompareTag("Player"))
+                {
+                    state = EntityState.Attack;
+                }
+                RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
+                if (behindHit.collider == null || !behindHit.collider.CompareTag("Player"))
+                {
+                    state = EntityState.Attack;
+                }
+            }
+            else
+            {
+                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, GameManager.Instance.Player.transform.position - this.transform.position, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                if (hit.collider == null || !hit.collider.CompareTag("Player"))
+                {
+                    state = EntityState.Attack;
+                }
             }
         }
 
         protected virtual void Shoot()
         {
-            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, unstealthAlertDistance, shootMask);
-            if (hit.collider != null && hit.collider.CompareTag("Player"))
+            if (directional)
             {
-                fire = true;
-                GameManager.Instance.TakeDamage(Random.Range(minDamage, maxDamage));
-                AudioManager.Instance.PlayGunshot();
-                Logger.Log(this, "Shoot!");
+                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, unstealthAlertDistance, shootMask);
+                if (hit.collider != null && hit.collider.CompareTag("Player"))
+                {
+                    Damage();
+                }
             }
+            else
+            {
+                RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, GameManager.Instance.Player.transform.position - transform.position, unstealthAlertDistance, shootMask);
+
+                if (hit.collider != null && hit.collider.CompareTag("Player"))
+                {
+                    Damage();
+                }
+            }
+        }
+
+        protected virtual void Damage()
+        {
+            fire = true;
+            GameManager.Instance.TakeDamage(Random.Range(minDamage, maxDamage));
+            AudioManager.Instance.PlayGunshot();
+            Logger.Log(this, "Shoot!");
         }
 
         protected override void Animate()

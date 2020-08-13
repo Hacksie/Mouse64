@@ -6,7 +6,14 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioSource fx = null;
     [SerializeField] private AudioSource music = null;
+    [SerializeField] private AudioClip activate = null;
     [SerializeField] private AudioClip gunshot = null;
+    [SerializeField] private AudioClip energy = null;
+    [SerializeField] private AudioClip denied = null;
+    [SerializeField] private AudioClip bullet = null;
+    [SerializeField] private AudioClip menuMusic = null;
+    [SerializeField] private AudioClip selectMusic = null;
+    [SerializeField] private AudioClip[] playMusic = null;
 
     public static AudioManager Instance { get; private set; }
 
@@ -16,5 +23,47 @@ public class AudioManager : MonoBehaviour
     {
         fx.clip = gunshot;
         fx.Play();
+    }
+
+    public void PlayEnergyPickup()
+    {
+        fx.clip = energy;
+        fx.Play();
+    }
+
+    public void PlayBulletPickup()
+    {
+        fx.clip = bullet;
+        fx.Play();
+    }    
+
+    public void PlayActivate()
+    {
+        fx.clip = activate;
+        fx.Play();
+    }    
+
+    public void PlayDenied()
+    {
+        fx.clip = denied;
+        fx.Play();
+    } 
+
+    public void PlayMenuMusic()
+    {
+        music.clip = menuMusic;
+        music.Play();
+    }
+
+    public void PlayMissionSelectMusic()
+    {
+        music.clip = selectMusic;
+        music.Play();
+    }
+
+    public void PlayRandomGameMusic()
+    {
+        music.clip = playMusic[Random.Range(0, playMusic.Length)];
+        music.Play();
     }
 }

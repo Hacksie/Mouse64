@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Entity
   - DoorSpawn
+  - Interactable
+  - Undefined
   - Door
   layers:
   - Default
@@ -19,7 +21,7 @@ TagManager:
   - Entity
   - Doorway
   - Player
-  - 
+  - Interact
   - 
   - 
   - 
@@ -43,4 +45,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Sprites
+    uniqueID: 1673042001
     locked: 0

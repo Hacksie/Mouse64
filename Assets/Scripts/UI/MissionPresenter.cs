@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace HackedDesign.UI
 {
@@ -10,6 +11,7 @@ namespace HackedDesign.UI
         [SerializeField] UnityEngine.UI.Text targetText = null;
         [SerializeField] UnityEngine.UI.Text difficultyText = null;
         [SerializeField] UnityEngine.UI.Text windowText = null;
+        [SerializeField] GameObject defaultButton = null;
 
         public override void Repaint()
         {
@@ -17,7 +19,8 @@ namespace HackedDesign.UI
             targetText.text = GameManager.Instance.Data.currentLevel.target;
             difficultyText.text = GameManager.Instance.Data.currentLevel.difficulty;
             windowText.text = GameManager.Instance.Data.currentLevel.window.ToString() + "s";
-            //dialogText.text = GameManager.Instance.Data.currentLevel.dialogue[GameManager.Instance.Data.currentLevel.currentDialogue];
+            
+            EventSystem.current.SetSelectedGameObject(defaultButton);
         }
 
         public void StartEvent()
