@@ -61,6 +61,7 @@ namespace HackedDesign
         {
             this.state = EntityState.Dead;
             collider.enabled = false;
+            fire = false;
 
             if(Random.value < bulletDropChance)
             {
@@ -229,6 +230,15 @@ namespace HackedDesign
                 transform.right = new Vector2(direction.x, 0);
             }
 
+            rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
+
+            if (!this.seeStealthed && GameManager.Instance.Player.Stealthed)
+            {
+                state = this.defaultState;
+                return;
+            }
+
+
             if (!reaction && (Time.time - reactionTimer) >= (GameManager.Instance.DifficultyAdjustment() * reactionTime))
             {
                 shootTimer = Time.time;
@@ -243,12 +253,8 @@ namespace HackedDesign
             }
 
 
-            rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
+            
 
-            if (!this.seeStealthed && GameManager.Instance.Player.Stealthed)
-            {
-                state = this.defaultState;
-            }
 
 
             if (directional)
@@ -306,7 +312,7 @@ namespace HackedDesign
         protected override void Animate()
         {
             base.Animate();
-            muzzleAnimator.SetBool("shoot", this.fire);
+            muzzleAnimator.SetBool("shoot", fire);
         }
     }
 }

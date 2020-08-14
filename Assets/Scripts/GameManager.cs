@@ -14,13 +14,13 @@ namespace HackedDesign
         [SerializeField] private PlayerController playerController = null;
         [SerializeField] private LevelRenderer levelRenderer = null;
         [SerializeField] private EntityPool entityPool = null;
+        [SerializeField] private UnityEngine.Audio.AudioMixer mixer = null;
+        [SerializeField] private PlayerPreferences preferences = null;
         [SerializeField] private bool invulnerability = true;
         [SerializeField] private Light2D globalLight = null;
         [SerializeField] private Color defaultLightColor = Color.gray;
         [SerializeField] private Color alertLightColor = Color.red;
         [SerializeField] private int alertGuards = 10;
-        [SerializeField] private int maxLevels = 24;
-
 
         [Header("Data")]
         [SerializeField] public float easyAdj = 1.0f;
@@ -51,6 +51,8 @@ namespace HackedDesign
         public PlayerController Player { get { return playerController; } private set { playerController = value; } }
         public EntityPool EntityPool { get { return entityPool; } private set { entityPool = value; } }
         public LevelRenderer LevelRenderer { get { return levelRenderer; } private set { levelRenderer = value; } }
+        public PlayerPreferences PlayerPreferences { get { return preferences;} private set { preferences = value; }}
+
 
         private IState currentState;
 
@@ -83,6 +85,8 @@ namespace HackedDesign
             Initialization();
             gameCanvas.SetActive(true);
             menuCanvas.SetActive(true);
+            preferences = new PlayerPreferences(this.mixer);
+            preferences.Load();
             SetMainMenu();
         }
 

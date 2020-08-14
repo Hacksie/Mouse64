@@ -13,6 +13,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip bullet = null;
     [SerializeField] private AudioClip menuMusic = null;
     [SerializeField] private AudioClip selectMusic = null;
+    [SerializeField] private AudioClip successMusic = null;
+    [SerializeField] private AudioClip deathMusic = null;
     [SerializeField] private AudioClip[] playMusic = null;
 
     public static AudioManager Instance { get; private set; }
@@ -64,6 +66,18 @@ public class AudioManager : MonoBehaviour
     public void PlayRandomGameMusic()
     {
         music.clip = playMusic[Random.Range(0, playMusic.Length)];
+        music.Play();
+    }
+
+    public void PlayMissionSuccessMusic()
+    {
+        music.clip = successMusic;
+        music.Play();
+    }
+
+    public void PlayDeathMusic()
+    {
+        music.clip = deathMusic;
         music.Play();
     }
 }

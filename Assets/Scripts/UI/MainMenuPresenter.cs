@@ -19,12 +19,20 @@ namespace HackedDesign.UI
         [SerializeField] private UnityEngine.UI.Slider masterSlider = null;
         [SerializeField] private UnityEngine.UI.Slider fxSlider = null;
         [SerializeField] private UnityEngine.UI.Slider musicSlider = null;
+        [SerializeField] private UnityEngine.UI.Slider lookSlider = null;
         [SerializeField] private GameObject[] slotButtons = null;
         [SerializeField] private UnityEngine.UI.Text[] slotTexts = null;
         [SerializeField] private GameObject quitButton = null;
         [SerializeField] private GameObject screenButton = null;
         [SerializeField] private UnityEngine.UI.Dropdown resolutionsDropdown = null;
+        [SerializeField] private UnityEngine.UI.Dropdown fullScreenDropdown = null;
+        //[SerializeField] private UnityEngine.UI.Toggle fullScreen = null;
         [SerializeField] private GameObject defaultButton = null;
+        [SerializeField] private UnityEngine.UI.Text masterVolumeText = null;
+        [SerializeField] private UnityEngine.UI.Text fxVolumeText = null;
+        [SerializeField] private UnityEngine.UI.Text musicVolumeText = null;
+        [SerializeField] private UnityEngine.UI.Text lookText = null;
+
 
         [SerializeField] private string URL = "https://hackeddesign.itch.io/";
         private MainMenuState state = MainMenuState.Default;
@@ -32,26 +40,34 @@ namespace HackedDesign.UI
         void Awake()
         {
             if (defaultPanel == null) Debug.LogWarning("Default panel not set");
-            float master, fx, music;
-            masterMixer.GetFloat("MasterVolume", out master);
-            masterMixer.GetFloat("FXVolume", out fx);
-            masterMixer.GetFloat("MusicVolume", out music);
-            masterSlider.value = master - 100;
-            fxSlider.value = fx - 100;
-            musicSlider.value = music - 100;
             if (Application.platform == RuntimePlatform.WebGLPlayer) // || Application.platform == RuntimePlatform.WindowsEditor)
             {
                 quitButton?.SetActive(false);
                 screenButton?.SetActive(false);
             }
-            PopulateOptionsValues();
+            PopulateValues();
             EventSystem.current.SetSelectedGameObject(defaultButton);
         }
 
-        private void PopulateOptionsValues()
+        private void PopulateValues()
         {
             resolutionsDropdown.ClearOptions();
             resolutionsDropdown.AddOptions(Screen.resolutions.ToList().ConvertAll(r => new UnityEngine.UI.Dropdown.OptionData(r.width + "x" + r.height)));
+            fullScreenDropdown.ClearOptions();
+            fullScreenDropdown.AddOptions(new List<UnityEngine.UI.Dropdown.OptionData>() { new UnityEngine.UI.Dropdown.OptionData("Exclusive"), new UnityEngine.UI.Dropdown.OptionData("Fullscreen Window"), new UnityEngine.UI.Dropdown.OptionData("Max Window"), new UnityEngine.UI.Dropdown.OptionData("Windowed") });
+            // float master, fx, music;
+            // masterMixer.GetFloat("MasterVolume", out master);
+            // masterMixer.GetFloat("FXVolume", out fx);
+            // masterMixer.GetFloat("MusicVolume", out music);
+            //fullScreen.isOn = (bool)GameManager.Instance.PlayerPreferences.fullScreen;
+            masterSlider.value = GameManager.Instance.PlayerPreferences.masterVolume;
+            fxSlider.value = GameManager.Instance.PlayerPreferences.sfxVolume;
+            musicSlider.value = GameManager.Instance.PlayerPreferences.musicVolume;
+            lookSlider.value = GameManager.Instance.PlayerPreferences.lookSpeed;
+            RepaintMasterText();
+            RepaintFXText();
+            RepaintMusicText();
+            RepaintLookText();
         }
 
         public override void Repaint()
@@ -137,6 +153,7 @@ namespace HackedDesign.UI
 
         public void ReturnEvent()
         {
+            GameManager.Instance.PlayerPreferences.Save();
             state = MainMenuState.Default;
         }
 
@@ -176,22 +193,78 @@ namespace HackedDesign.UI
             Application.OpenURL(this.URL);
         }
 
-        public void MasterChanged()
+        public void MasterChangedEvent()
         {
             masterMixer.SetFloat("MasterVolume", masterSlider.value);
+            GameManager.Instance.PlayerPreferences.masterVolume = masterSlider.value;
+            RepaintMasterText();
+            GameManager.Instance.PlayerPreferences.Save();
         }
-        public void FXChanged()
+
+        public void FXChangedEvent()
         {
             masterMixer.SetFloat("FXVolume", fxSlider.value);
+            GameManager.Instance.PlayerPreferences.sfxVolume = fxSlider.value;
+            RepaintFXText();
+            GameManager.Instance.PlayerPreferences.Save();
         }
-        public void MusicChanged()
+
+        public void MusicChangedEvent()
         {
             masterMixer.SetFloat("MusicVolume", musicSlider.value);
+            GameManager.Instance.PlayerPreferences.musicVolume = musicSlider.value;
+            RepaintMusicText();
+            GameManager.Instance.PlayerPreferences.Save();
         }
-        public void SensitivityChanged()
+
+        public void SensitivityChangedEvent()
+        {
+            GameManager.Instance.PlayerPreferences.lookSpeed = lookSlider.value;
+            RepaintLookText();
+            GameManager.Instance.PlayerPreferences.Save();
+        }
+
+        public void ResolutionChangedEvent()
         {
 
         }
+
+        public void FullScreenChangedEvent()
+        {
+
+        }
+
+
+        public void Tiny64WindowEvent()
+        {
+            Screen.SetResolution(64, 64, FullScreenMode.Windowed, Screen.currentResolution.refreshRate);
+        }
+
+        public void Small640WindowEvent()
+        {
+            Screen.SetResolution(640, 640, FullScreenMode.Windowed, Screen.currentResolution.refreshRate);
+        }
+
+        private void RepaintMasterText()
+        {
+            masterVolumeText.text = GameManager.Instance.PlayerPreferences.masterVolume.ToString("F0") + "db";
+        }
+
+        private void RepaintFXText()
+        {
+            fxVolumeText.text = GameManager.Instance.PlayerPreferences.sfxVolume.ToString("F0") + "db";
+        }
+
+        private void RepaintMusicText()
+        {
+            musicVolumeText.text = GameManager.Instance.PlayerPreferences.musicVolume.ToString("F0") + "db";
+        }
+
+        private void RepaintLookText()
+        {
+            lookText.text = GameManager.Instance.PlayerPreferences.lookSpeed.ToString("F0") + "#/s";
+        }
+
     }
 
     public enum MainMenuState

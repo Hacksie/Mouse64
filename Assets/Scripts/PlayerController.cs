@@ -20,7 +20,6 @@ namespace HackedDesign
         [SerializeField] private float lookAngle = 0;
         [SerializeField] private float maxAngle = 75.0f;
         [SerializeField] private float minAngle = -25.0f;
-        [SerializeField] private float rotateSpeed = 180.0f;
         [SerializeField] private float shootDistance = 4.0f;
         [SerializeField] private float interactDistance = 0.5f;
         [SerializeField] private LayerMask shootMask = 0;
@@ -40,12 +39,9 @@ namespace HackedDesign
         private bool sit = false;
 
         public bool Crouched { get { return crouch; } }
-
         public bool Stealthed { get { return stealth; } }
-
         public bool Sit { get { return sit; } set { sit = value; } }
-
-        public bool Dead { get { return dead; } set { dead = value; rigidbody.velocity = Vector3.zero; } }
+        public bool Dead { get { return dead; } set { dead = value; rigidbody.velocity = Vector3.zero; shoot = false; } }
 
         // Start is called before the first frame update
         void Awake()
@@ -190,7 +186,7 @@ namespace HackedDesign
 
         private void UpdateCrosshair()
         {
-            lookAngle += (inputAxis.y * Time.deltaTime * rotateSpeed);
+            lookAngle += (inputAxis.y * Time.deltaTime * GameManager.Instance.PlayerPreferences.lookSpeed);
             lookAngle = Mathf.Clamp(lookAngle, minAngle, maxAngle);
 
             float newAngle = lookAngle;

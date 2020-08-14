@@ -18,6 +18,7 @@ namespace HackedDesign
         public void Begin()
         {
             this.player.Dead = true;
+            AudioManager.Instance.PlayDeathMusic();
             this.deadPresenter.Show();
         }
 
