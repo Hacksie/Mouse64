@@ -676,6 +676,7 @@ GameObject:
   - component: {fileID: 6459521789142674778}
   - component: {fileID: 8971929724750786898}
   - component: {fileID: 6842247497856399649}
+  - component: {fileID: 4294094425711912038}
   m_Layer: 11
   m_Name: Trigger
   m_TagString: Untagged
@@ -737,3 +738,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 2195192138023277155}
+--- !u!114 &4294094425711912038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221972966347389652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98c233e53c9a6f347811574d2328f441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 8221972966347389652}
+  interact: {fileID: 6842247497856399649}
+  powerRecovery: 30

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="630"
+   height="500"
+   viewBox="0 0 166.6875 132.29167"
+   version="1.1"
+   id="svg8"
+   inkscape:export-filename="C:\Users\Ben\Documents\dev\Mouse64\Project\logocover.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="logo.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="-45.336188"
+     inkscape:cy="157.65399"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-164.70832)">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.11666656;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect829"
+       width="250.22023"
+       height="253.24405"
+       x="-40.443455"
+       y="125.02082"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <g
+       id="g827"
+       transform="matrix(0.869201,0,0,0.869201,2.3160785,9.7471014)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <text
+         id="text817"
+         y="273.07111"
+         x="27.425318"
+         style="font-style:normal;font-weight:normal;font-size:125.00204468px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#d00058;fill-opacity:1;stroke:none;stroke-width:3.12505102"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Imogen Agnes';-inkscape-font-specification:'Imogen Agnes';fill:#d00058;fill-opacity:1;stroke-width:3.12505102"
+           y="273.07111"
+           x="27.425318"
+           id="tspan815"
+           sodipodi:role="line">Mouse</tspan></text>
+      <text
+         id="text821"
+         y="284.7597"
+         x="105.69148"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:23.29003525px;line-height:1.25;font-family:'Road Rage';-inkscape-font-specification:'Road Rage';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.58225083"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Road Rage';-inkscape-font-specification:'Road Rage';fill:#0097a3;fill-opacity:1;stroke-width:0.58225083"
+           y="284.7597"
+           x="105.69148"
+           id="tspan819"
+           sodipodi:role="line">2064</tspan></text>
+    </g>
+  </g>
+</svg>

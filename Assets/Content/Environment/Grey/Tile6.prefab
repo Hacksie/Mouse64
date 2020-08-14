@@ -720,4 +720,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trigger: {fileID: 8738775498157774613}
-  powerRecovery: 33
+  interact: {fileID: 814355183528659784}
+  powerRecovery: 30

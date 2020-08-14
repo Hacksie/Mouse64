@@ -47,6 +47,8 @@ namespace HackedDesign
         public List<string> dialogue;
         public int currentDialogue;
         public bool completed = false;
+        public int score = 0;
+        public int reactions = 0;
         // boss
         // end condition
     }

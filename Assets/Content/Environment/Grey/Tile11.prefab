@@ -146,7 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trigger: {fileID: 3868953786164885318}
-  powerRecovery: 33
+  interact: {fileID: 8003705655959822203}
+  powerRecovery: 30
 --- !u!1 &4117171429781755498
 GameObject:
   m_ObjectHideFlags: 0

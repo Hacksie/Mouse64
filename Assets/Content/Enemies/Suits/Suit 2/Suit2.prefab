@@ -178,10 +178,10 @@ MonoBehaviour:
   alertSprite: {fileID: 8874976105127993250}
   muzzleAnimator: {fileID: 924314663094428556}
   crosshairAnchor: {fileID: 1257141074845529809}
-  unstealthAlertDistance: 3.5
+  unstealthAlertDistance: 3
   crouchAlertDistance: 2.5
   behindReductionDistance: 0.5
-  reactionTime: 0.6
+  reactionTime: 0.8
   shootTime: 0.5
   minDamage: 30
   maxDamage: 60

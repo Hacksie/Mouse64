@@ -21,6 +21,10 @@ namespace HackedDesign
         [SerializeField] private Color defaultLightColor = Color.gray;
         [SerializeField] private Color alertLightColor = Color.red;
         [SerializeField] private int alertGuards = 10;
+        [SerializeField] private ParticleSystem particlesSelect = null;
+        [SerializeField] private ParticleSystem particlesLeft = null;
+        [SerializeField] private ParticleSystem particlesRight = null;
+        
 
         [Header("Data")]
         [SerializeField] public float easyAdj = 1.0f;
@@ -51,7 +55,10 @@ namespace HackedDesign
         public PlayerController Player { get { return playerController; } private set { playerController = value; } }
         public EntityPool EntityPool { get { return entityPool; } private set { entityPool = value; } }
         public LevelRenderer LevelRenderer { get { return levelRenderer; } private set { levelRenderer = value; } }
-        public PlayerPreferences PlayerPreferences { get { return preferences;} private set { preferences = value; }}
+        public PlayerPreferences PlayerPreferences { get { return preferences; } private set { preferences = value; } }
+        public ParticleSystem ParticlesSelect { get { return particlesSelect; } private set { particlesSelect = value; }}
+        public ParticleSystem ParticlesLeft { get { return particlesLeft; } private set { particlesLeft = value; }}
+        public ParticleSystem ParticlesRight { get { return particlesRight; } private set { particlesRight = value; }}
 
 
         private IState currentState;
@@ -80,14 +87,10 @@ namespace HackedDesign
 
         private void Awake()
         {
-            LoadSlots();
+
             CheckBindings();
             Initialization();
-            gameCanvas.SetActive(true);
-            menuCanvas.SetActive(true);
-            preferences = new PlayerPreferences(this.mixer);
-            preferences.Load();
-            SetMainMenu();
+
         }
 
 
@@ -253,6 +256,11 @@ namespace HackedDesign
             }
         }
 
+        public void IncreaseGuardReaction()
+        {
+            Data.currentLevel.reactions++;
+        }
+
         public void IncreaseAlert()
         {
             if (Data.alert < Data.currentLevel.maxAlert)
@@ -296,6 +304,16 @@ namespace HackedDesign
         private void Initialization()
         {
             HideAllUI();
+            LoadSlots();
+            preferences = new PlayerPreferences(this.mixer);
+            preferences.Load();
+            ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            ParticlesLeft.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            ParticlesRight.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            entityPool.DestroyEntities();
+            gameCanvas.SetActive(true);
+            menuCanvas.SetActive(true);
+            SetMainMenu();
         }
 
         private void HideAllUI()

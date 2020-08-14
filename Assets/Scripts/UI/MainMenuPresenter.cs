@@ -53,8 +53,12 @@ namespace HackedDesign.UI
         {
             resolutionsDropdown.ClearOptions();
             resolutionsDropdown.AddOptions(Screen.resolutions.ToList().ConvertAll(r => new UnityEngine.UI.Dropdown.OptionData(r.width + "x" + r.height)));
+
+            resolutionsDropdown.value = Screen.resolutions.ToList().IndexOf(Screen.currentResolution);
+            
             fullScreenDropdown.ClearOptions();
-            fullScreenDropdown.AddOptions(new List<UnityEngine.UI.Dropdown.OptionData>() { new UnityEngine.UI.Dropdown.OptionData("Exclusive"), new UnityEngine.UI.Dropdown.OptionData("Fullscreen Window"), new UnityEngine.UI.Dropdown.OptionData("Max Window"), new UnityEngine.UI.Dropdown.OptionData("Windowed") });
+            fullScreenDropdown.AddOptions(new List<UnityEngine.UI.Dropdown.OptionData>() { new UnityEngine.UI.Dropdown.OptionData("Exclusive"), new UnityEngine.UI.Dropdown.OptionData("Full(Win)"), new UnityEngine.UI.Dropdown.OptionData("Maximised"), new UnityEngine.UI.Dropdown.OptionData("Window") });
+            fullScreenDropdown.value = (int)Screen.fullScreenMode;
             // float master, fx, music;
             // masterMixer.GetFloat("MasterVolume", out master);
             // masterMixer.GetFloat("FXVolume", out fx);
@@ -64,6 +68,7 @@ namespace HackedDesign.UI
             fxSlider.value = GameManager.Instance.PlayerPreferences.sfxVolume;
             musicSlider.value = GameManager.Instance.PlayerPreferences.musicVolume;
             lookSlider.value = GameManager.Instance.PlayerPreferences.lookSpeed;
+            
             RepaintMasterText();
             RepaintFXText();
             RepaintMusicText();
@@ -165,6 +170,11 @@ namespace HackedDesign.UI
         public void PlayEvent()
         {
             state = MainMenuState.Play;
+        }
+
+        public void RandomEvent()
+        {
+            
         }
 
         public void DeleteEvent()

@@ -14,6 +14,11 @@ namespace HackedDesign
             sprite.SetActive(false);
         }
 
+        public void Hide()
+        {
+            sprite.SetActive(false);
+        }
+
         public void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))

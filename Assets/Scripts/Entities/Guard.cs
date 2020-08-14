@@ -63,7 +63,7 @@ namespace HackedDesign
             collider.enabled = false;
             fire = false;
 
-            if(Random.value < bulletDropChance)
+            if (Random.value < bulletDropChance)
             {
                 DropBullet();
             }
@@ -119,6 +119,7 @@ namespace HackedDesign
                     {
                         state = EntityState.Attack;
                         reactionTimer = Time.time;
+
                     }
                     RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
                     if (behindHit.collider != null && behindHit.collider.CompareTag("Player"))
@@ -253,29 +254,37 @@ namespace HackedDesign
             }
 
 
-            
-
-
-
             if (directional)
             {
                 RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, transform.right, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
+                RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
+
+                if ((hit.collider == null || !hit.collider.CompareTag("Player")) && (behindHit.collider == null || !behindHit.collider.CompareTag("Player")))
+                {
+                    state = this.defaultState;
+                    return;
+                }
+                
+                /*
                 if (hit.collider == null || !hit.collider.CompareTag("Player"))
                 {
-                    state = EntityState.Attack;
+                    state = this.defaultState;
+                    return;
                 }
-                RaycastHit2D behindHit = Physics2D.Raycast(crosshairAnchor.transform.position, -1 * transform.right, behindReductionDistance * (GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance), shootMask);
+                
                 if (behindHit.collider == null || !behindHit.collider.CompareTag("Player"))
                 {
-                    state = EntityState.Attack;
-                }
+                    state = this.defaultState;
+                    return;
+                }*/
             }
             else
             {
                 RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, GameManager.Instance.Player.transform.position - this.transform.position, GameManager.Instance.Player.Crouched ? crouchAlertDistance : unstealthAlertDistance, shootMask);
                 if (hit.collider == null || !hit.collider.CompareTag("Player"))
                 {
-                    state = EntityState.Attack;
+                    state = this.defaultState;
+                    return;
                 }
             }
         }

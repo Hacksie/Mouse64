@@ -387,7 +387,7 @@ MonoBehaviour:
   unstealthAlertDistance: 3.5
   crouchAlertDistance: 2.5
   behindReductionDistance: 0.5
-  reactionTime: 0.6
+  reactionTime: 0.8
   shootTime: 0.5
   minDamage: 30
   maxDamage: 60

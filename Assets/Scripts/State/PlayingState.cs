@@ -25,6 +25,10 @@ namespace HackedDesign
             //this.player.Reset();
             this.pool.DestroyEntities();
             this.levelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
+            GameManager.Instance.ParticlesLeft.Play();
+            Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length + 1);
+            GameManager.Instance.ParticlesRight.transform.position = rightPos + new Vector3(2.0f, 4, 0);
+            GameManager.Instance.ParticlesRight.Play();
             GameManager.Instance.Data.timer = GameManager.Instance.Data.currentLevel.window;
             this.hudPresenter.Show();
             AudioManager.Instance.PlayRandomGameMusic();
@@ -32,6 +36,8 @@ namespace HackedDesign
 
         public void End()
         {
+            GameManager.Instance.ParticlesLeft.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            GameManager.Instance.ParticlesRight.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.hudPresenter.Hide();
         }
 
@@ -47,14 +53,14 @@ namespace HackedDesign
             {
                 GameManager.Instance.Data.timer -= Time.deltaTime;
             }
-            else 
+            else
             {
                 GameManager.Instance.TimeUp();
                 //Logger.LogWarning("PlayingState", "Time run out");
                 //GameManager.Instance.EntityPool.S
             }
 
-            
+
         }
 
         public void FixedUpdate()

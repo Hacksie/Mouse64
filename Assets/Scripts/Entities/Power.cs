@@ -9,6 +9,7 @@ namespace HackedDesign
         
         [Header("GameObjects")]
         [SerializeField] private GameObject trigger = null;
+        [SerializeField] private InteractTrigger interact = null;
 
         [Header("Settings")]
         [SerializeField] private int powerRecovery = 33;
@@ -29,6 +30,7 @@ namespace HackedDesign
             Logger.Log(this, "use power");
             this.trigger.SetActive(false);
             GameManager.Instance.ConsumeStealth(-1 * powerRecovery);
+            interact.Hide();
         }
 
         public void UpdateBehaviour()

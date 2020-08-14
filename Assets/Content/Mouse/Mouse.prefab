@@ -483,7 +483,6 @@ MonoBehaviour:
   lookAngle: 0
   maxAngle: 60
   minAngle: -35
-  rotateSpeed: 180
   shootDistance: 4
   interactDistance: 0.75
   shootMask:

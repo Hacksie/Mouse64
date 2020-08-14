@@ -12,11 +12,9 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            var time = (GameManager.Instance.Data.currentLevel.window - GameManager.Instance.Data.timer);
-            var score = 100 + (Mathf.FloorToInt(time) * 10) - (GameManager.Instance.Data.alert * -5);
-            timeText.text = time.ToString() + "s";
+            timeText.text = (GameManager.Instance.Data.currentLevel.window - GameManager.Instance.Data.timer).ToString("F0") + "s";
             alertsText.text = GameManager.Instance.Data.alert.ToString();
-            scoreText.text = score.ToString();
+            scoreText.text = GameManager.Instance.Data.currentLevel.score.ToString();
         }
 
         public void NextEvent()

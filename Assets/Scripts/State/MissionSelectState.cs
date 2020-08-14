@@ -35,10 +35,12 @@ namespace HackedDesign
             this.levelRenderer.LoadMissionSelectLevel();
             this.dialogPresenter.Show();
             AudioManager.Instance.PlayMissionSelectMusic();
+            GameManager.Instance.ParticlesSelect.Play();
         }
 
         public void End()
         {
+            GameManager.Instance.ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.player.Sit = false;
             this.dialogPresenter.Hide();
             this.missionPresenter.Hide();
@@ -48,7 +50,6 @@ namespace HackedDesign
         {
             if(GameManager.Instance.Data.currentLevel.currentDialogue >= GameManager.Instance.Data.currentLevel.dialogue.Count)
             {
-                GameManager.Instance.SaveGame();
                 this.dialogPresenter.Hide();
                 this.missionPresenter.Show();
                 this.missionPresenter.Repaint();

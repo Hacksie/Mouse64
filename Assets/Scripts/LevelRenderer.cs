@@ -291,5 +291,8 @@ namespace HackedDesign
 
         public GameObject[] randomTiles;
         public GameObject doorway;
+        public GameObject[] lightGreebles;
+        public GameObject[] floorGreebles;
+
     }
 }

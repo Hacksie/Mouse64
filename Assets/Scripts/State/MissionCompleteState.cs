@@ -17,8 +17,11 @@ namespace HackedDesign
 
         public void Begin()
         {
-            GameManager.Instance.Reset();
+            this.player.Stop();
+            CalcScore();
+            AudioManager.Instance.PlayMissionSuccessMusic();
             this.missionCompletePresenter.Show();
+            this.missionCompletePresenter.Repaint();
         }
 
         public void End()
@@ -26,9 +29,21 @@ namespace HackedDesign
             this.missionCompletePresenter.Hide();
         }
 
+        private void CalcScore()
+        {
+            
+            var time = (GameManager.Instance.Data.currentLevel.window - GameManager.Instance.Data.timer);
+            var score = Mathf.Max(0, 1000 + (Mathf.FloorToInt(time) * 20) + (GameManager.Instance.Data.alert * -50) + (5 - (GameManager.Instance.Data.bullets * -50)) + (GameManager.Instance.Data.currentLevel.reactions * -25));
+
+            Logger.Log("Mission complete", "calc score ", score.ToString());
+
+            GameManager.Instance.Data.currentLevel.score = score;
+            GameManager.Instance.Data.score += score;
+        }
+
         public void Update()
         {
-            this.missionCompletePresenter.Repaint();
+            
         }
 
         public void FixedUpdate()

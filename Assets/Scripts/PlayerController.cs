@@ -41,13 +41,18 @@ namespace HackedDesign
         public bool Crouched { get { return crouch; } }
         public bool Stealthed { get { return stealth; } }
         public bool Sit { get { return sit; } set { sit = value; } }
-        public bool Dead { get { return dead; } set { dead = value; rigidbody.velocity = Vector3.zero; shoot = false; } }
+        public bool Dead { get { return dead; } set { dead = value; Stop(); } }
 
         // Start is called before the first frame update
         void Awake()
         {
             animator = GetComponent<Animator>();
             rigidbody = GetComponent<Rigidbody2D>();
+        }
+
+        public void Stop()
+        {
+            rigidbody.velocity = Vector3.zero; shoot = false;
         }
 
         public void Reset()
