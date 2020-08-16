@@ -78,6 +78,12 @@ namespace HackedDesign
         {
             base.UpdateBehaviour();
 
+            if(!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                rigidbody.velocity = Vector2.zero;
+                return;
+            }
+
             switch (this.state)
             {
                 case EntityState.Idle:
@@ -225,13 +231,14 @@ namespace HackedDesign
             alertSprite?.SetActive(true);
             direction = new Vector3(GameManager.Instance.Player.transform.position.x - this.transform.position.x, this.transform.position.y, this.transform.position.z);
             velocity = Vector2.zero;
+            currentVelocity = Vector2.zero;
 
             if (direction.x != 0)
             {
                 transform.right = new Vector2(direction.x, 0);
             }
 
-            rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
+            rigidbody.velocity = Vector2.zero; // Vector2.SmoothDamp(rigidbody.velocity, velocity, ref currentVelocity, movementSmoothing);
 
             if (!this.seeStealthed && GameManager.Instance.Player.Stealthed)
             {

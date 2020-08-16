@@ -7,6 +7,7 @@ namespace HackedDesign
     {
         public static void Log(string gameObject, params string[] messages)
         {
+            /*
 #if UNITY_EDITOR
             StringBuilder builder = new StringBuilder(gameObject);
             builder.Append(" - ");
@@ -16,11 +17,12 @@ namespace HackedDesign
             }
 
             Debug.Log(builder.ToString());
-#endif
+#endif*/
         }
 
         public static void Log(UnityEngine.Object context, params string[] messages)
         {
+            /*
 #if UNITY_EDITOR
             StringBuilder builder = new StringBuilder(context.name);
             builder.Append(" - ");
@@ -30,12 +32,12 @@ namespace HackedDesign
             }
 
             Debug.Log(builder.ToString(), context);
-#endif
+#endif*/
         }
 
 
         public static void LogError(string gameObject, params string[] messages)
-        {
+        {/*
 #if UNITY_EDITOR            
             StringBuilder builder = new StringBuilder(gameObject);
             builder.Append(" - ");
@@ -45,11 +47,11 @@ namespace HackedDesign
             }
 
             Debug.LogError(builder.ToString());
-#endif
+#endif*/
         }
 
         public static void LogError(UnityEngine.Object context, params string[] messages)
-        {
+        {/*
 #if UNITY_EDITOR            
             StringBuilder builder = new StringBuilder(context.name);
             builder.Append(" - ");
@@ -59,11 +61,11 @@ namespace HackedDesign
             }
 
             Debug.LogError(builder.ToString(), context);
-#endif
+#endif*/
         }
 
         public static void LogWarning(string gameObject, params string[] messages)
-        {
+        {/*
 #if UNITY_EDITOR
             StringBuilder builder = new StringBuilder(gameObject);
             builder.Append(" - ");
@@ -73,11 +75,11 @@ namespace HackedDesign
             }
 
             Debug.LogWarning(builder.ToString());
-#endif
+#endif*/
         }
 
         public static void LogWarning(UnityEngine.Object context, params string[] messages)
-        {
+        {/*
 #if UNITY_EDITOR
             StringBuilder builder = new StringBuilder(context.name);
             builder.Append(" - ");
@@ -87,7 +89,7 @@ namespace HackedDesign
             }
 
             Debug.LogWarning(builder.ToString(), context);
-#endif
+#endif*/
         }
     }
 }

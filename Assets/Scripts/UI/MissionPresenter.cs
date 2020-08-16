@@ -19,12 +19,17 @@ namespace HackedDesign.UI
             targetText.text = GameManager.Instance.Data.currentLevel.target;
             difficultyText.text = GameManager.Instance.Data.currentLevel.difficulty;
             windowText.text = GameManager.Instance.Data.currentLevel.window.ToString() + "s";
-            
+
             EventSystem.current.SetSelectedGameObject(defaultButton);
         }
 
         public void StartEvent()
         {
+            //GameManager.Instance.LevelRenderer.LoadRandomLevel()            
+            GameManager.Instance.Reset();
+            GameManager.Instance.EntityPool.DestroyEntities();
+            GameManager.Instance.LevelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
+            AudioManager.Instance.PlayRandomGameMusic();
             GameManager.Instance.SetPlaying();
         }
     }

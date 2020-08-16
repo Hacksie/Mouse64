@@ -215,6 +215,7 @@ namespace HackedDesign.UI
         public void RandomEvent()
         {
             state = MainMenuState.Random;
+            seedInput.text = ((int)System.DateTime.Now.Ticks).ToString();
 
         }
 
@@ -236,6 +237,11 @@ namespace HackedDesign.UI
             GameManager.Instance.SetMissionSelect();
         }
 
+        public void NewSeedEvent()
+        {
+            seedInput.text = ((int)System.DateTime.Now.Ticks).ToString();
+        }
+
         public void StartRandomEvent()
         {
             GameManager.Instance.RandomGame = true;
@@ -244,6 +250,10 @@ namespace HackedDesign.UI
             System.Int32.TryParse(seedInput.text, out result);
 
             GameManager.Instance.NewRandomGame(result, difficulties[difficultyDropdown.value]);
+            GameManager.Instance.Reset();
+            GameManager.Instance.EntityPool.DestroyEntities();
+            GameManager.Instance.LevelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
+            AudioManager.Instance.PlayRandomGameMusic();
             GameManager.Instance.SetPlaying();
         }
 

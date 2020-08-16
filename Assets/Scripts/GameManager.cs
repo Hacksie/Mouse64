@@ -271,9 +271,9 @@ namespace HackedDesign
             Data.health = 0;
             Data.energy = 100;
             Data.alert = 0;
-            Data.timer = 64;
+            Data.timer = Data.currentLevel.window;
             this.globalLight.color = defaultLightColor;
-            this.entityPool.DestroyEntities();
+            //this.entityPool.DestroyEntities();
             this.playerController.Reset();
         }
 

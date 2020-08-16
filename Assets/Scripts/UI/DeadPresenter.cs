@@ -15,6 +15,10 @@ namespace HackedDesign.UI
 
         public void ResetEvent()
         {
+            GameManager.Instance.Reset();
+            GameManager.Instance.EntityPool.DestroyEntities();
+            GameManager.Instance.LevelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
+            AudioManager.Instance.PlayRandomGameMusic();
             GameManager.Instance.SetPlaying();
         }
 

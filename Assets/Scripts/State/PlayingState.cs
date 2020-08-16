@@ -21,15 +21,17 @@ namespace HackedDesign
 
         public void Begin()
         {
-            GameManager.Instance.Reset();
-            this.levelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
+            // GameManager.Instance.Reset();
+            // this.levelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
+            // AudioManager.Instance.PlayRandomGameMusic();
+            
             GameManager.Instance.ParticlesLeft.Play();
             Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length + 1);
             GameManager.Instance.ParticlesRight.transform.position = rightPos + new Vector3(2.0f, 4, 0);
             GameManager.Instance.ParticlesRight.Play();
-            GameManager.Instance.Data.timer = GameManager.Instance.Data.currentLevel.window;
+            
             this.hudPresenter.Show();
-            AudioManager.Instance.PlayRandomGameMusic();
+            
         }
 
         public void End()

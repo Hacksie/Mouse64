@@ -23,6 +23,7 @@ namespace HackedDesign
         {
             GameManager.Instance.SaveGame();
             GameManager.Instance.Reset();
+            GameManager.Instance.EntityPool.DestroyEntities();
             this.player.Sit = true;
             this.player.transform.position = new Vector3(2, 0.275f, 0);
             this.levelRenderer.LoadMissionSelectLevel();

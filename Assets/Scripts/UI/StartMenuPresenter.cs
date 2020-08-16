@@ -11,7 +11,6 @@ namespace HackedDesign.UI
         public override void Repaint()
         {
             EventSystem.current.SetSelectedGameObject(defaultButton);
-
         }
 
         public void ResumeEvent()
@@ -22,6 +21,7 @@ namespace HackedDesign.UI
         public void QuitEvent()
         {
             GameManager.Instance.Reset();
+            GameManager.Instance.EntityPool.DestroyEntities();
             GameManager.Instance.SetMainMenu();
         }
     }
