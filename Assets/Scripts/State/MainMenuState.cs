@@ -39,17 +39,6 @@ namespace HackedDesign
             menuPresenter.Repaint();
         }
 
-
-        public void Interact()
-        {
-
-        }
-
-        public void Select()
-        {
-
-        }
-
         public void Start()
         {
 

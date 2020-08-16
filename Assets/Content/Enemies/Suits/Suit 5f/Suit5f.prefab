@@ -551,7 +551,7 @@ MonoBehaviour:
   crosshairAnchor: {fileID: 1776024032440277131}
   unstealthAlertDistance: 3
   crouchAlertDistance: 2.5
-  behindReductionDistance: 0.5
+  behindReductionDistance: 0.75
   reactionTime: 0.8
   shootTime: 0.5
   minDamage: 30

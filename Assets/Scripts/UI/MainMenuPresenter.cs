@@ -10,31 +10,39 @@ namespace HackedDesign.UI
 
     public class MainMenuPresenter : AbstractPresenter
     {
+        [Header("Main")]
         [SerializeField] private GameObject defaultPanel = null;
         [SerializeField] private GameObject playPanel = null;
+        [SerializeField] private GameObject randomPanel = null;
         [SerializeField] private GameObject optionsPanel = null;
         [SerializeField] private GameObject screenPanel = null;
         [SerializeField] private GameObject creditsPanel = null;
         [SerializeField] private AudioMixer masterMixer = null;
+        [SerializeField] private GameObject quitButton = null;
+        [SerializeField] private GameObject defaultButton = null;
+        [Header("Play")]
+        [SerializeField] private UnityEngine.UI.Button[] slotButtons = null;
+        [SerializeField] private UnityEngine.UI.Text[] slotTexts = null;
+        [SerializeField] private Color selectedColor = Color.red;
+        [SerializeField] private Color unselectedColor = Color.black;
+        [Header("Random")]
+        [SerializeField] private UnityEngine.UI.InputField seedInput = null;
+        [SerializeField] private UnityEngine.UI.Dropdown difficultyDropdown = null;
+        [SerializeField] private string[] difficulties = { "Easy", "Medium", "Hard" };
+        [Header("Options")]
         [SerializeField] private UnityEngine.UI.Slider masterSlider = null;
         [SerializeField] private UnityEngine.UI.Slider fxSlider = null;
         [SerializeField] private UnityEngine.UI.Slider musicSlider = null;
         [SerializeField] private UnityEngine.UI.Slider lookSlider = null;
-        [SerializeField] private GameObject[] slotButtons = null;
-        [SerializeField] private UnityEngine.UI.Text[] slotTexts = null;
-        [SerializeField] private GameObject quitButton = null;
-        [SerializeField] private GameObject screenButton = null;
         [SerializeField] private UnityEngine.UI.Dropdown resolutionsDropdown = null;
         [SerializeField] private UnityEngine.UI.Dropdown fullScreenDropdown = null;
-        //[SerializeField] private UnityEngine.UI.Toggle fullScreen = null;
-        [SerializeField] private GameObject defaultButton = null;
+        [SerializeField] private GameObject screenButton = null;
         [SerializeField] private UnityEngine.UI.Text masterVolumeText = null;
         [SerializeField] private UnityEngine.UI.Text fxVolumeText = null;
         [SerializeField] private UnityEngine.UI.Text musicVolumeText = null;
         [SerializeField] private UnityEngine.UI.Text lookText = null;
 
 
-        [SerializeField] private string URL = "https://hackeddesign.itch.io/";
         private MainMenuState state = MainMenuState.Default;
 
         void Awake()
@@ -45,29 +53,29 @@ namespace HackedDesign.UI
                 quitButton?.SetActive(false);
                 screenButton?.SetActive(false);
             }
+        }
+
+        void Start()
+        {
             PopulateValues();
-            EventSystem.current.SetSelectedGameObject(defaultButton);
         }
 
         private void PopulateValues()
         {
             resolutionsDropdown.ClearOptions();
             resolutionsDropdown.AddOptions(Screen.resolutions.ToList().ConvertAll(r => new UnityEngine.UI.Dropdown.OptionData(r.width + "x" + r.height)));
-
-            resolutionsDropdown.value = Screen.resolutions.ToList().IndexOf(Screen.currentResolution);
-            
+            resolutionsDropdown.SetValueWithoutNotify(Screen.resolutions.ToList().IndexOf(Screen.currentResolution));
             fullScreenDropdown.ClearOptions();
             fullScreenDropdown.AddOptions(new List<UnityEngine.UI.Dropdown.OptionData>() { new UnityEngine.UI.Dropdown.OptionData("Exclusive"), new UnityEngine.UI.Dropdown.OptionData("Full(Win)"), new UnityEngine.UI.Dropdown.OptionData("Maximised"), new UnityEngine.UI.Dropdown.OptionData("Window") });
-            fullScreenDropdown.value = (int)Screen.fullScreenMode;
-            // float master, fx, music;
-            // masterMixer.GetFloat("MasterVolume", out master);
-            // masterMixer.GetFloat("FXVolume", out fx);
-            // masterMixer.GetFloat("MusicVolume", out music);
-            //fullScreen.isOn = (bool)GameManager.Instance.PlayerPreferences.fullScreen;
+            fullScreenDropdown.SetValueWithoutNotify((int)Screen.fullScreenMode);
             masterSlider.value = GameManager.Instance.PlayerPreferences.masterVolume;
             fxSlider.value = GameManager.Instance.PlayerPreferences.sfxVolume;
             musicSlider.value = GameManager.Instance.PlayerPreferences.musicVolume;
             lookSlider.value = GameManager.Instance.PlayerPreferences.lookSpeed;
+
+            seedInput.text = ((int)System.DateTime.Now.Ticks).ToString();
+            difficultyDropdown.ClearOptions();
+            difficultyDropdown.AddOptions(difficulties.ToList().ConvertAll(i => new UnityEngine.UI.Dropdown.OptionData(i)));
             
             RepaintMasterText();
             RepaintFXText();
@@ -77,26 +85,50 @@ namespace HackedDesign.UI
 
         public override void Repaint()
         {
-            for (int i = 0; i < slotTexts.Length; i++)
-            {
-                slotTexts[i].text = (GameManager.Instance.gameSlots[i] == null || GameManager.Instance.gameSlots[i].newGame) ? "empty" : GameManager.Instance.gameSlots[i].saveName;
-            }
-
             switch (state)
             {
                 case MainMenuState.Play:
                     defaultPanel.SetActive(false);
                     playPanel.SetActive(true);
+                    randomPanel.SetActive(false);
                     optionsPanel.SetActive(false);
                     screenPanel.SetActive(false);
                     creditsPanel.SetActive(false);
 
-                    EventSystem.current.SetSelectedGameObject(slotButtons[GameManager.Instance.currentSlot]);
 
+                    for (int i = 0; i < slotTexts.Length; i++)
+                    {
+                        slotTexts[i].text = (GameManager.Instance.gameSlots[i] == null || GameManager.Instance.gameSlots[i].newGame) ? "empty" : GameManager.Instance.gameSlots[i].saveName;
+                    }
+
+                    for (int j = 0; j < slotButtons.Length; j++)
+                    {
+                        if (j == GameManager.Instance.currentSlot)
+                        {
+                            var block = slotButtons[j].colors;
+                            block.normalColor = selectedColor;
+                            slotButtons[j].colors = block;
+                        }
+                        else
+                        {
+                            var block = slotButtons[j].colors;
+                            block.normalColor = unselectedColor;
+                            slotButtons[j].colors = block;
+                        }
+                    }
+                    break;
+                case MainMenuState.Random:
+                    defaultPanel.SetActive(false);
+                    playPanel.SetActive(false);
+                    randomPanel.SetActive(true);
+                    optionsPanel.SetActive(false);
+                    screenPanel.SetActive(false);
+                    creditsPanel.SetActive(false);
                     break;
                 case MainMenuState.Options:
                     defaultPanel.SetActive(false);
                     playPanel.SetActive(false);
+                    randomPanel.SetActive(false);
                     optionsPanel.SetActive(true);
                     screenPanel.SetActive(false);
                     creditsPanel.SetActive(false);
@@ -104,6 +136,7 @@ namespace HackedDesign.UI
                 case MainMenuState.Screen:
                     defaultPanel.SetActive(false);
                     playPanel.SetActive(false);
+                    randomPanel.SetActive(false);
                     optionsPanel.SetActive(false);
                     screenPanel.SetActive(true);
                     creditsPanel.SetActive(false);
@@ -111,14 +144,21 @@ namespace HackedDesign.UI
                 case MainMenuState.Credits:
                     defaultPanel.SetActive(false);
                     playPanel.SetActive(false);
+                    randomPanel.SetActive(false);
                     optionsPanel.SetActive(false);
                     screenPanel.SetActive(false);
                     creditsPanel.SetActive(true);
                     break;
                 case MainMenuState.Default:
                 default:
+
+                    if (EventSystem.current.currentSelectedGameObject == null)
+                    {
+                        EventSystem.current.SetSelectedGameObject(defaultButton.gameObject);
+                    }
                     defaultPanel.SetActive(true);
                     playPanel.SetActive(false);
+                    randomPanel.SetActive(false);
                     optionsPanel.SetActive(false);
                     screenPanel.SetActive(false);
                     creditsPanel.SetActive(false);
@@ -174,7 +214,8 @@ namespace HackedDesign.UI
 
         public void RandomEvent()
         {
-            
+            state = MainMenuState.Random;
+
         }
 
         public void DeleteEvent()
@@ -190,17 +231,25 @@ namespace HackedDesign.UI
                 GameManager.Instance.NewGame();
             }
 
+            GameManager.Instance.RandomGame = false;
+            //GameManager.Instance.SetGameOver();
             GameManager.Instance.SetMissionSelect();
+        }
+
+        public void StartRandomEvent()
+        {
+            GameManager.Instance.RandomGame = true;
+
+            int result = 0;
+            System.Int32.TryParse(seedInput.text, out result);
+
+            GameManager.Instance.NewRandomGame(result, difficulties[difficultyDropdown.value]);
+            GameManager.Instance.SetPlaying();
         }
 
         public void QuitEvent()
         {
             GameManager.Instance.SetQuit();
-        }
-
-        public void LogoEvent()
-        {
-            Application.OpenURL(this.URL);
         }
 
         public void MasterChangedEvent()
@@ -236,23 +285,52 @@ namespace HackedDesign.UI
 
         public void ResolutionChangedEvent()
         {
+            Logger.Log(this, "res changd");
+            SetResolution();
+            GameManager.Instance.PlayerPreferences.Save();
 
         }
 
         public void FullScreenChangedEvent()
         {
+            Logger.Log(this, "full screen changd");
+            SetResolution();
+            GameManager.Instance.PlayerPreferences.Save();
 
+        }
+
+        private void SetResolution()
+        {
+            var resolution = Screen.resolutions[resolutionsDropdown.value];
+            GameManager.Instance.PlayerPreferences.resolutionWidth = resolution.width;
+            GameManager.Instance.PlayerPreferences.resolutionHeight = resolution.height;
+            GameManager.Instance.PlayerPreferences.fullScreen = fullScreenDropdown.value;
+            Screen.SetResolution(resolution.width, resolution.height, (FullScreenMode)fullScreenDropdown.value);
         }
 
 
         public void Tiny64WindowEvent()
         {
+
+            var resolution = Screen.resolutions[resolutionsDropdown.value];
+            GameManager.Instance.PlayerPreferences.resolutionWidth = resolution.width;
+            GameManager.Instance.PlayerPreferences.resolutionHeight = resolution.height;
+            GameManager.Instance.PlayerPreferences.resolutionRefresh = resolution.refreshRate;
+            GameManager.Instance.PlayerPreferences.fullScreen = fullScreenDropdown.value;
             Screen.SetResolution(64, 64, FullScreenMode.Windowed, Screen.currentResolution.refreshRate);
+            GameManager.Instance.PlayerPreferences.Save();
         }
 
         public void Small640WindowEvent()
         {
+
+            var resolution = Screen.resolutions[resolutionsDropdown.value];
+            GameManager.Instance.PlayerPreferences.resolutionWidth = resolution.width;
+            GameManager.Instance.PlayerPreferences.resolutionHeight = resolution.height;
+            GameManager.Instance.PlayerPreferences.resolutionRefresh = resolution.refreshRate;
+            GameManager.Instance.PlayerPreferences.fullScreen = fullScreenDropdown.value;
             Screen.SetResolution(640, 640, FullScreenMode.Windowed, Screen.currentResolution.refreshRate);
+            GameManager.Instance.PlayerPreferences.Save();
         }
 
         private void RepaintMasterText()
@@ -281,6 +359,7 @@ namespace HackedDesign.UI
     {
         Default,
         Play,
+        Random,
         Options,
         Screen,
         Credits,

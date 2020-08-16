@@ -220,10 +220,21 @@ namespace HackedDesign
         {
             if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
             {
-                this.inputAxis = Vector2.zero;
+                this.inputAxis.x = 0;
                 return;
             }
-            inputAxis = context.ReadValue<Vector2>();
+            inputAxis.x = context.ReadValue<float>();
+            //inputAxis = context.ReadValue<Vector2>();
+        }
+
+        public void LookEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                this.inputAxis.y = 0;
+                return;
+            }
+            inputAxis.y = context.ReadValue<float>();
         }
 
         public void JumpEvent(InputAction.CallbackContext context)

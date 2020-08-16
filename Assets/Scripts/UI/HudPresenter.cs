@@ -12,6 +12,8 @@ namespace HackedDesign.UI
         [SerializeField] private UnityEngine.UI.Slider energySlider = null;
         [SerializeField] private UnityEngine.UI.Text timerText = null;
         [SerializeField] private UnityEngine.UI.Text alertText = null;
+        [SerializeField] private GameObject musicSprite = null;
+        [SerializeField] private UnityEngine.UI.Text musicText = null;
 
         public override void Repaint()
         {
@@ -27,6 +29,17 @@ namespace HackedDesign.UI
             else
             {
                 timerText.text = "<color=#FF0000> ! </color>";
+            }
+
+            if(GameManager.Instance.Data.timer >= 60)
+            {
+                musicSprite.SetActive(true);
+                musicText.text = AudioManager.Instance.Playing;
+            }
+            else
+            {
+                musicSprite.SetActive(false);
+                musicText.text = "";
             }
 
         }

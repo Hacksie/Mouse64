@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 941605668455852454}
   m_Layer: 11
   m_Name: Trigger
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -669,7 +669,7 @@ GameObject:
   - component: {fileID: 3808855219282600975}
   m_Layer: 11
   m_Name: Tile1
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

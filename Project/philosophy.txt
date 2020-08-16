@@ -1,0 +1,162 @@
+0
+==
+Take a seat, friend.
+You look down on your luck.
+Another victim of the corp
+hegemony?
+<color="#999999">You nod.</color>
+Who did you work for?
+<color="#999999">You flash your Arisana ID.</color>
+Hungry?
+<color="#999999">You nod again.</color>
+Toppings?
+<color="#999999">You shrug.</color>
+The works, then.
+<color="#999999">He slides you the hotdog.</color>
+<color="#999999">A corp address and a name is</color>
+<color="#999999">scrawled on the napkin.</color>
+<color="#999999">Tucked underneath it</color>
+<color="#999999">is a loaded 9mm</color>
+A good evening starts with a
+good hotdog, friend.
+
+1
+==
+Welcome back. Still hungry?
+Good. Hungry sells more hotdogs.
+
+2
+==
+You get a lot of bad advice
+while unemployed.
+Here's some good advice,
+hot dogs don't give bad advice.
+
+
+3
+==
+Want my advice, friend?
+It's best not to find out
+how the hot dog is made
+
+4
+==
+They say, friend,
+that you should grab life with 
+both hands. I say, two hands
+equals two hotdogs.
+
+5
+==
+Is a hot dog a sandwich?
+Can a sandwich fulfill 
+the dark part of your soul
+like a hot dog does?
+
+6
+==
+Friend, the best time to 
+eat a hot dog is now.
+
+7
+==
+One hot dog, 
+served with everything.
+Nirvana.
+
+8
+==
+People say you should not eat 
+the buns. That's absurd.
+
+9
+==
+Life is hard. Picking the
+right condiment is harder.
+
+
+10
+==
+A fully loaded hot dog can be 
+a difficult burden to bear
+
+11
+==
+They call hot dogs cheap, 
+as if it's an insult. 
+Who's satisfied now?
+
+12
+==
+Friend, acquiring 
+the hot dog isn't the 
+purpose of life. Consuming it is.
+
+13
+==
+Friend, do not desire 
+another's hot dog. 
+Yours is on it's way.
+
+14
+==
+You cannot control much 
+in life. But you can control 
+what condiments you put on.
+
+15
+==
+Very little is needed for 
+happiness. Sausage, bun. 
+Simple.
+
+16
+==
+No man eating a hot dog is 
+unhappy.
+
+17
+==
+Tomorrow's hot dog is a reason 
+to survive today.
+
+18
+==
+A mouthful of hot dog 
+prevents saying stupid things.
+
+19
+==
+A split hot dog still tastes 
+delicious.
+
+20
+==
+Sometimes the condiments 
+fall off. Such is life.
+
+21
+==
+Friend, we don't live forever. 
+Eat the hot dog while it's 
+hot.
+
+22
+==
+The hot dog only succeeds 
+with the bun's support.
+
+23
+==
+A hot dog is a hot dog. 
+That is the long and the 
+thick of it.
+
+
+24
+==
+A good life is like a 
+good hot dog. 
+Long, delicious, and messy.
+
+

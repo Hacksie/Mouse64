@@ -31,7 +31,7 @@ namespace HackedDesign
 
             PlayerPrefs.SetInt("FullScreen", fullScreen);
             PlayerPrefs.SetFloat("LookSpeed", lookSpeed);
-            PlayerPrefs.SetFloat("MasterVolume", sfxVolume);
+            PlayerPrefs.SetFloat("MasterVolume", masterVolume);
             PlayerPrefs.SetFloat("FXVolume", sfxVolume);
             PlayerPrefs.SetFloat("MusicVolume", musicVolume);
         }
@@ -43,9 +43,9 @@ namespace HackedDesign
             resolutionRefresh = PlayerPrefs.GetInt("ResolutionRefresh", Screen.currentResolution.refreshRate);
             fullScreen = PlayerPrefs.GetInt("FullScreen", (int)Screen.fullScreenMode);
             lookSpeed = PlayerPrefs.GetFloat("LookSpeed", 180);
-            masterVolume = PlayerPrefs.GetFloat("MasterVolume", 100);
-            sfxVolume = PlayerPrefs.GetFloat("FXVolume", 100);
-            musicVolume = PlayerPrefs.GetFloat("MusicVolume", 100);
+            masterVolume = PlayerPrefs.GetFloat("MasterVolume", 0);
+            sfxVolume = PlayerPrefs.GetFloat("FXVolume", 0);
+            musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0);
             SetPreferences();
         }
 
@@ -54,11 +54,13 @@ namespace HackedDesign
             this.mixer.SetFloat("MasterVolume", this.masterVolume);
             this.mixer.SetFloat("FXVolume", this.sfxVolume);
             this.mixer.SetFloat("MusicVolume", this.musicVolume);
+            
+            //Screen.SetResolution(resolutionWidth, resolutionHeight, (FullScreenMode) fullScreen);
 
-            Resolution scr = Screen.resolutions.FirstOrDefault(r => r.width == this.resolutionWidth && r.height == this.resolutionHeight && r.refreshRate == this.resolutionRefresh);
+            //Resolution scr = Screen.resolutions.FirstOrDefault(r => r.width == this.resolutionWidth && r.height == this.resolutionHeight && r.refreshRate == this.resolutionRefresh);
 
-            Logger.Log("Player Preferences", scr.width.ToString(), " x ", scr.height.ToString());
-            Screen.SetResolution(scr.width, scr.height, (FullScreenMode)this.fullScreen, scr.refreshRate);
+            //Logger.Log("Player Preferences", scr.width.ToString(), " x ", scr.height.ToString());
+            //Screen.SetResolution(scr.width, scr.height, (FullScreenMode)this.fullScreen, scr.refreshRate);
         }
     }
 }

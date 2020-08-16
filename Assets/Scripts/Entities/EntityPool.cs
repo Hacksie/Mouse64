@@ -8,7 +8,6 @@ namespace HackedDesign
     {
         [SerializeField] private Transform entityPool = null;
         [SerializeField] private GameObject[] securityPrefab = null;
-        [SerializeField] private GameObject[] techPrefab = null;
         [SerializeField] private GameObject[] guardPrefab = null;
         [SerializeField] private GameObject[] suitPrefab = null;
         [SerializeField] private GameObject[] dronePrefab = null;

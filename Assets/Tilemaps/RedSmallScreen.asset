@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: RedSmallScreen
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 7483125020187367666, guid: 4ce503d3a8b058840aba4faf492c4870, type: 3}
+  - {fileID: -643172208032534154, guid: 4ce503d3a8b058840aba4faf492c4870, type: 3}
+  - {fileID: 8951720658237195102, guid: 4ce503d3a8b058840aba4faf492c4870, type: 3}
+  - {fileID: -2977462402128243700, guid: 4ce503d3a8b058840aba4faf492c4870, type: 3}
+  m_MinSpeed: 2
+  m_MaxSpeed: 2
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

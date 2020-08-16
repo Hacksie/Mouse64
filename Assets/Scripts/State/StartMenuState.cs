@@ -19,6 +19,7 @@ namespace HackedDesign
         {
             this.hudPresenter.Show();
             this.startMenuPresenter.Show();
+            this.startMenuPresenter.Repaint();
         }
 
         public void End()
@@ -33,27 +34,14 @@ namespace HackedDesign
 
         public void FixedUpdate()
         {
-            
         }
 
         public void LateUpdate()
         {
-            
-        }
-
-        public void Interact()
-        {
-            
-        }
-
-        public void Select()
-        {
-            
         }
 
         public void Start()
         {
-            
         }
     }
 }

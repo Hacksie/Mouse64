@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 4729807382688316032}
   m_Layer: 11
   m_Name: Tile8
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

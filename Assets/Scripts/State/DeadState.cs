@@ -20,6 +20,7 @@ namespace HackedDesign
             this.player.Dead = true;
             AudioManager.Instance.PlayDeathMusic();
             this.deadPresenter.Show();
+            this.deadPresenter.Repaint();
         }
 
         public void End()
@@ -39,16 +40,6 @@ namespace HackedDesign
         public void LateUpdate()
         {
             this.player.LateUpdateBehaviour();
-            
-        }
-
-        public void Interact()
-        {
-            
-        }
-
-        public void Select()
-        {
             
         }
 

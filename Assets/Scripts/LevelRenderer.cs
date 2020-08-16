@@ -13,11 +13,13 @@ namespace HackedDesign
         [Header("Prefabs")]
         [SerializeField] private GameObject[] missionSelectStartTiles = null;
         [SerializeField] private GameObject[] missionSelectEndTiles = null;
+        [SerializeField] private GameObject[] lights = null;
         [SerializeField] private LevelTemplate[] levelTemplates = null;
+
         [Header("Settings")]
         [SerializeField] private int tileSize = 4;
 
-        private List<int> entitySpawns;
+        private List<bool> entitySpawns;
 
 
         public void LoadRandomLevel(Level level)
@@ -37,6 +39,13 @@ namespace HackedDesign
                 return;
             }
 
+            entitySpawns = new List<bool>(level.length * tileSize);
+
+            for (int i = 0; i < (level.length - 2) * tileSize; i++)
+            {
+                entitySpawns.Add(false);
+            }
+
             RenderStartTile(template);
             RenderCorridorTiles(level, template);
             RenderBossTile(level, template);
@@ -50,6 +59,7 @@ namespace HackedDesign
             RenderRCannon(level, template);
             RenderWCannon(level, template);
             RenderSuit(level, template);
+            RenderLights(level, template);
 
         }
 
@@ -112,83 +122,88 @@ namespace HackedDesign
 
                 Instantiate(template.doorway, spawns[index].transform.position, Quaternion.identity, environmentParent);
                 GameManager.Instance.EntityPool.SpawnDoor(spawns[index].transform.position);
+                entitySpawns[Mathf.RoundToInt(spawns[index].transform.position.x)] = true;
                 spawns.RemoveAt(index);
             }
         }
 
-        // public void CalcSpawns(Level level, LevelTemplate template)
-        // {
-        //     entitySpawns = new List<int>(level.length * tileSize);
-
-        // }
 
         public void RenderSecurity(Level level, LevelTemplate template)
         {
-            List<int> taken = new List<int>(level.security);
-
             if ((level.length - 2) < level.security)
             {
                 Logger.LogError(this, "Not enough corridor to spawn security");
                 return;
             }
 
-            float step = (level.length - 3) / (float)level.security;
-            float min = 1;
-            float max = min + step;
-
             for (int i = 0; i < level.security; i++)
             {
-                GameManager.Instance.EntityPool.SpawnSecurity(CalcPosition(Mathf.RoundToInt(Random.Range(min, max))));
-                min += step;
-                max += step;
+                for (int r = 0; r < 1000; r++)
+                {
+                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+
+                    if (entitySpawns[x])
+                    {
+                        continue;
+                    }
+
+                    entitySpawns[x] = true;
+                    GameManager.Instance.EntityPool.SpawnSecurity(CalcPosition(x));
+                    break;
+                }
             }
         }
 
         public void RenderOpenGuards(Level level, LevelTemplate template)
         {
-            List<int> taken = new List<int>(level.openGuards);
-
             if ((level.length - 2) < level.openGuards)
             {
                 Logger.LogError(this, "Not enough corridor to spawn guard");
                 return;
             }
 
-            float step = (level.length - 2) / (float)level.openGuards;
-            float min = 1;
-            float max = min + step;
-
             for (int i = 0; i < level.openGuards; i++)
             {
-                int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
-                Logger.Log(this, "Spawning guard:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
-                GameManager.Instance.EntityPool.SpawnGuard(new Vector3(pos, 0.275f, 0));
-                min += step;
-                max += step;
+                for (int r = 0; r < 1000; r++)
+                {
+                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+
+                    if (entitySpawns[x])
+                    {
+                        continue;
+                    }
+
+                    entitySpawns[x] = true;
+
+                    GameManager.Instance.EntityPool.SpawnGuard(new Vector3(x, 0.275f, 0));
+                    break;
+                }
             }
         }
 
         public void RenderDrones(Level level, LevelTemplate template)
         {
-            List<int> taken = new List<int>(level.drones);
-
             if ((level.length - 2) < level.drones)
             {
                 Logger.LogError(this, "Not enough corridor to spawn drone");
                 return;
             }
 
-            float step = (level.length - 2) / (float)level.drones;
-            float min = 1;
-            float max = min + step;
-
             for (int i = 0; i < level.drones; i++)
             {
-                int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
-                Logger.Log(this, "Spawning drone:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
-                GameManager.Instance.EntityPool.SpawnDrone(new Vector3(pos, 0.275f, 0));
-                min += step;
-                max += step;
+                for (int r = 0; r < 1000; r++)
+                {
+                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+
+                    if (entitySpawns[x])
+                    {
+                        continue;
+                    }
+
+                    entitySpawns[x] = true;
+                    GameManager.Instance.EntityPool.SpawnDrone(new Vector3(x, 0.275f, 0));
+                    break;
+                }
             }
         }
 
@@ -196,73 +211,81 @@ namespace HackedDesign
 
         public void RenderGCannon(Level level, LevelTemplate template)
         {
-            List<int> taken = new List<int>(level.gcannon);
-
             if ((level.length - 2) < level.gcannon)
             {
                 Logger.LogError(this, "Not enough corridor to spawn gcannon");
                 return;
             }
 
-            float step = (level.length - 2) / (float)level.gcannon;
-            float min = 1;
-            float max = min + step;
-
             for (int i = 0; i < level.gcannon; i++)
             {
-                int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
-                Logger.Log(this, "Spawning gcannon:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
-                GameManager.Instance.EntityPool.SpawnGCannon(new Vector3(pos + 0.5f, 0.275f, 0));
-                min += step;
-                max += step;
+                for (int r = 0; r < 1000; r++)
+                {
+                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+
+                    if (entitySpawns[x])
+                    {
+                        continue;
+                    }
+
+                    entitySpawns[x] = true;
+
+                    GameManager.Instance.EntityPool.SpawnGCannon(new Vector3(x + 0.5f, 0.275f, 0));
+                    break;
+                }
             }
         }
 
         public void RenderRCannon(Level level, LevelTemplate template)
         {
-            List<int> taken = new List<int>(level.rcannon);
-
             if ((level.length - 2) < level.rcannon)
             {
                 Logger.LogError(this, "Not enough corridor to spawn rcannon");
                 return;
             }
 
-            float step = (level.length - 2) / (float)level.rcannon;
-            float min = 1;
-            float max = min + step;
-
             for (int i = 0; i < level.rcannon; i++)
             {
-                int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
-                Logger.Log(this, "Spawning rcannon:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
-                GameManager.Instance.EntityPool.SpawnRCannon(new Vector3(pos + 0.5f, 3.5f, 0));
-                min += step;
-                max += step;
+                for (int r = 0; r < 1000; r++)
+                {
+                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+
+                    if (entitySpawns[x])
+                    {
+                        continue;
+                    }
+
+                    entitySpawns[x] = true;
+
+                    GameManager.Instance.EntityPool.SpawnRCannon(new Vector3(x + 0.5f, 3.5f, 0));
+                    break;
+                }
             }
         }
 
         public void RenderWCannon(Level level, LevelTemplate template)
         {
-            List<int> taken = new List<int>(level.wcannon);
-
             if ((level.length - 2) < level.wcannon)
             {
                 Logger.LogError(this, "Not enough corridor to spawn wcannon");
                 return;
             }
 
-            float step = (level.length - 2) / (float)level.wcannon;
-            float min = 1;
-            float max = min + step;
-
             for (int i = 0; i < level.wcannon; i++)
             {
-                int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
-                Logger.Log(this, "Spawning wcannon:", pos.ToString(), " (", min.ToString(), " - ", max.ToString(), ")");
-                GameManager.Instance.EntityPool.SpawnWCannon(new Vector3(pos + 0.5f, 2.5f, 0));
-                min += step;
-                max += step;
+                for (int r = 0; r < 1000; r++)
+                {
+                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+
+                    if (entitySpawns[x])
+                    {
+                        continue;
+                    }
+
+                    entitySpawns[x] = true;
+                    GameManager.Instance.EntityPool.SpawnWCannon(new Vector3(x + 0.5f, 2.5f, 0));
+                    break;
+                }
             }
         }
 
@@ -273,6 +296,31 @@ namespace HackedDesign
             int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
             Logger.Log(this, "Spawning suit");
             GameManager.Instance.EntityPool.SpawnSuit(new Vector3(pos, 0.275f, 0));
+        }
+
+        public void RenderLights(Level level, LevelTemplate template)
+        {
+            var count = Random.Range(0, 5);
+
+            for (int i = 0; i < count; i++)
+            {
+                for (int r = 0; r < 1000; r++)
+                {
+                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+
+                    if (entitySpawns[x])
+                    {
+                        continue;
+                    }
+
+                    entitySpawns[x] = true;
+
+                    var index = Random.Range(0, lights.Length);
+
+                    Instantiate(lights[index], new Vector3(x, 0, 0), Quaternion.identity, environmentParent);
+                    break;
+                }
+            }
         }
 
         public Vector3 CalcPosition(int position)
@@ -291,8 +339,5 @@ namespace HackedDesign
 
         public GameObject[] randomTiles;
         public GameObject doorway;
-        public GameObject[] lightGreebles;
-        public GameObject[] floorGreebles;
-
     }
 }

@@ -10,19 +10,26 @@ namespace HackedDesign.UI
         [SerializeField] UnityEngine.UI.Text dialogText = null;
         [SerializeField] GameObject button = null;
 
+        private bool dirty = true;
+
         public override void Repaint()
         {
-            EventSystem.current.SetSelectedGameObject(button);
-            
-            if (GameManager.Instance.Data.currentLevel.currentDialogue < GameManager.Instance.Data.currentLevel.dialogue.Count)
+            if (this.dirty)
             {
-                dialogText.text = GameManager.Instance.Data.currentLevel.dialogue[GameManager.Instance.Data.currentLevel.currentDialogue];
+                EventSystem.current.SetSelectedGameObject(button);
+
+                if (GameManager.Instance.Data.currentLevel.currentDialogue < GameManager.Instance.Data.currentLevel.dialogue.Count)
+                {
+                    dialogText.text = GameManager.Instance.Data.currentLevel.dialogue[GameManager.Instance.Data.currentLevel.currentDialogue];
+                }
+                this.dirty = false;
             }
         }
 
         public void NextEvent()
         {
             GameManager.Instance.Data.currentLevel.currentDialogue++;
+            this.dirty = true;
         }
     }
 }

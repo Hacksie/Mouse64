@@ -22,8 +22,6 @@ namespace HackedDesign
         public void Begin()
         {
             GameManager.Instance.Reset();
-            //this.player.Reset();
-            this.pool.DestroyEntities();
             this.levelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
             GameManager.Instance.ParticlesLeft.Play();
             Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length + 1);
@@ -77,16 +75,6 @@ namespace HackedDesign
             }
 
             this.hudPresenter.Repaint();
-        }
-
-        public void Interact()
-        {
-
-        }
-
-        public void Select()
-        {
-
         }
 
         public void Start()

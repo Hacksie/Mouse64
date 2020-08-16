@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
@@ -15,9 +16,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip selectMusic = null;
     [SerializeField] private AudioClip successMusic = null;
     [SerializeField] private AudioClip deathMusic = null;
-    [SerializeField] private AudioClip[] playMusic = null;
+    [SerializeField] private List<AudioClip> playMusic = null;
 
     public static AudioManager Instance { get; private set; }
+
+    public string Playing { get { return music.clip.name;}}
 
     private AudioManager() => Instance = this;
 
@@ -37,19 +40,19 @@ public class AudioManager : MonoBehaviour
     {
         fx.clip = bullet;
         fx.Play();
-    }    
+    }
 
     public void PlayActivate()
     {
         fx.clip = activate;
         fx.Play();
-    }    
+    }
 
     public void PlayDenied()
     {
         fx.clip = denied;
         fx.Play();
-    } 
+    }
 
     public void PlayMenuMusic()
     {
@@ -65,8 +68,17 @@ public class AudioManager : MonoBehaviour
 
     public void PlayRandomGameMusic()
     {
-        music.clip = playMusic[Random.Range(0, playMusic.Length)];
+        music.clip = playMusic[Random.Range(0, playMusic.Count)];
         music.Play();
+    }
+
+    public void PlayGameMusic(string name)
+    {
+        var clip = playMusic.FirstOrDefault(c => c.name == name);
+        if (clip != null)
+        {
+            music.clip = playMusic.FirstOrDefault(c => c.name == name);
+        }
     }
 
     public void PlayMissionSuccessMusic()
