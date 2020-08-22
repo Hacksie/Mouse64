@@ -112,7 +112,7 @@ public class @MouseRun : IInputActionCollection, IDisposable
                 {
                     ""name"": ""Positive"",
                     ""id"": ""8180e8bd-4097-4f4e-ab88-4523101a6ce9"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
