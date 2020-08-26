@@ -10,6 +10,7 @@ namespace HackedDesign
         private UI.AbstractPresenter gameOverPresenter;
         
         public bool PlayerActionAllowed => false;
+        public bool Battle => false;
 
         public GameOverState(PlayerController player, EntityPool entityPool, LevelRenderer levelRenderer, UI.GameOverPresenter gameOverPresenter)
         {

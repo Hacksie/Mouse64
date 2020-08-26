@@ -19,6 +19,7 @@ namespace HackedDesign
         [SerializeField] private bool invulnerability = true;
         [SerializeField] private Light2D globalLight = null;
         [SerializeField] private Color defaultLightColor = Color.gray;
+        [SerializeField] private Color preludeLightColor = Color.gray;
         [SerializeField] private Color alertLightColor = Color.red;
         [SerializeField] private int alertGuards = 10;
         [SerializeField] private ParticleSystem particlesSelect = null;
@@ -107,6 +108,7 @@ namespace HackedDesign
         public void SetStartMenu() => CurrentState = new StartMenuState(this.hudPanel, this.startMenuPanel);
         public void SetDead() => CurrentState = new DeadState(this.playerController, this.deadPanel);
         public void SetGameOver() => CurrentState = new GameOverState(this.playerController, this.entityPool, this.levelRenderer, this.gameOverPanel);
+        public void SetPrelude() => CurrentState = new RoomState(this.playerController, this.entityPool, this.levelRenderer);
         public void SetQuit() => Application.Quit();
 
         public void LoadSlots()

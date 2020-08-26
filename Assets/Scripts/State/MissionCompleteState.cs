@@ -8,6 +8,7 @@ namespace HackedDesign
         private UI.AbstractPresenter missionCompletePresenter;
 
         public bool PlayerActionAllowed => false;
+        public bool Battle => false;
 
         public MissionCompleteState(PlayerController player, UI.AbstractPresenter missionCompletePresenter)
         {

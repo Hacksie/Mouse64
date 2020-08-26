@@ -10,5 +10,6 @@ namespace HackedDesign
         void Start();
         
         bool PlayerActionAllowed { get; }
+        bool Battle { get; }
     }   
 }

@@ -12,6 +12,7 @@ namespace HackedDesign
         }
 
         public bool PlayerActionAllowed => false;
+        public bool Battle => false;
 
         public void Begin()
         {

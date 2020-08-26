@@ -8,6 +8,7 @@ namespace HackedDesign
         private UI.AbstractPresenter startMenuPresenter;
 
         public bool PlayerActionAllowed => false;
+        public bool Battle => false;
 
         public StartMenuState(UI.AbstractPresenter hudPresenter, UI.AbstractPresenter startMenuPresenter)
         {

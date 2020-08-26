@@ -11,6 +11,7 @@ namespace HackedDesign
         [Header("Game Objects")]
         [SerializeField] private Transform environmentParent = null;
         [Header("Prefabs")]
+        [SerializeField] private GameObject[] preludeTiles = null;
         [SerializeField] private GameObject[] missionSelectStartTiles = null;
         [SerializeField] private GameObject[] missionSelectEndTiles = null;
         [SerializeField] private GameObject[] lights = null;
@@ -62,6 +63,16 @@ namespace HackedDesign
             RenderLights(level, template);
 
         }
+
+        public void LoadPreludeLevel()
+        {
+            Random.InitState(GameManager.Instance.Data.seed);
+            DestroyEnvironment();
+            for(int i =0;i<preludeTiles.Length;i++)
+            {
+                Instantiate(preludeTiles[i], CalcPosition(i), Quaternion.identity, environmentParent);
+            }
+        }        
 
         public void LoadMissionSelectLevel()
         {

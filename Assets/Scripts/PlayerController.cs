@@ -27,6 +27,7 @@ namespace HackedDesign
 
         private Vector2 direction;
         private Vector2 inputAxis;
+        private Vector2 mousePos;
         private new Rigidbody2D rigidbody;
         private Vector2 currentVelocity = Vector2.zero;
         private bool shoot = false;
@@ -48,6 +49,127 @@ namespace HackedDesign
         {
             animator = GetComponent<Animator>();
             rigidbody = GetComponent<Rigidbody2D>();
+        }
+
+        public void MoveEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                this.inputAxis.x = 0;
+                return;
+            }
+            inputAxis.x = context.ReadValue<float>();
+            //inputAxis = context.ReadValue<Vector2>();
+        }
+
+        public void LookEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                this.inputAxis.y = 0;
+                return;
+            }
+            inputAxis.y = context.ReadValue<float>();
+        }
+
+        public void MousePosEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                //this.inputAxis.y = 0;
+                return;
+            }
+            mousePos = context.ReadValue<Vector2>();
+            //inputAxis.y += context.ReadValue<float>() * Time.deltaTime;
+        }
+
+        public void JumpEvent(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                GameManager.Instance.SetDead();
+            }
+        }
+
+        public void CrouchEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                this.crouch = false;
+                return;
+            }
+
+            if (context.performed)
+            {
+                this.crouch = true;
+            }
+            else if (context.canceled)
+            {
+                this.crouch = false;
+            }
+        }
+
+        public void FireEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed || !GameManager.Instance.CurrentState.Battle)
+            {
+                this.shoot = false;
+                return;
+            }
+
+            if (context.performed)
+            {
+                this.shoot = true;
+            }
+            else if (context.canceled)
+            {
+                this.shoot = false;
+            }
+        }
+
+        public void StealthEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                this.stealth = false;
+                return;
+            }
+
+            if (context.performed)
+            {
+                this.stealth = true;
+            }
+            else if (context.canceled)
+            {
+                this.stealth = false;
+            }
+        }
+
+        public void InteractEvent(InputAction.CallbackContext context)
+        {
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            {
+                this.interact = false;
+                return;
+            }
+
+            if (context.performed)
+            {
+                Logger.Log(this, "interact");
+                this.interact = true;
+            }
+            else if (context.canceled)
+            {
+                this.interact = false;
+            }
+        }
+
+        public void StartEvent(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                GameManager.Instance.CurrentState.Start();
+            }
         }
 
         public void Stop()
@@ -124,6 +246,11 @@ namespace HackedDesign
 
         private void UpdateShoot()
         {
+            if (!GameManager.Instance.CurrentState.Battle)
+            {
+                return;
+            }
+
             if (shoot)
             {
                 var hitEntity = GetMeleeHit();
@@ -179,6 +306,12 @@ namespace HackedDesign
 
         private void UpdateStealth()
         {
+            if (!GameManager.Instance.CurrentState.Battle)
+            {
+                stealth = false;
+                return;
+            }
+
             if (stealth && GameManager.Instance.Data.energy > 0)
             {
                 GameManager.Instance.ConsumeStealth(stealthRate * Time.deltaTime);
@@ -191,17 +324,25 @@ namespace HackedDesign
 
         private void UpdateCrosshair()
         {
-            lookAngle += (inputAxis.y * Time.deltaTime * GameManager.Instance.PlayerPreferences.lookSpeed);
-            lookAngle = Mathf.Clamp(lookAngle, minAngle, maxAngle);
-
-            float newAngle = lookAngle;
-
-            if (transform.right.x < 0)
+            if (!GameManager.Instance.CurrentState.Battle)
             {
-                newAngle = 180 - lookAngle;
+                crosshairAnchor.gameObject.SetActive(false);
             }
+            else
+            {
+                crosshairAnchor.gameObject.SetActive(true);
+                lookAngle += (inputAxis.y * Time.deltaTime * GameManager.Instance.PlayerPreferences.lookSpeed);
+                lookAngle = Mathf.Clamp(lookAngle, minAngle, maxAngle);
 
-            crosshairAnchor.rotation = Quaternion.Euler(0, 0, newAngle);
+                float newAngle = lookAngle;
+
+                if (transform.right.x < 0)
+                {
+                    newAngle = 180 - lookAngle;
+                }
+
+                crosshairAnchor.rotation = Quaternion.Euler(0, 0, newAngle);
+            }
         }
 
         private void Animate()
@@ -212,118 +353,8 @@ namespace HackedDesign
             animator.SetBool("stealth", this.stealth);
             animator.SetBool("dead", this.dead);
             animator.SetBool("sit", this.sit);
+            animator.SetBool("outofbattle", !GameManager.Instance.CurrentState.Battle);
             muzzleAnimator.SetBool("shoot", this.fire);
-
-        }
-
-        public void MoveEvent(InputAction.CallbackContext context)
-        {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
-            {
-                this.inputAxis.x = 0;
-                return;
-            }
-            inputAxis.x = context.ReadValue<float>();
-            //inputAxis = context.ReadValue<Vector2>();
-        }
-
-        public void LookEvent(InputAction.CallbackContext context)
-        {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
-            {
-                this.inputAxis.y = 0;
-                return;
-            }
-            inputAxis.y = context.ReadValue<float>();
-        }
-
-        public void JumpEvent(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                GameManager.Instance.SetDead();
-            }
-        }
-
-        public void CrouchEvent(InputAction.CallbackContext context)
-        {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
-            {
-                this.crouch = false;
-                return;
-            }
-
-            if (context.performed)
-            {
-                this.crouch = true;
-            }
-            else if (context.canceled)
-            {
-                this.crouch = false;
-            }
-        }
-
-        public void FireEvent(InputAction.CallbackContext context)
-        {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
-            {
-                this.shoot = false;
-                return;
-            }
-
-            if (context.performed)
-            {
-                this.shoot = true;
-            }
-            else if (context.canceled)
-            {
-                this.shoot = false;
-            }
-        }
-
-        public void StealthEvent(InputAction.CallbackContext context)
-        {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
-            {
-                this.stealth = false;
-                return;
-            }
-
-            if (context.performed)
-            {
-                this.stealth = true;
-            }
-            else if (context.canceled)
-            {
-                this.stealth = false;
-            }
-        }
-
-        public void InteractEvent(InputAction.CallbackContext context)
-        {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
-            {
-                this.interact = false;
-                return;
-            }
-
-            if (context.performed)
-            {
-                Logger.Log(this, "interact");
-                this.interact = true;
-            }
-            else if (context.canceled)
-            {
-                this.interact = false;
-            }
-        }
-
-        public void StartEvent(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-            {
-                GameManager.Instance.CurrentState.Start();
-            }
         }
     }
 }

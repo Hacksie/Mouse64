@@ -1,18 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace HackedDesign
 {
-    public class InteractTrigger : MonoBehaviour
+    public class InteractTrigger : MonoBehaviour, IEntity
     {
         [Header("Settings")]
         [SerializeField] private GameObject sprite = null;
+        [SerializeField] private UnityEvent action = null;
 
         void Awake()
         {
             sprite.SetActive(false);
         }
+
+        public void Alert()
+        {
+
+        }
+
+        public void Hit()
+        {
+            action.Invoke();
+        }
+
+        public void UpdateBehaviour()
+        {
+
+        }
+
+        public void UpdateLateBehaviour()
+        {
+            
+        }        
 
         public void Hide()
         {

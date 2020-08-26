@@ -10,6 +10,7 @@ namespace HackedDesign
         private LevelRenderer levelRenderer;
 
         public bool PlayerActionAllowed => true;
+        public bool Battle => true;
 
         public PlayingState(PlayerController player, EntityPool entityPool, LevelRenderer levelRenderer, UI.AbstractPresenter hudPresenter)
         {

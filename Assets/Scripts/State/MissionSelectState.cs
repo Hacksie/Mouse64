@@ -12,6 +12,7 @@ namespace HackedDesign
         private UI.LevelPresenter levelPresenter;
 
         public bool PlayerActionAllowed => false;
+        public bool Battle => false;
 
         public MissionSelectState(PlayerController player, EntityPool entityPool, LevelRenderer levelRenderer, UI.DialogPresenter dialogPresenter, UI.MissionPresenter missionPresenter, UI.LevelPresenter levelPresenter)
         {

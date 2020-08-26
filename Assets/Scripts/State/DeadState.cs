@@ -8,6 +8,7 @@ namespace HackedDesign
         private UI.AbstractPresenter deadPresenter;
 
         public bool PlayerActionAllowed => false;
+        public bool Battle => false;
 
         public DeadState(PlayerController player, UI.AbstractPresenter deadPresenter)
         {
