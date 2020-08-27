@@ -23,7 +23,7 @@ namespace HackedDesign
             GameManager.Instance.SaveGame();
             GameManager.Instance.Reset();
             //this.player.Sit = true;
-            this.player.transform.position = new Vector3(3.25f, 0.275f, 0);
+            this.player.transform.position = new Vector3(1.75f, 0.275f, 0);
             this.pool.DestroyEntities();
             this.levelRenderer.LoadPreludeLevel();
             AudioManager.Instance.PlayMissionSelectMusic();
