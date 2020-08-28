@@ -10,6 +10,8 @@ namespace HackedDesign
         public bool PlayerActionAllowed => false;
         public bool Battle => false;
 
+        public Dialog CurrentDialog { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         public MissionCompleteState(PlayerController player, UI.AbstractPresenter missionCompletePresenter)
         {
             this.player = player;
@@ -21,13 +23,12 @@ namespace HackedDesign
             this.player.Stop();
             CalcScore();
             AudioManager.Instance.PlayMissionSuccessMusic();
-            this.missionCompletePresenter.Show();
-            this.missionCompletePresenter.Repaint();
+            ShowDialog();
         }
 
         public void End()
         {
-            this.missionCompletePresenter.Hide();
+            HideDialog();
         }
 
         private void CalcScore()
@@ -61,6 +62,17 @@ namespace HackedDesign
         public void Start()
         {
             
+        }
+
+        public void ShowDialog()
+        {
+            this.missionCompletePresenter.Show();
+            this.missionCompletePresenter.Repaint();
+        }
+
+        public void HideDialog()
+        {
+            this.missionCompletePresenter.Hide();
         }
     }
 }

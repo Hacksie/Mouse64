@@ -10,6 +10,8 @@ namespace HackedDesign
         public bool PlayerActionAllowed => false;
         public bool Battle => false;
 
+        public Dialog CurrentDialog { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         public DeadState(PlayerController player, UI.AbstractPresenter deadPresenter)
         {
             this.player = player;
@@ -20,13 +22,12 @@ namespace HackedDesign
         {
             this.player.Dead = true;
             AudioManager.Instance.PlayDeathMusic();
-            this.deadPresenter.Show();
-            this.deadPresenter.Repaint();
+            ShowDialog();
         }
 
         public void End()
         {
-            this.deadPresenter.Hide();
+            HideDialog();
         }
 
         public void Update()
@@ -47,6 +48,17 @@ namespace HackedDesign
         public void Start()
         {
             
+        }
+
+        public void ShowDialog()
+        {
+            this.deadPresenter.Show();
+            this.deadPresenter.Repaint();
+        }
+
+        public void HideDialog()
+        {
+            this.deadPresenter.Hide();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace HackedDesign
         public bool PlayerActionAllowed => true;
         public bool Battle => true;
 
+        public Dialog CurrentDialog { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         public PlayingState(PlayerController player, EntityPool entityPool, LevelRenderer levelRenderer, UI.AbstractPresenter hudPresenter)
         {
             this.player = player;
@@ -83,6 +85,16 @@ namespace HackedDesign
         public void Start()
         {
             GameManager.Instance.SetStartMenu();
+        }
+
+        public void ShowDialog()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void HideDialog()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

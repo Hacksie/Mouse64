@@ -104,6 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 8733519223870178650}
+  action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6486824762461066609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1058,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 8754946460187467782}
+  action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8733519223870178650
 GameObject:
   m_ObjectHideFlags: 0

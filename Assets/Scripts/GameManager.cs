@@ -21,20 +21,19 @@ namespace HackedDesign
         [SerializeField] private Color defaultLightColor = Color.gray;
         [SerializeField] private Color preludeLightColor = Color.gray;
         [SerializeField] private Color alertLightColor = Color.red;
-        [SerializeField] private int alertGuards = 10;
+        
         [SerializeField] private ParticleSystem particlesSelect = null;
         [SerializeField] private ParticleSystem particlesLeft = null;
         [SerializeField] private ParticleSystem particlesRight = null;
         [SerializeField] private bool isRandom = false;
+        [SerializeField] private GameSettings settings = null;
 
         [Header("Data")]
-        [SerializeField] public float easyAdj = 1.0f;
-        [SerializeField] public float mediumAdj = 0.8f;
-        [SerializeField] public float hardAdj = 0.6f;
+        
         [SerializeField] public int currentSlot = 0;
         [SerializeField] public List<GameData> gameSlots = new List<GameData>(3);
         [SerializeField] public GameData randomGameSlot = new GameData();
-        [SerializeField] private Level[] levels = null;
+        [SerializeField] public List<Level> levels = new List<Level>(25);
         [SerializeField] private string[] corpList = null;
         [SerializeField] private string[] nameList = null;
 
@@ -108,7 +107,7 @@ namespace HackedDesign
         public void SetStartMenu() => CurrentState = new StartMenuState(this.hudPanel, this.startMenuPanel);
         public void SetDead() => CurrentState = new DeadState(this.playerController, this.deadPanel);
         public void SetGameOver() => CurrentState = new GameOverState(this.playerController, this.entityPool, this.levelRenderer, this.gameOverPanel);
-        public void SetPrelude() => CurrentState = new RoomState(this.playerController, this.entityPool, this.levelRenderer);
+        public void SetPrelude() => CurrentState = new RoomState(this.playerController, this.entityPool,  this.levelRenderer, this.dialogPanel);
         public void SetQuit() => Application.Quit();
 
         public void LoadSlots()
@@ -283,11 +282,11 @@ namespace HackedDesign
         {
             ++Data.currentLevelIndex;
 
-            if (Data.currentLevelIndex >= levels.Length)
+            if (Data.currentLevelIndex >= levels.Count)
             {
                 SetGameOver();
             }
-            else if (Data.currentLevelIndex == (levels.Length - 1))
+            else if (Data.currentLevelIndex == (levels.Count - 1))
             {
                 Data.currentLevel = levels[Data.currentLevelIndex];
                 Data.seed = (int)System.DateTime.Now.Ticks;
@@ -308,16 +307,17 @@ namespace HackedDesign
 
         }
 
+        // FIXME: make this a property
         public float DifficultyAdjustment()
         {
             switch (Data.currentLevel.difficulty)
             {
                 case "Easy":
-                    return easyAdj;
+                    return settings.easyAdj;
                 case "Medium":
-                    return mediumAdj;
+                    return settings.mediumAdj;
                 case "Hard":
-                    return hardAdj;
+                    return settings.hardAdj;
             }
 
             return 1;
@@ -352,7 +352,7 @@ namespace HackedDesign
 
             this.globalLight.color = alertLightColor;
             Data.alertTriggered = true;
-            for (int i = 0; i < this.alertGuards; i++)
+            for (int i = 0; i < this.settings.alertGuards; i++)
             {
                 var position = entityPool.FindGuardSpawn(this.playerController.transform.position);
                 entityPool.SpawnGuard(position);

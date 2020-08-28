@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043798769c10d75479155a75731313f6, type: 3}
+  m_Name: Dialog
+  m_EditorClassIdentifier: 
+  text:
+  - Take a seat, friend.
+  - 'You look like you have the '
+  - unemployment blues.
+  - A fresh victim of the corp
+  - hegemony?
+  - <color="#999999">You give the man a nod.</color>
+  - Who were you working for?
+  - <color="#999999">You flash your old Arisana ID.</color>
+  - Parting can be tough. Hungry?
+  - <color="#999999">You nod again.</color>
+  - Toppings?
+  - <color="#999999">You shrug.</color>
+  - The works, then.
+  - <color="#999999">He slides you a hot dog.</color>
+  - <color="#999999">Scrawled on the napkin is a</color>
+  - <color="#999999">corp and a name.</color>
+  - <color="#999999">Tucked underneath, </color>
+  - <color="#999999">loaded with 6 rounds of .357,</color>
+  - <color="#999999">is a Mateba autorevolver.</color>
+  - <color="#999999">A relic of an old world.</color>
+  - <color="#999999">Befitting.</color>
+  - A good evening starts with a
+  - good hotdog, friend.
+  allowRepeats: 0

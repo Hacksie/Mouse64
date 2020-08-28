@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace HackedDesign
@@ -24,39 +23,5 @@ namespace HackedDesign
         [SerializeField] public int seed = 0;
         [SerializeField] public bool alertTriggered = false;
         
-    }
-
-    [System.Serializable]
-    public class Level {
-        public string corp = "Arisana";
-        public string target = "Z.Bana";
-        public string missionLevel = "hotdog";
-        public string difficulty = "Easy";
-        public int length = 2;
-        public int security = 3;
-        public int tech = 4;
-        public int openGuards = 2;
-        public int drones = 2;
-        public int gcannon = 2;
-        public int wcannon = 2;
-        public int rcannon = 2;
-        public int doors = 8;
-        public int window = 64;
-        public LevelAlertSpawn alertSpawn;
-        public int maxAlert = 5;
-        public List<string> dialogue;
-        public int currentDialogue;
-        public bool completed = false;
-        public int score = 0;
-        public int reactions = 0;
-        // boss
-        // end condition
-    }
-
-    public enum LevelAlertSpawn
-    {
-        Guard,
-        Drone,
-        Any
     }
 }

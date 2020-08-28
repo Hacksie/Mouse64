@@ -14,6 +14,8 @@ namespace HackedDesign
         public bool PlayerActionAllowed => false;
         public bool Battle => false;
 
+        public Dialog CurrentDialog { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         public MissionSelectState(PlayerController player, EntityPool entityPool, LevelRenderer levelRenderer, UI.DialogPresenter dialogPresenter, UI.MissionPresenter missionPresenter, UI.LevelPresenter levelPresenter)
         {
             this.player = player;
@@ -34,22 +36,22 @@ namespace HackedDesign
             this.pool.DestroyEntities();
             //GameManager.Instance.Data.currentLevel.name = "hotdog";
             this.levelRenderer.LoadMissionSelectLevel();
-            this.dialogPresenter.Show();
             AudioManager.Instance.PlayMissionSelectMusic();
             GameManager.Instance.ParticlesSelect.Play();
+            ShowDialog();
         }
 
         public void End()
         {
             GameManager.Instance.ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.player.Sit = false;
-            this.dialogPresenter.Hide();
             this.missionPresenter.Hide();
+            HideDialog();
         }
 
         public void Update()
         {
-            if(GameManager.Instance.Data.currentLevel.currentDialogue >= GameManager.Instance.Data.currentLevel.dialogue.Count)
+            if (GameManager.Instance.Data.currentLevel.currentDialogue >= GameManager.Instance.Data.currentLevel.dialogue.Count)
             {
                 this.dialogPresenter.Hide();
                 this.missionPresenter.Show();
@@ -58,19 +60,18 @@ namespace HackedDesign
             }
             else
             {
-                this.dialogPresenter.Show();
+
                 this.levelPresenter.Show();
                 this.missionPresenter.Hide();
-                this.dialogPresenter.Repaint();
                 this.levelPresenter.Repaint();
             }
-            
+
             this.player.UpdateBehavior();
         }
 
         public void FixedUpdate()
         {
-            
+
         }
 
         public void LateUpdate()
@@ -84,7 +85,18 @@ namespace HackedDesign
 
         public void Start()
         {
-            
+
+        }
+
+        public void ShowDialog()
+        {
+            this.dialogPresenter.Show();
+            this.dialogPresenter.Repaint();
+        }
+
+        public void HideDialog()
+        {
+            this.dialogPresenter.Hide();
         }
     }
 }

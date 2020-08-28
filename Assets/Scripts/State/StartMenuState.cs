@@ -10,6 +10,8 @@ namespace HackedDesign
         public bool PlayerActionAllowed => false;
         public bool Battle => false;
 
+        public Dialog CurrentDialog { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         public StartMenuState(UI.AbstractPresenter hudPresenter, UI.AbstractPresenter startMenuPresenter)
         {
             this.hudPresenter = hudPresenter;
@@ -19,14 +21,13 @@ namespace HackedDesign
         public void Begin()
         {
             this.hudPresenter.Show();
-            this.startMenuPresenter.Show();
-            this.startMenuPresenter.Repaint();
+            
         }
 
         public void End()
         {
             this.hudPresenter.Hide();
-            this.startMenuPresenter.Hide();
+            HideDialog();
         }
 
         public void Update()
@@ -43,6 +44,17 @@ namespace HackedDesign
 
         public void Start()
         {
+        }
+
+        public void ShowDialog()
+        {
+            this.startMenuPresenter.Show();
+            this.startMenuPresenter.Repaint();
+        }
+
+        public void HideDialog()
+        {
+            this.startMenuPresenter.Hide();
         }
     }
 }

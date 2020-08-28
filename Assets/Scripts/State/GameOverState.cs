@@ -12,6 +12,8 @@ namespace HackedDesign
         public bool PlayerActionAllowed => false;
         public bool Battle => false;
 
+        public Dialog CurrentDialog { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         public GameOverState(PlayerController player, EntityPool entityPool, LevelRenderer levelRenderer, UI.GameOverPresenter gameOverPresenter)
         {
             this.player = player;
@@ -28,18 +30,16 @@ namespace HackedDesign
             this.player.Sit = true;
             this.player.transform.position = new Vector3(2, 0.275f, 0);
             this.levelRenderer.LoadMissionSelectLevel();
-            this.gameOverPresenter.Show();
-            this.gameOverPresenter.Repaint();
             AudioManager.Instance.PlayMissionSelectMusic();
             GameManager.Instance.ParticlesSelect.Play();
+            ShowDialog();
         }
 
         public void End()
         {
             GameManager.Instance.ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.player.Sit = false;
-            this.gameOverPresenter.Hide();
-            
+            HideDialog();
         }
 
         public void Update()
@@ -60,6 +60,17 @@ namespace HackedDesign
         public void Start()
         {
             
+        }
+
+        public void ShowDialog()
+        {
+            this.gameOverPresenter.Show();
+            this.gameOverPresenter.Repaint();
+        }
+
+        public void HideDialog()
+        {
+            this.gameOverPresenter.Hide();
         }
     }
 }

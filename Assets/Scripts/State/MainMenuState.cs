@@ -13,6 +13,7 @@ namespace HackedDesign
 
         public bool PlayerActionAllowed => false;
         public bool Battle => false;
+        public Dialog CurrentDialog { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public void Begin()
         {
@@ -45,6 +46,14 @@ namespace HackedDesign
 
         }
 
+        public void ShowDialog()
+        {
+            throw new System.NotImplementedException();
+        }
 
+        public void HideDialog()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

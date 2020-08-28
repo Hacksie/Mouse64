@@ -12,18 +12,9 @@ namespace HackedDesign
         [SerializeField] private Transform crosshairAnchor = null;
 
         [Header("Settings")]
-        [SerializeField] private float fireRate = 0.5f;
-        [SerializeField] private float runSpeed = 3;
-        [SerializeField] private float crouchSpeed = 3;
-        [Range(0, .3f)] [SerializeField] private float movementSmoothing = .05f;
-        [SerializeField] private float stealthRate = 1f;
-        [SerializeField] private float lookAngle = 0;
-        [SerializeField] private float maxAngle = 75.0f;
-        [SerializeField] private float minAngle = -25.0f;
-        [SerializeField] private float shootDistance = 4.0f;
-        [SerializeField] private float interactDistance = 0.5f;
-        [SerializeField] private LayerMask shootMask = 0;
-        [SerializeField] private LayerMask interactMask = 0;
+        [SerializeField] private PlayerSettings settings = null;
+
+        private float lookAngle = 0;
 
         private Vector2 direction;
         private Vector2 inputAxis;
@@ -209,9 +200,9 @@ namespace HackedDesign
                 transform.right = new Vector2(direction.x, 0);
             }
 
-            Vector2 targetVelocity = new Vector2(inputAxis.x * (crouch ? crouchSpeed : runSpeed), rigidbody.velocity.y);
+            Vector2 targetVelocity = new Vector2(inputAxis.x * (crouch ? settings.crouchSpeed : settings.runSpeed), rigidbody.velocity.y);
 
-            rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, targetVelocity, ref currentVelocity, movementSmoothing);
+            rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, targetVelocity, ref currentVelocity, settings.movementSmoothing);
 
             UpdateInteract();
             UpdateShoot();
@@ -223,7 +214,7 @@ namespace HackedDesign
         {
             if (interact)
             {
-                RaycastHit2D[] hits = Physics2D.RaycastAll(crosshairAnchor.transform.position, crosshairAnchor.right, interactDistance, interactMask);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(crosshairAnchor.transform.position, crosshairAnchor.right, settings.interactDistance, settings.interactMask);
 
                 foreach (var hit in hits)
                 {
@@ -255,7 +246,7 @@ namespace HackedDesign
             {
                 var hitEntity = GetMeleeHit();
 
-                if (hitEntity == null && (Time.time - lastFire > fireRate) && GameManager.Instance.Data.bullets > 0)
+                if (hitEntity == null && (Time.time - lastFire > settings.fireRate) && GameManager.Instance.Data.bullets > 0)
                 {
                     GameManager.Instance.ConsumeBullet(1);
                     lastFire = Time.time;
@@ -278,7 +269,7 @@ namespace HackedDesign
 
         private IEntity GetMeleeHit()
         {
-            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, interactDistance, shootMask);
+            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, settings.interactDistance, settings.shootMask);
             if (hit.collider != null && hit.collider.CompareTag("Entity"))
             {
                 return hit.collider.GetComponent<IEntity>(); ;
@@ -289,7 +280,7 @@ namespace HackedDesign
 
         private IEntity GetShootHit()
         {
-            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, shootDistance, shootMask);
+            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, settings.shootDistance, settings.shootMask);
             if (hit.collider != null && hit.collider.CompareTag("Entity"))
             {
                 return hit.collider.GetComponent<IEntity>();
@@ -314,7 +305,7 @@ namespace HackedDesign
 
             if (stealth && GameManager.Instance.Data.energy > 0)
             {
-                GameManager.Instance.ConsumeStealth(stealthRate * Time.deltaTime);
+                GameManager.Instance.ConsumeStealth(settings.stealthRate * Time.deltaTime);
             }
             else
             {
@@ -332,7 +323,7 @@ namespace HackedDesign
             {
                 crosshairAnchor.gameObject.SetActive(true);
                 lookAngle += (inputAxis.y * Time.deltaTime * GameManager.Instance.PlayerPreferences.lookSpeed);
-                lookAngle = Mathf.Clamp(lookAngle, minAngle, maxAngle);
+                lookAngle = Mathf.Clamp(lookAngle, settings.minAngle, settings.maxAngle);
 
                 float newAngle = lookAngle;
 
