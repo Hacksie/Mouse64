@@ -8,6 +8,5 @@ namespace HackedDesign
     public class Dialog : ScriptableObject
     {
         [SerializeField] public List<string> text;
-        [SerializeField] public bool allowRepeats = false;
     }
 }

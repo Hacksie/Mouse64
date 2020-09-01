@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796a285833f91fb4b9609f490b0c82c9, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  invulnerability: 0
   easyAdj: 1
   mediumAdj: 0.8
   hardAdj: 0.6
+  alertGuards: 10
+  defaultLightColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  preludeLightColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  roomLightColor: {r: 0.40000004, g: 0.2392157, b: 0.29803923, a: 1}
+  alertLightColor: {r: 0.81568635, g: 0.0627451, b: 0, a: 1}

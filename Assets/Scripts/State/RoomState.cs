@@ -28,27 +28,30 @@ namespace HackedDesign
         {
             GameManager.Instance.SaveGame();
             GameManager.Instance.Reset();
-            //this.player.Sit = true;
             this.player.transform.position = new Vector3(1.75f, 0.275f, 0);
             this.pool.DestroyEntities();
             this.levelRenderer.LoadPreludeLevel();
             AudioManager.Instance.PlayMissionSelectMusic();
             GameManager.Instance.ParticlesLeft.Play();
-            Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length + 1);
-            GameManager.Instance.ParticlesRight.transform.position = rightPos + new Vector3(2.0f, 4, 0);
+            GameManager.Instance.ParticlesRight.transform.position = new Vector3(18.0f, 4, 0);
             GameManager.Instance.ParticlesRight.Play();
-            
+            GameManager.Instance.Data.currentLevel.currentDialogue = GameManager.Instance.Data.currentLevel.settings.startingDialogue;
+            GameManager.Instance.Data.currentLevel.currentDialogueIndex = 0;
+            GameManager.Instance.LightManager.SetGlobalLight(GlobalLight.Room);
+            ShowDialog();
         }
 
         public void End()
         {
             GameManager.Instance.ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            HideDialog();
+            EndDialog();
         }
 
         public void Update()
         {
-            if (GameManager.Instance.Data.currentLevel.currentDialogue >= GameManager.Instance.Data.currentLevel.dialogue.Count)
+            //FIXME: make a 'end of dialogue' state event
+            /*
+            if (GameManager.Instance.Data.currentLevel.currentDialogueIndex >= GameManager.Instance.Data.currentLevel.currentDialogue.text.Count)
             {
                 this.dialogPresenter.Hide();
                 actionAllowed = true;
@@ -57,7 +60,7 @@ namespace HackedDesign
             {
                 this.dialogPresenter.Show();
                 this.dialogPresenter.Repaint();
-            }
+            }*/
 
             this.player.UpdateBehavior();
         }
@@ -88,9 +91,10 @@ namespace HackedDesign
             
         }
 
-        public void HideDialog()
+        public void EndDialog()
         {
             this.dialogPresenter.Hide();
+            actionAllowed = true;
         }
     }
 }

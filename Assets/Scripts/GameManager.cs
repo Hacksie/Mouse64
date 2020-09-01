@@ -9,27 +9,22 @@ namespace HackedDesign
 {
     public class GameManager : MonoBehaviour
     {
-        public const string gameVersion = "1.0";
+        public const string gameVersion = "2.0";
         [Header("Game")]
         [SerializeField] private PlayerController playerController = null;
         [SerializeField] private LevelRenderer levelRenderer = null;
         [SerializeField] private EntityPool entityPool = null;
         [SerializeField] private UnityEngine.Audio.AudioMixer mixer = null;
         [SerializeField] private PlayerPreferences preferences = null;
-        [SerializeField] private bool invulnerability = true;
-        [SerializeField] private Light2D globalLight = null;
-        [SerializeField] private Color defaultLightColor = Color.gray;
-        [SerializeField] private Color preludeLightColor = Color.gray;
-        [SerializeField] private Color alertLightColor = Color.red;
-        
         [SerializeField] private ParticleSystem particlesSelect = null;
         [SerializeField] private ParticleSystem particlesLeft = null;
         [SerializeField] private ParticleSystem particlesRight = null;
         [SerializeField] private bool isRandom = false;
         [SerializeField] private GameSettings settings = null;
+        [SerializeField] private LightManager lightManager = null;
 
         [Header("Data")]
-        
+        // FIXME: Repository pattern
         [SerializeField] public int currentSlot = 0;
         [SerializeField] public List<GameData> gameSlots = new List<GameData>(3);
         [SerializeField] public GameData randomGameSlot = new GameData();
@@ -59,10 +54,12 @@ namespace HackedDesign
         public PlayerController Player { get { return playerController; } private set { playerController = value; } }
         public EntityPool EntityPool { get { return entityPool; } private set { entityPool = value; } }
         public LevelRenderer LevelRenderer { get { return levelRenderer; } private set { levelRenderer = value; } }
+        public LightManager LightManager { get { return lightManager; } private set { lightManager = value; } }
         public PlayerPreferences PlayerPreferences { get { return preferences; } private set { preferences = value; } }
         public ParticleSystem ParticlesSelect { get { return particlesSelect; } private set { particlesSelect = value; } }
         public ParticleSystem ParticlesLeft { get { return particlesLeft; } private set { particlesLeft = value; } }
         public ParticleSystem ParticlesRight { get { return particlesRight; } private set { particlesRight = value; } }
+        public GameSettings GameSettings { get { return settings; } private set { settings = value; } }
         public IState CurrentState
         {
             get
@@ -83,18 +80,31 @@ namespace HackedDesign
             }
         }
 
+        public float DifficultyAdjustment
+        {
+            get
+            {
+                switch (Data.currentLevel.settings.difficulty)
+                {
+                    case GameDifficulty.Tutorial:
+                        return settings.easyAdj;
+                    case GameDifficulty.Easy:
+                        return settings.easyAdj;
+                    case GameDifficulty.Medium:
+                        return settings.mediumAdj;
+                    case GameDifficulty.Hard:
+                        return settings.hardAdj;
+                }
+
+                return 1;
+            }
+        }        
+
         private GameManager() => Instance = this;
 
-        void Awake()
-        {
-            CheckBindings();
+        void Awake() => CheckBindings();
+        void Start() => Initialization();
 
-        }
-
-        void Start()
-        {
-            Initialization();
-        }
 
         private void Update() => CurrentState.Update();
         private void LateUpdate() => CurrentState.LateUpdate();
@@ -102,12 +112,13 @@ namespace HackedDesign
 
         public void SetMainMenu() => CurrentState = new MainMenuState(this.mainMenuPanel);
         public void SetMissionSelect() => CurrentState = new MissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel, this.levelPanel);
+        public void SetTutorialMissionSelect() => CurrentState = new TutorialMissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel, this.levelPanel);
         public void SetMissionComplete() => CurrentState = new MissionCompleteState(this.playerController, this.missionCompletePanel);
         public void SetPlaying() => CurrentState = new PlayingState(this.playerController, this.entityPool, this.levelRenderer, this.hudPanel);
         public void SetStartMenu() => CurrentState = new StartMenuState(this.hudPanel, this.startMenuPanel);
         public void SetDead() => CurrentState = new DeadState(this.playerController, this.deadPanel);
         public void SetGameOver() => CurrentState = new GameOverState(this.playerController, this.entityPool, this.levelRenderer, this.gameOverPanel);
-        public void SetPrelude() => CurrentState = new RoomState(this.playerController, this.entityPool,  this.levelRenderer, this.dialogPanel);
+        public void SetPrelude() => CurrentState = new RoomState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel);
         public void SetQuit() => Application.Quit();
 
         public void LoadSlots()
@@ -161,19 +172,17 @@ namespace HackedDesign
                 score = 0,
                 currentLevelIndex = 0,
                 seed = (int)System.DateTime.Now.Ticks,
-                currentLevel = levels[0]
+                currentLevel = levels[0],
             };
 
-            Data.currentLevel.corp = GetRandomCorp();
-            Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
+            Data.currentLevel.corp = Data.currentLevel.corp = GetRandomCorp();
+            Data.currentLevel.target = Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
 
-            this.playerController.Reset();
+            Player.Reset();
         }
 
-        public void NewRandomGame(int seed, string difficulty)
+        public void NewRandomGame(int seed, GameDifficulty difficulty)
         {
-            Logger.Log(this, "new random game ", seed.ToString(), difficulty);
-
             Random.InitState(seed);
 
             this.randomGameSlot = new GameData()
@@ -202,51 +211,49 @@ namespace HackedDesign
             int maxAlert = 0;
             LevelAlertSpawn alertSpawn = LevelAlertSpawn.Guard;
 
-            switch(difficulty)
+            switch (difficulty)
             {
-                case "Hard":
-                length = 26;
-                security = Random.Range(4,6);
-                openGuards = Random.Range(3, 6);
-                drones = Random.Range(1, 4);
-                gcannon = Random.Range(0, 3);
-                wcannon = Random.Range(0, 3);
-                rcannon = Random.Range(0, 3);
-                doors = Random.Range(7, 10);
-                maxAlert = 5;
-                alertSpawn = LevelAlertSpawn.Any;
-                break;
-                case "Medium":
-                length = 24;
-                security = Random.Range(2,4);
-                openGuards = Random.Range(2, 5);
-                drones = Random.Range(0, 3);
-                gcannon = Random.Range(0, 2);
-                wcannon = Random.Range(0, 2);
-                rcannon = Random.Range(0, 2);
-                doors = Random.Range(8, 11);
-                maxAlert = 4;
-                alertSpawn = LevelAlertSpawn.Guard;
-                break;
-                case "Easy":
+                case GameDifficulty.Hard:
+                    length = 26;
+                    security = Random.Range(4, 6);
+                    openGuards = Random.Range(3, 6);
+                    drones = Random.Range(1, 4);
+                    gcannon = Random.Range(0, 3);
+                    wcannon = Random.Range(0, 3);
+                    rcannon = Random.Range(0, 3);
+                    doors = Random.Range(7, 10);
+                    maxAlert = 5;
+                    alertSpawn = LevelAlertSpawn.Any;
+                    break;
+                case GameDifficulty.Medium:
+                    length = 24;
+                    security = Random.Range(2, 4);
+                    openGuards = Random.Range(2, 5);
+                    drones = Random.Range(0, 3);
+                    gcannon = Random.Range(0, 2);
+                    wcannon = Random.Range(0, 2);
+                    rcannon = Random.Range(0, 2);
+                    doors = Random.Range(8, 11);
+                    maxAlert = 4;
+                    alertSpawn = LevelAlertSpawn.Guard;
+                    break;
+                case GameDifficulty.Easy:
                 default:
-                length = 24;
-                security = Random.Range(1,4);
-                openGuards = Random.Range(2, 4);
-                drones = Random.Range(0, 2);
-                gcannon = Random.Range(0, 1);
-                wcannon = Random.Range(0, 1);
-                rcannon = Random.Range(0, 2);
-                doors = Random.Range(8, 12);
-                maxAlert = 3;
-                alertSpawn = LevelAlertSpawn.Guard;                
-                break;
+                    length = 24;
+                    security = Random.Range(1, 4);
+                    openGuards = Random.Range(2, 4);
+                    drones = Random.Range(0, 2);
+                    gcannon = Random.Range(0, 1);
+                    wcannon = Random.Range(0, 1);
+                    rcannon = Random.Range(0, 2);
+                    doors = Random.Range(8, 12);
+                    maxAlert = 3;
+                    alertSpawn = LevelAlertSpawn.Guard;
+                    break;
             }
 
-            Data.currentLevel = new Level()
+            var settings = new LevelSettings()
             {
-                corp = GetRandomCorp(),
-                target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName(),
                 difficulty = difficulty,
                 length = length,
                 security = security,
@@ -257,13 +264,19 @@ namespace HackedDesign
                 rcannon = rcannon,
                 doors = doors,
                 maxAlert = maxAlert,
-                alertSpawn = alertSpawn
+                alertSpawn = alertSpawn,
             };
-            
 
-            this.globalLight.color = defaultLightColor;
-            this.entityPool.DestroyEntities();
-            this.playerController.Reset();
+            Data.currentLevel = new Level()
+            {
+                corp = GetRandomCorp(),
+                target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName(),
+                settings = settings
+            };
+
+            LightManager.SetGlobalLight(GlobalLight.Default);
+            EntityPool.DestroyEntities();
+            Player.Reset();
         }
 
         public void Reset()
@@ -272,76 +285,46 @@ namespace HackedDesign
             Data.health = 0;
             Data.energy = 100;
             Data.alert = 0;
-            Data.timer = Data.currentLevel.window;
-            this.globalLight.color = defaultLightColor;
-            //this.entityPool.DestroyEntities();
+            Data.timer = Data.currentLevel.settings.window;
+            LightManager.SetGlobalLight(GlobalLight.Default);
             this.playerController.Reset();
         }
 
-        public void NextLevel()
+        public bool NextLevel()
         {
             ++Data.currentLevelIndex;
 
             if (Data.currentLevelIndex >= levels.Count)
             {
-                SetGameOver();
+                return false;
+                //SetGameOver();
             }
             else if (Data.currentLevelIndex == (levels.Count - 1))
             {
                 Data.currentLevel = levels[Data.currentLevelIndex];
                 Data.seed = (int)System.DateTime.Now.Ticks;
-
                 Data.currentLevel.corp = "Arisana";
                 Data.currentLevel.target = "G.Booker";
-                GameManager.Instance.SetMissionSelect();
+                return true;
+                //GameManager.Instance.SetMissionSelect();
             }
             else
             {
                 Data.currentLevel = levels[Data.currentLevelIndex];
                 Data.seed = (int)System.DateTime.Now.Ticks;
-
                 Data.currentLevel.corp = GetRandomCorp();
                 Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
-                GameManager.Instance.SetMissionSelect();
+                return true;
+                //GameManager.Instance.SetMissionSelect();
             }
 
         }
 
-        // FIXME: make this a property
-        public float DifficultyAdjustment()
-        {
-            switch (Data.currentLevel.difficulty)
-            {
-                case "Easy":
-                    return settings.easyAdj;
-                case "Medium":
-                    return settings.mediumAdj;
-                case "Hard":
-                    return settings.hardAdj;
-            }
+        public string GetRandomCorp() =>this.corpList[Random.Range(0, this.corpList.Length)];
+        public string GetRandomName() =>this.nameList[Random.Range(0, this.nameList.Length)];
 
-            return 1;
-        }
-
-        public string GetRandomCorp()
-        {
-            return this.corpList[Random.Range(0, this.corpList.Length)];
-        }
-
-        public string GetRandomName()
-        {
-            return this.nameList[Random.Range(0, this.nameList.Length)];
-        }
-
-        public void ConsumeBullet(int amount)
-        {
-            Data.bullets = Mathf.Clamp(Data.bullets - amount, 0, Data.maxBullets);
-        }
-
-        public void ConsumeStealth(float amount)
-        {
-            Data.energy = Mathf.Clamp(Data.energy - amount, 0, Data.maxEnergy);
-        }
+        public void ConsumeBullet(int amount) => Data.bullets = Mathf.Clamp(Data.bullets - amount, 0, Data.maxBullets);
+        public void ConsumeStealth(float amount) => Data.energy = Mathf.Clamp(Data.energy - amount, 0, Data.maxEnergy);
 
         public void TimeUp()
         {
@@ -350,7 +333,8 @@ namespace HackedDesign
                 return;
             }
 
-            this.globalLight.color = alertLightColor;
+            LightManager.SetGlobalLight(GlobalLight.Alert);
+            //this.globalLight.color = alertLightColor;
             Data.alertTriggered = true;
             for (int i = 0; i < this.settings.alertGuards; i++)
             {
@@ -359,30 +343,27 @@ namespace HackedDesign
             }
         }
 
-        public void IncreaseGuardReaction()
-        {
-            Data.currentLevel.reactions++;
-        }
+        public void IncreaseGuardReaction() => Data.currentLevel.reactions++;
 
         public void IncreaseAlert()
         {
-            if (Data.alert < Data.currentLevel.maxAlert)
+            if (Data.alert < Data.currentLevel.settings.maxAlert)
             {
                 Data.alert++;
 
                 var position = entityPool.FindGuardSpawn(this.playerController.transform.position);
 
-                var c = Data.currentLevel.alertSpawn;
+                var c = Data.currentLevel.settings.alertSpawn;
                 c = c == LevelAlertSpawn.Any ? (LevelAlertSpawn)Random.Range(0, 2) : c;
 
                 switch (c)
                 {
                     case LevelAlertSpawn.Drone:
-                        entityPool.SpawnDrone(position);
+                        EntityPool.SpawnDrone(position);
                         break;
                     case LevelAlertSpawn.Guard:
                     default:
-                        entityPool.SpawnGuard(position);
+                        EntityPool.SpawnGuard(position);
                         break;
                 }
             }
@@ -391,7 +372,7 @@ namespace HackedDesign
         public void TakeDamage(int amount)
         {
             Data.health -= amount;
-            if (!invulnerability && Data.health <= 0)
+            if (!GameSettings.invulnerability && Data.health <= 0)
             {
                 SetDead();
             }
@@ -399,9 +380,9 @@ namespace HackedDesign
 
         private void CheckBindings()
         {
-            this.playerController = this.playerController ?? FindObjectOfType<PlayerController>();
-            this.levelRenderer = this.levelRenderer ?? FindObjectOfType<LevelRenderer>();
-            this.entityPool = this.entityPool ?? FindObjectOfType<EntityPool>();
+            Player = this.playerController ?? FindObjectOfType<PlayerController>();
+            LevelRenderer = this.levelRenderer ?? FindObjectOfType<LevelRenderer>();
+            EntityPool = this.entityPool ?? FindObjectOfType<EntityPool>();
         }
 
         private void Initialization()
@@ -413,7 +394,7 @@ namespace HackedDesign
             ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             ParticlesLeft.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             ParticlesRight.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            entityPool.DestroyEntities();
+            EntityPool.DestroyEntities();
             gameCanvas.SetActive(true);
             menuCanvas.SetActive(true);
             SetMainMenu();

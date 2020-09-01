@@ -76,7 +76,7 @@ namespace HackedDesign.UI
             seedInput.text = ((int)System.DateTime.Now.Ticks).ToString();
             difficultyDropdown.ClearOptions();
             difficultyDropdown.AddOptions(difficulties.ToList().ConvertAll(i => new UnityEngine.UI.Dropdown.OptionData(i)));
-            
+
             RepaintMasterText();
             RepaintFXText();
             RepaintMusicText();
@@ -233,8 +233,6 @@ namespace HackedDesign.UI
             }
 
             GameManager.Instance.RandomGame = false;
-            //GameManager.Instance.SetGameOver();
-            //GameManager.Instance.SetMissionSelect();
             GameManager.Instance.SetPrelude();
         }
 
@@ -250,7 +248,9 @@ namespace HackedDesign.UI
             int result = 0;
             System.Int32.TryParse(seedInput.text, out result);
 
-            GameManager.Instance.NewRandomGame(result, difficulties[difficultyDropdown.value]);
+            GameDifficulty difficulty = (GameDifficulty)System.Enum.Parse(typeof(GameDifficulty), difficulties[difficultyDropdown.value]);
+
+            GameManager.Instance.NewRandomGame(result, difficulty);
             GameManager.Instance.Reset();
             GameManager.Instance.EntityPool.DestroyEntities();
             GameManager.Instance.LevelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
@@ -299,7 +299,6 @@ namespace HackedDesign.UI
             Logger.Log(this, "res changd");
             SetResolution();
             GameManager.Instance.PlayerPreferences.Save();
-
         }
 
         public void FullScreenChangedEvent()
@@ -364,16 +363,18 @@ namespace HackedDesign.UI
             lookText.text = GameManager.Instance.PlayerPreferences.lookSpeed.ToString("F0") + "#/s";
         }
 
+        private enum MainMenuState
+        {
+            Default,
+            Play,
+            Random,
+            Options,
+            Screen,
+            Credits,
+            Quit
+        }
+
     }
 
-    public enum MainMenuState
-    {
-        Default,
-        Play,
-        Random,
-        Options,
-        Screen,
-        Credits,
-        Quit
-    }
+
 }

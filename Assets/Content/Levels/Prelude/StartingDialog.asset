@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043798769c10d75479155a75731313f6, type: 3}
+  m_Name: StartingDialog
+  m_EditorClassIdentifier: 
+  text:
+  - <color='#B0B0B0'>Twas the night before christmas,</color>
+  - <color='#B0B0B0'>when all through the city,</color>
+  - <color='#B0B0B0'>no creatures were stirring.</color>
+  - <color='#B0B0B0'>...Except a Mouse.</color>
+  - <color='#B0B0B0'>Though if you had your way,</color>
+  - <color='#B0B0B0'>You'd leave the creatures to their stirrings.</color>
+  - I'm getting too old for this.

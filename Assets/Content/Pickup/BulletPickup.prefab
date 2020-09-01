@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5280917692150632527}
   - component: {fileID: 5142149691402963427}
   - component: {fileID: 4598387618271957191}
+  - component: {fileID: 5875784600625886215}
   m_Layer: 0
   m_Name: BulletDrop
   m_TagString: Untagged
@@ -125,6 +126,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: {fileID: 4822069582178175570}
   bulletRecovery: 1
+--- !u!114 &5875784600625886215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4822069582178175570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f635fe3485dfd0544941abc0f29f6f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  action:
+    m_PersistentCalls:
+      m_Calls: []
+  allowRepeats: 0
 --- !u!1 &5046707835185323936
 GameObject:
   m_ObjectHideFlags: 0

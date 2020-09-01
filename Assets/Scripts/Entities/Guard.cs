@@ -47,7 +47,7 @@ namespace HackedDesign
             base.Awake();
             this.collider = this.collider ?? GetComponent<Collider2D>();
             this.patrolMin = GameManager.Instance.LevelRenderer.CalcPosition(1).x;
-            this.patrolMax = GameManager.Instance.LevelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length - 2).x;
+            this.patrolMax = GameManager.Instance.LevelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.settings.length - 2).x;
             rigidbody = GetComponent<Rigidbody2D>();
         }
 
@@ -247,14 +247,14 @@ namespace HackedDesign
             }
 
 
-            if (!reaction && (Time.time - reactionTimer) >= (GameManager.Instance.DifficultyAdjustment() * reactionTime))
+            if (!reaction && (Time.time - reactionTimer) >= (GameManager.Instance.DifficultyAdjustment* reactionTime))
             {
                 shootTimer = Time.time;
                 reaction = true;
                 Shoot();
             }
 
-            if (reaction && (Time.time - shootTimer) >= (GameManager.Instance.DifficultyAdjustment() * shootTime))
+            if (reaction && (Time.time - shootTimer) >= (GameManager.Instance.DifficultyAdjustment* shootTime))
             {
                 shootTimer = Time.time;
                 Shoot();

@@ -83,9 +83,10 @@ GameObject:
   - component: {fileID: 5875915444091208523}
   - component: {fileID: 6161307415507084059}
   - component: {fileID: 5136759466723880893}
-  m_Layer: 0
+  - component: {fileID: 7626340275775400884}
+  m_Layer: 11
   m_Name: Computer
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,7 +119,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -129,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 1}
+  m_Size: {x: 1.5, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &5136759466723880893
 MonoBehaviour:
@@ -143,7 +144,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f635fe3485dfd0544941abc0f29f6f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 3534785693750474397}
+  sprite: {fileID: 0}
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HackedDesign.DialogTrigger, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  allowRepeats: 0
+--- !u!114 &7626340275775400884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808178054894822243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483478a22a1f0f344b6c20cbb5beb560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog: {fileID: 11400000, guid: fae01a8fa67cf024090235b05fd93b83, type: 2}
 --- !u!1 &3534785693750474397
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5555265397829518379}
   - component: {fileID: 9172882287745948541}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +438,7 @@ Tilemap:
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 0
   - first: {x: 3, y: 1, z: 0}
     second:
       serializedVersion: 2
@@ -490,7 +520,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
-  m_AnimatedTiles: {}
+  m_AnimatedTiles:
+  - first: {x: 2, y: 1, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: 2701988108291960151, guid: 894de372dbee34f4784f15c224b0772c, type: 3}
+      - {fileID: -629472245607452477, guid: 894de372dbee34f4784f15c224b0772c, type: 3}
+      m_AnimationSpeed: 1
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
   m_TileAssetArray:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 8d98b62a18fd6604da8f497a95c8f929, type: 2}
@@ -505,7 +543,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: f8f89f714d22b6e44bdb49f498b569d0, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: be1ebafd7b0a0184d87830a664bd9fff, type: 2}
+    m_Data: {fileID: 11400000, guid: 2173e98c7664f1f4f8bc13fe03cf5842, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 600dfaacbcad4674d86f086852918f41, type: 2}
   - m_RefCount: 1

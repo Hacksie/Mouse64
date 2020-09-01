@@ -12,6 +12,7 @@ namespace HackedDesign
         [SerializeField] private Transform environmentParent = null;
         [Header("Prefabs")]
         [SerializeField] private GameObject[] preludeTiles = null;
+        [SerializeField] private GameObject[] missionTutorialStartTiles = null;
         [SerializeField] private GameObject[] missionSelectStartTiles = null;
         [SerializeField] private GameObject[] missionSelectEndTiles = null;
         [SerializeField] private GameObject[] lights = null;
@@ -27,9 +28,9 @@ namespace HackedDesign
         {
             Random.InitState(GameManager.Instance.Data.seed);
             DestroyEnvironment();
-            if (level.length < 3)
+            if (level.settings.length <= 3)
             {
-                Logger.Log(this, "Level length less than 2");
+                Logger.LogError(this, "Level length less than 3");
                 return;
             }
 
@@ -40,9 +41,9 @@ namespace HackedDesign
                 return;
             }
 
-            entitySpawns = new List<bool>(level.length * tileSize);
+            entitySpawns = new List<bool>(level.settings.length * tileSize);
 
-            for (int i = 0; i < (level.length - 2) * tileSize; i++)
+            for (int i = 0; i < (level.settings.length - 2) * tileSize; i++)
             {
                 entitySpawns.Add(false);
             }
@@ -74,6 +75,15 @@ namespace HackedDesign
             }
         }        
 
+        public void LoadMissionTutorialLevel()
+        {
+            Random.InitState(GameManager.Instance.Data.seed);
+            DestroyEnvironment();
+
+            Instantiate(missionTutorialStartTiles[Random.Range(0, missionTutorialStartTiles.Length)], CalcPosition(0), Quaternion.identity, environmentParent);
+            Instantiate(missionSelectEndTiles[Random.Range(0, missionSelectEndTiles.Length)], CalcPosition(1), Quaternion.identity, environmentParent);
+        }
+
         public void LoadMissionSelectLevel()
         {
             Random.InitState(GameManager.Instance.Data.seed);
@@ -103,7 +113,7 @@ namespace HackedDesign
 
         public void RenderCorridorTiles(Level level, LevelTemplate template)
         {
-            for (int i = 1; i < (level.length - 2); i++)
+            for (int i = 1; i < (level.settings.length - 2); i++)
             {
                 int index = Random.Range(0, template.randomTiles.Length);
                 Instantiate(template.randomTiles[index], CalcPosition(i), Quaternion.identity, environmentParent);
@@ -112,19 +122,19 @@ namespace HackedDesign
 
         public void RenderBossTile(Level level, LevelTemplate template)
         {
-            Instantiate(template.bossTile, CalcPosition(level.length - 2), Quaternion.identity, environmentParent);
+            Instantiate(template.bossTile, CalcPosition(level.settings.length - 2), Quaternion.identity, environmentParent);
         }
 
         public void RenderEndTile(Level level, LevelTemplate template)
         {
-            Instantiate(template.exitTile, CalcPosition(level.length - 1), Quaternion.identity, environmentParent);
+            Instantiate(template.exitTile, CalcPosition(level.settings.length - 1), Quaternion.identity, environmentParent);
         }
 
         public void RenderDoors(Level level, LevelTemplate template)
         {
             var spawns = GameObject.FindGameObjectsWithTag("DoorSpawn").ToList();
 
-            for (int i = 0; i < level.doors; i++)
+            for (int i = 0; i < level.settings.doors; i++)
             {
                 if (spawns.Count <= 0)
                     break;
@@ -141,17 +151,17 @@ namespace HackedDesign
 
         public void RenderSecurity(Level level, LevelTemplate template)
         {
-            if ((level.length - 2) < level.security)
+            if ((level.settings.length - 2) < level.settings.security)
             {
                 Logger.LogError(this, "Not enough corridor to spawn security");
                 return;
             }
 
-            for (int i = 0; i < level.security; i++)
+            for (int i = 0; i < level.settings.security; i++)
             {
                 for (int r = 0; r < 1000; r++)
                 {
-                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+                    var x = Random.Range(tileSize, (level.settings.length - 3) * tileSize);
 
                     if (entitySpawns[x])
                     {
@@ -167,17 +177,17 @@ namespace HackedDesign
 
         public void RenderOpenGuards(Level level, LevelTemplate template)
         {
-            if ((level.length - 2) < level.openGuards)
+            if ((level.settings.length - 2) < level.settings.openGuards)
             {
                 Logger.LogError(this, "Not enough corridor to spawn guard");
                 return;
             }
 
-            for (int i = 0; i < level.openGuards; i++)
+            for (int i = 0; i < level.settings.openGuards; i++)
             {
                 for (int r = 0; r < 1000; r++)
                 {
-                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+                    var x = Random.Range(tileSize, (level.settings.length - 3) * tileSize);
 
                     if (entitySpawns[x])
                     {
@@ -194,17 +204,17 @@ namespace HackedDesign
 
         public void RenderDrones(Level level, LevelTemplate template)
         {
-            if ((level.length - 2) < level.drones)
+            if ((level.settings.length - 2) < level.settings.drones)
             {
                 Logger.LogError(this, "Not enough corridor to spawn drone");
                 return;
             }
 
-            for (int i = 0; i < level.drones; i++)
+            for (int i = 0; i < level.settings.drones; i++)
             {
                 for (int r = 0; r < 1000; r++)
                 {
-                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+                    var x = Random.Range(tileSize, (level.settings.length - 3) * tileSize);
 
                     if (entitySpawns[x])
                     {
@@ -222,17 +232,17 @@ namespace HackedDesign
 
         public void RenderGCannon(Level level, LevelTemplate template)
         {
-            if ((level.length - 2) < level.gcannon)
+            if ((level.settings.length - 2) < level.settings.gcannon)
             {
                 Logger.LogError(this, "Not enough corridor to spawn gcannon");
                 return;
             }
 
-            for (int i = 0; i < level.gcannon; i++)
+            for (int i = 0; i < level.settings.gcannon; i++)
             {
                 for (int r = 0; r < 1000; r++)
                 {
-                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+                    var x = Random.Range(tileSize, (level.settings.length - 3) * tileSize);
 
                     if (entitySpawns[x])
                     {
@@ -249,17 +259,17 @@ namespace HackedDesign
 
         public void RenderRCannon(Level level, LevelTemplate template)
         {
-            if ((level.length - 2) < level.rcannon)
+            if ((level.settings.length - 2) < level.settings.rcannon)
             {
                 Logger.LogError(this, "Not enough corridor to spawn rcannon");
                 return;
             }
 
-            for (int i = 0; i < level.rcannon; i++)
+            for (int i = 0; i < level.settings.rcannon; i++)
             {
                 for (int r = 0; r < 1000; r++)
                 {
-                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+                    var x = Random.Range(tileSize, (level.settings.length - 3) * tileSize);
 
                     if (entitySpawns[x])
                     {
@@ -276,17 +286,17 @@ namespace HackedDesign
 
         public void RenderWCannon(Level level, LevelTemplate template)
         {
-            if ((level.length - 2) < level.wcannon)
+            if ((level.settings.length - 2) < level.settings.wcannon)
             {
                 Logger.LogError(this, "Not enough corridor to spawn wcannon");
                 return;
             }
 
-            for (int i = 0; i < level.wcannon; i++)
+            for (int i = 0; i < level.settings.wcannon; i++)
             {
                 for (int r = 0; r < 1000; r++)
                 {
-                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+                    var x = Random.Range(tileSize, (level.settings.length - 3) * tileSize);
 
                     if (entitySpawns[x])
                     {
@@ -302,8 +312,8 @@ namespace HackedDesign
 
         public void RenderSuit(Level level, LevelTemplate template)
         {
-            float min = level.length - 2;
-            float max = level.length - 1;
+            float min = level.settings.length - 2;
+            float max = level.settings.length - 1;
             int pos = Mathf.RoundToInt(Random.Range(min, max) * tileSize);
             Logger.Log(this, "Spawning suit");
             GameManager.Instance.EntityPool.SpawnSuit(new Vector3(pos, 0.275f, 0));
@@ -317,7 +327,7 @@ namespace HackedDesign
             {
                 for (int r = 0; r < 1000; r++)
                 {
-                    var x = Random.Range(tileSize, (level.length - 3) * tileSize);
+                    var x = Random.Range(tileSize, (level.settings.length - 3) * tileSize);
 
                     if (entitySpawns[x])
                     {

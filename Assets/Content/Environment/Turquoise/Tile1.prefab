@@ -154,7 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f635fe3485dfd0544941abc0f29f6f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 380602775770435078}
+  sprite: {fileID: 0}
+  action:
+    m_PersistentCalls:
+      m_Calls: []
+  allowRepeats: 0
 --- !u!114 &4118086784336468361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,8 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c233e53c9a6f347811574d2328f441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: {fileID: 3269368318986023657}
-  interact: {fileID: 9006326799741701748}
   powerRecovery: 30
 --- !u!1 &4659204451695871496
 GameObject:

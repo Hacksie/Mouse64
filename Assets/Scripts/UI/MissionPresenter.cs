@@ -17,8 +17,8 @@ namespace HackedDesign.UI
         {
             corpText.text = GameManager.Instance.Data.currentLevel.corp;
             targetText.text = GameManager.Instance.Data.currentLevel.target;
-            difficultyText.text = GameManager.Instance.Data.currentLevel.difficulty;
-            windowText.text = GameManager.Instance.Data.currentLevel.window.ToString() + "s";
+            difficultyText.text = GameManager.Instance.Data.currentLevel.settings.difficulty.ToString();
+            windowText.text = GameManager.Instance.Data.currentLevel.settings.window.ToString() + "s";
 
             EventSystem.current.SetSelectedGameObject(defaultButton);
         }

@@ -43,12 +43,13 @@ GameObject:
   - component: {fileID: 2852730730976529327}
   - component: {fileID: 5154667679830899513}
   - component: {fileID: 2845166358113732553}
-  m_Layer: 0
+  - component: {fileID: 3998553825468841936}
+  m_Layer: 11
   m_Name: Kat
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2852730730976529327
 Transform:
@@ -78,7 +79,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -89,7 +90,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1}
+  m_Size: {x: 0.5, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &2845166358113732553
 MonoBehaviour:
@@ -103,10 +104,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f635fe3485dfd0544941abc0f29f6f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 8733519223870178650}
+  sprite: {fileID: 0}
   action:
     m_PersistentCalls:
       m_Calls: []
+  allowRepeats: 0
+--- !u!114 &3998553825468841936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5596042335438108076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483478a22a1f0f344b6c20cbb5beb560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog: {fileID: 11400000, guid: 9fb1f808d4d5c464ebe969ccce7574f8, type: 2}
 --- !u!1 &6486824762461066609
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,7 +758,7 @@ Tilemap:
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
-      m_AllTileFlags: 1073741825
+      m_AllTileFlags: 0
   - first: {x: 3, y: 1, z: 0}
     second:
       serializedVersion: 2
@@ -825,7 +840,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
-  m_AnimatedTiles: {}
+  m_AnimatedTiles:
+  - first: {x: 2, y: 1, z: 0}
+    second:
+      m_AnimatedSprites:
+      - {fileID: -6662830832694087935, guid: 894de372dbee34f4784f15c224b0772c, type: 3}
+      - {fileID: 9213593953539519693, guid: 894de372dbee34f4784f15c224b0772c, type: 3}
+      m_AnimationSpeed: 1
+      m_AnimationTimeOffset: 0
+      m_IsLooping: 1
   m_TileAssetArray:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 19f6056142982c54c93f2a0ac4fa7e69, type: 2}
@@ -836,7 +859,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: eee3f0ab73ae0314e94afccd0bf90ac0, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 30fe89c0c5b75b44c93ea21d1b7f9178, type: 2}
+    m_Data: {fileID: 11400000, guid: ecdebcfdbca40844f9738e08f48b3680, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 52c87eaf63455b54b89eda8596784a61, type: 2}
   - m_RefCount: 1
@@ -997,12 +1020,13 @@ GameObject:
   - component: {fileID: 6970665264196560500}
   - component: {fileID: 4841958193577953772}
   - component: {fileID: 9056314154027827732}
-  m_Layer: 0
+  - component: {fileID: 169339599828376102}
+  m_Layer: 11
   m_Name: PPK
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6970665264196560500
 Transform:
@@ -1032,7 +1056,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1043,7 +1067,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1}
+  m_Size: {x: 0.5, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &9056314154027827732
 MonoBehaviour:
@@ -1057,10 +1081,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f635fe3485dfd0544941abc0f29f6f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 8754946460187467782}
+  sprite: {fileID: 0}
   action:
     m_PersistentCalls:
       m_Calls: []
+  allowRepeats: 0
+--- !u!114 &169339599828376102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8592210621236007882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483478a22a1f0f344b6c20cbb5beb560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialog: {fileID: 11400000, guid: 5bb4fba3d97663640bc84bba80b6f26c, type: 2}
 --- !u!1 &8733519223870178650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,12 +1109,12 @@ GameObject:
   m_Component:
   - component: {fileID: 474306249673531537}
   - component: {fileID: 168134259523172658}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &474306249673531537
 Transform:
@@ -1153,12 +1191,12 @@ GameObject:
   m_Component:
   - component: {fileID: 77495298739968612}
   - component: {fileID: 5646368945853460222}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &77495298739968612
 Transform:

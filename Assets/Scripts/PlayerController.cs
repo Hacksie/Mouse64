@@ -146,7 +146,6 @@ namespace HackedDesign
 
             if (context.performed)
             {
-                Logger.Log(this, "interact");
                 this.interact = true;
             }
             else if (context.canceled)

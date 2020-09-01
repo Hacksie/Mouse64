@@ -39,7 +39,7 @@ namespace HackedDesign
         {
             GameManager.Instance.ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.player.Sit = false;
-            HideDialog();
+            EndDialog();
         }
 
         public void Update()
@@ -68,7 +68,7 @@ namespace HackedDesign
             this.gameOverPresenter.Repaint();
         }
 
-        public void HideDialog()
+        public void EndDialog()
         {
             this.gameOverPresenter.Hide();
         }

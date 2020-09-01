@@ -28,13 +28,13 @@ namespace HackedDesign
 
         public void End()
         {
-            HideDialog();
+            EndDialog();
         }
 
         private void CalcScore()
         {
             
-            var time = (GameManager.Instance.Data.currentLevel.window - GameManager.Instance.Data.timer);
+            var time = (GameManager.Instance.Data.currentLevel.settings.window - GameManager.Instance.Data.timer);
             var score = Mathf.Max(0, 1000 + (Mathf.FloorToInt(time) * 20) + (GameManager.Instance.Data.alert * -50) + (5 - (GameManager.Instance.Data.bullets * -50)) + (GameManager.Instance.Data.currentLevel.reactions * -25));
 
             Logger.Log("Mission complete", "calc score ", score.ToString());
@@ -70,7 +70,7 @@ namespace HackedDesign
             this.missionCompletePresenter.Repaint();
         }
 
-        public void HideDialog()
+        public void EndDialog()
         {
             this.missionCompletePresenter.Hide();
         }

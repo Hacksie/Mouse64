@@ -15,14 +15,21 @@ namespace HackedDesign.UI
         public override void Repaint()
         {
             EventSystem.current.SetSelectedGameObject(defaultButton);
-            timeText.text = (GameManager.Instance.Data.currentLevel.window - GameManager.Instance.Data.timer).ToString("F0") + "s";
+            timeText.text = (GameManager.Instance.Data.currentLevel.settings.window - GameManager.Instance.Data.timer).ToString("F0") + "s";
             alertsText.text = GameManager.Instance.Data.alert.ToString();
             scoreText.text = GameManager.Instance.Data.currentLevel.score.ToString();
         }
 
         public void NextEvent()
         {
-            GameManager.Instance.NextLevel();
+            if(GameManager.Instance.NextLevel())
+            {
+                GameManager.Instance.SetMissionSelect();
+            }
+            else 
+            {
+                GameManager.Instance.SetGameOver();
+            }
         }
     }
 }

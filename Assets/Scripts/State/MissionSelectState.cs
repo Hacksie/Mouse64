@@ -38,6 +38,8 @@ namespace HackedDesign
             this.levelRenderer.LoadMissionSelectLevel();
             AudioManager.Instance.PlayMissionSelectMusic();
             GameManager.Instance.ParticlesSelect.Play();
+            GameManager.Instance.Data.currentLevel.currentDialogue = GameManager.Instance.Data.currentLevel.settings.startingDialogue;
+            GameManager.Instance.Data.currentLevel.currentDialogueIndex = 0;
             ShowDialog();
         }
 
@@ -46,12 +48,12 @@ namespace HackedDesign
             GameManager.Instance.ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.player.Sit = false;
             this.missionPresenter.Hide();
-            HideDialog();
+            EndDialog();
         }
 
         public void Update()
         {
-            if (GameManager.Instance.Data.currentLevel.currentDialogue >= GameManager.Instance.Data.currentLevel.dialogue.Count)
+            if (GameManager.Instance.Data.currentLevel.currentDialogueIndex >= GameManager.Instance.Data.currentLevel.dialogue.Count)
             {
                 this.dialogPresenter.Hide();
                 this.missionPresenter.Show();
@@ -94,7 +96,7 @@ namespace HackedDesign
             this.dialogPresenter.Repaint();
         }
 
-        public void HideDialog()
+        public void EndDialog()
         {
             this.dialogPresenter.Hide();
         }

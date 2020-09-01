@@ -51,7 +51,7 @@ namespace HackedDesign
             throw new System.NotImplementedException();
         }
 
-        public void HideDialog()
+        public void EndDialog()
         {
             throw new System.NotImplementedException();
         }

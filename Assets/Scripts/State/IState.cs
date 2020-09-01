@@ -9,9 +9,9 @@ namespace HackedDesign
         void End();
         void Start();
         void ShowDialog();
-        void HideDialog();
+        void EndDialog();
 
-        Dialog CurrentDialog { get; set; }
+        //Dialog CurrentDialog { get; set; }
         
         bool PlayerActionAllowed { get; }
         bool Battle { get; }

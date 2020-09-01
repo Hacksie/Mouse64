@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 043798769c10d75479155a75731313f6, type: 3}
-  m_Name: Dialog
+  m_Name: ComputerDialog
   m_EditorClassIdentifier: 
   text:
-  - Twas the night before christmas,
-  - when all through the city,
-  - no creatures were stirring.
-  - ...Except a Mouse.
-  - 'Though if I had my way, '
-  - I'd leave the creatures to their stirrings.
-  - I'm getting too old for this.
+  - <color='#B0B0B0'>A message waits for you from your Manager.</color>
+  - 'Ms Hart, I have an additional request for '
+  - tonight's job. Your new coworker, Ms Snow
+  - I want her to observe you tonight.
+  - See how she handles herself.
+  - Report back when you're done.
+  - That is all.
+  - <color='#B0B0B0'>You can't think of anything worse than babysitting.</color>
   allowRepeats: 0

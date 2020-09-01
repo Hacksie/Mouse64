@@ -27,7 +27,7 @@ namespace HackedDesign
 
         public void End()
         {
-            HideDialog();
+            EndDialog();
         }
 
         public void Update()
@@ -56,7 +56,7 @@ namespace HackedDesign
             this.deadPresenter.Repaint();
         }
 
-        public void HideDialog()
+        public void EndDialog()
         {
             this.deadPresenter.Hide();
         }

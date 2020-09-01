@@ -24,17 +24,12 @@ namespace HackedDesign
 
         public void Begin()
         {
-            // GameManager.Instance.Reset();
-            // this.levelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
-            // AudioManager.Instance.PlayRandomGameMusic();
-            
             GameManager.Instance.ParticlesLeft.Play();
-            Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.length + 1);
+            Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.settings.length + 1);
             GameManager.Instance.ParticlesRight.transform.position = rightPos + new Vector3(2.0f, 4, 0);
             GameManager.Instance.ParticlesRight.Play();
             
-            this.hudPresenter.Show();
-            
+            this.hudPresenter.Show(); 
         }
 
         public void End()
@@ -92,7 +87,7 @@ namespace HackedDesign
             throw new System.NotImplementedException();
         }
 
-        public void HideDialog()
+        public void EndDialog()
         {
             throw new System.NotImplementedException();
         }
