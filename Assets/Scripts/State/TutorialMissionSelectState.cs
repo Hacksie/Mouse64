@@ -32,7 +32,7 @@ namespace HackedDesign
             GameManager.Instance.Reset();
             //GameManager.Instance.Data.currentLevel = levels[Data.currentLevelIndex];
             //this.player.Sit = true;
-            this.player.transform.position = new Vector3(-0.75f, 0.275f, 0);
+            this.player.transform.position = new Vector3(-0.85f, 0.275f, 0);
             this.pool.DestroyEntities();
             //GameManager.Instance.Data.currentLevel.name = "hotdog";
             this.levelRenderer.LoadMissionTutorialLevel();
