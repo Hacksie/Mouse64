@@ -98,7 +98,7 @@ namespace HackedDesign
 
                 return 1;
             }
-        }        
+        }
 
         private GameManager() => Instance = this;
 
@@ -299,10 +299,23 @@ namespace HackedDesign
                 return false;
                 //SetGameOver();
             }
+
+            Data.currentLevel = levels[Data.currentLevelIndex];
+            Data.seed = (int)System.DateTime.Now.Ticks;
+
+            if(Data.currentLevel.settings.randomizeDetails)
+            {
+                Data.currentLevel.corp = GetRandomCorp();
+                Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
+            }
+
+            return true;
+
+
+/*
             else if (Data.currentLevelIndex == (levels.Count - 1))
             {
-                Data.currentLevel = levels[Data.currentLevelIndex];
-                Data.seed = (int)System.DateTime.Now.Ticks;
+
                 Data.currentLevel.corp = "Arisana";
                 Data.currentLevel.target = "G.Booker";
                 return true;
@@ -316,12 +329,14 @@ namespace HackedDesign
                 Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
                 return true;
                 //GameManager.Instance.SetMissionSelect();
-            }
+            }*/
+
+
 
         }
 
-        public string GetRandomCorp() =>this.corpList[Random.Range(0, this.corpList.Length)];
-        public string GetRandomName() =>this.nameList[Random.Range(0, this.nameList.Length)];
+        public string GetRandomCorp() => this.corpList[Random.Range(0, this.corpList.Length)];
+        public string GetRandomName() => this.nameList[Random.Range(0, this.nameList.Length)];
 
         public void ConsumeBullet(int amount) => Data.bullets = Mathf.Clamp(Data.bullets - amount, 0, Data.maxBullets);
         public void ConsumeStealth(float amount) => Data.energy = Mathf.Clamp(Data.energy - amount, 0, Data.maxEnergy);
