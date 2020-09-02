@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PPKDialog
   m_EditorClassIdentifier: 
   text:
-  - <color='#B0B0B0'>Your pistol, a .32 PPK.</color>
+  - <color='#B0B0B0'>Your pistol, a PPK in .32ACP.</color>
   - <color='#B0B0B0'>A peashooter against modern tech autos, but</color>
   - <color='#B0B0B0'>beggers can't be choosers on the black market.</color>
   - <color='#B0B0B0'>Best not to get caught with it.</color>

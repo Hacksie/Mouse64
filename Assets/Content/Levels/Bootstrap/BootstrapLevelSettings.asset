@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: BootstrapLevelSettings
   m_EditorClassIdentifier: 
   difficulty: 0
-  length: 8
-  security: 3
+  randomizeDetails: 0
+  length: 16
+  security: 4
   tech: 4
   openGuards: 0
   drones: 0

@@ -40,6 +40,8 @@ namespace HackedDesign
             GameManager.Instance.ParticlesSelect.Play();
             GameManager.Instance.Data.currentLevel.currentDialogue = GameManager.Instance.Data.currentLevel.settings.startingDialogue;
             GameManager.Instance.Data.currentLevel.currentDialogueIndex = 0;
+            this.levelPresenter.Show();
+            this.levelPresenter.Repaint();
             ShowDialog();
         }
 
@@ -47,8 +49,10 @@ namespace HackedDesign
         {
             GameManager.Instance.ParticlesSelect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.player.Sit = false;
-            this.missionPresenter.Hide();
             EndDialog();
+            this.missionPresenter.Hide();
+            this.levelPresenter.Hide();
+            
         }
 
         public void Update()
@@ -99,7 +103,11 @@ namespace HackedDesign
 
         public void EndDialog()
         {
+            Logger.Log("MissionState", "End dialog");
             this.dialogPresenter.Hide();
+            this.levelPresenter.Hide();
+            this.missionPresenter.Show();
+            this.missionPresenter.Repaint();            
         }
     }
 }

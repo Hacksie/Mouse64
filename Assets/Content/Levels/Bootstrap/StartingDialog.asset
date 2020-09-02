@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: StartingDialog
   m_EditorClassIdentifier: 
   text:
+  - <color='#B0B0B0'>The girl in front of you stares as you walk over.</color>
+  - I'm Snow Owl. Let's do this.
   - <color='#B0B0B0'>The kid in front of you could have been you, </color>
   - <color='#B0B0B0'>10 years ago. Impatient and arrogant.</color>
-  - <color='#B0B0B0'>She looks at you as you walk over.</color> Snow Owl. Ready?
   - <color='#B0B0B0'>You give her a nod.</color>
