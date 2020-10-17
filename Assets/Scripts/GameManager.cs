@@ -252,20 +252,20 @@ namespace HackedDesign
                     break;
             }
 
-            var settings = new LevelSettings()
-            {
-                difficulty = difficulty,
-                length = length,
-                security = security,
-                openGuards = openGuards,
-                drones = drones,
-                gcannon = gcannon,
-                wcannon = wcannon,
-                rcannon = rcannon,
-                doors = doors,
-                maxAlert = maxAlert,
-                alertSpawn = alertSpawn,
-            };
+            var settings = ScriptableObject.CreateInstance<LevelSettings>();
+
+            settings.difficulty = difficulty;
+            settings.length = length;
+            settings.security = security;
+            settings.openGuards = openGuards;
+            settings.drones = drones;
+            settings.gcannon = gcannon;
+            settings.wcannon = wcannon;
+            settings.rcannon = rcannon;
+            settings.doors = doors;
+            settings.maxAlert = maxAlert;
+            settings.alertSpawn = alertSpawn;
+
 
             Data.currentLevel = new Level()
             {
@@ -303,7 +303,7 @@ namespace HackedDesign
             Data.currentLevel = levels[Data.currentLevelIndex];
             Data.seed = (int)System.DateTime.Now.Ticks;
 
-            if(Data.currentLevel.settings.randomizeDetails)
+            if (Data.currentLevel.settings.randomizeDetails)
             {
                 Data.currentLevel.corp = GetRandomCorp();
                 Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
@@ -312,24 +312,24 @@ namespace HackedDesign
             return true;
 
 
-/*
-            else if (Data.currentLevelIndex == (levels.Count - 1))
-            {
+            /*
+                        else if (Data.currentLevelIndex == (levels.Count - 1))
+                        {
 
-                Data.currentLevel.corp = "Arisana";
-                Data.currentLevel.target = "G.Booker";
-                return true;
-                //GameManager.Instance.SetMissionSelect();
-            }
-            else
-            {
-                Data.currentLevel = levels[Data.currentLevelIndex];
-                Data.seed = (int)System.DateTime.Now.Ticks;
-                Data.currentLevel.corp = GetRandomCorp();
-                Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
-                return true;
-                //GameManager.Instance.SetMissionSelect();
-            }*/
+                            Data.currentLevel.corp = "Arisana";
+                            Data.currentLevel.target = "G.Booker";
+                            return true;
+                            //GameManager.Instance.SetMissionSelect();
+                        }
+                        else
+                        {
+                            Data.currentLevel = levels[Data.currentLevelIndex];
+                            Data.seed = (int)System.DateTime.Now.Ticks;
+                            Data.currentLevel.corp = GetRandomCorp();
+                            Data.currentLevel.target = ((char)(Random.Range(0, 26) + 65)) + "." + GetRandomName();
+                            return true;
+                            //GameManager.Instance.SetMissionSelect();
+                        }*/
 
 
 

@@ -234,6 +234,7 @@ namespace HackedDesign.UI
 
             GameManager.Instance.RandomGame = false;
             GameManager.Instance.SetPrelude();
+            //GameManager.Instance.SetMissionSelect();
         }
 
         public void NewSeedEvent()

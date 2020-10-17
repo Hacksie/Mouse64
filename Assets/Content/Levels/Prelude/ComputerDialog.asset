@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text:
   - <color='#B0B0B0'>A message waits for you from your Manager.</color>
-  - 'Ms Hart, I have an additional request for '
-  - tonight's job. Your new coworker, Ms Snow
-  - I want her to observe you tonight.
-  - See how she handles herself.
-  - Report back when you're done.
-  - That is all.
+  - Ms Hart, change of plans for tonight.
+  - You will be joined by your new coworker, Ms Snow.
+  - She has my new plan for you.
+  - <color='#B0B0B0'>Great...</color>
   - <color='#B0B0B0'>You can't think of anything worse than babysitting.</color>
-  allowRepeats: 0

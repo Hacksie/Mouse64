@@ -15,4 +15,4 @@ MonoBehaviour:
   text:
   - <color='#B0B0B0'>Victoria Hart, you know damn well your fridge is empty.</color>
   - <color='#B0B0B0'>You aught to get off your butt and do something about that.</color>
-  allowRepeats: 0
+  - <color='#B0B0B0'>about that.</color>
