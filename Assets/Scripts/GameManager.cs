@@ -131,7 +131,7 @@ namespace HackedDesign
 
         public void SaveGame()
         {
-            Data.saveName = System.DateTime.Now.ToString("yyddMM HHmm");
+            Data.saveName = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm");
             Logger.Log(this, "Saving state ", Data.saveName);
             string json = JsonUtility.ToJson(Data);
             string path = Path.Combine(Application.persistentDataPath, $"SaveFile{currentSlot}.json");

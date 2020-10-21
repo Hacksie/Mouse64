@@ -44,6 +44,10 @@ namespace HackedDesign
             this.missionPresenter.Hide();
             this.levelPresenter.Repaint();
             ShowDialog();
+            if(GameManager.Instance.GameSettings.skipDialog)
+            {
+                EndDialog();
+            }
         }
 
         public void End()
@@ -53,7 +57,6 @@ namespace HackedDesign
             this.missionPresenter.Hide();
             this.dialogPresenter.Hide();
             this.levelPresenter.Hide();
-            EndDialog();
         }
 
         public void Update()
@@ -104,7 +107,6 @@ namespace HackedDesign
 
         public void EndDialog()
         {
-            Logger.Log("MissionState", "End dialog");
             this.dialogPresenter.Hide();
             this.levelPresenter.Hide();
             this.missionPresenter.Show();

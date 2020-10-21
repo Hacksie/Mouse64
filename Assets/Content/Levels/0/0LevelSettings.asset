@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 489a6fd6aa1dfe5478612895f5b8d0c7, type: 3}
-  m_Name: LevelSettings
+  m_Name: 0LevelSettings
   m_EditorClassIdentifier: 
-  difficulty: Easy
-  length: 2
+  difficulty: 1
+  randomizeDetails: 1
+  length: 24
   security: 2
   tech: 0
   openGuards: 3

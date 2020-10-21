@@ -20,6 +20,7 @@ namespace HackedDesign
             this.pool = entityPool;
             this.levelRenderer = levelRenderer;
             this.hudPresenter = hudPresenter;
+            
         }
 
         public void Begin()
@@ -28,6 +29,7 @@ namespace HackedDesign
             Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.settings.length + 1);
             GameManager.Instance.ParticlesRight.transform.position = rightPos + new Vector3(2.0f, 4, 0);
             GameManager.Instance.ParticlesRight.Play();
+            Cursor.visible = false;
             
             this.hudPresenter.Show(); 
         }
@@ -37,6 +39,7 @@ namespace HackedDesign
             GameManager.Instance.ParticlesLeft.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             GameManager.Instance.ParticlesRight.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.hudPresenter.Hide();
+            Cursor.visible = true;
         }
 
         public void Update()

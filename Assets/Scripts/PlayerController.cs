@@ -10,20 +10,23 @@ namespace HackedDesign
         [SerializeField] private Animator animator = null;
         [SerializeField] private Animator muzzleAnimator = null;
         [SerializeField] private Transform crosshairAnchor = null;
+        [SerializeField] private Transform crosshair = null;
+        [SerializeField] private Camera cam = null;
+        [SerializeField] private RectTransform rect;
 
         [Header("Settings")]
         [SerializeField] private PlayerSettings settings = null;
 
         private float lookAngle = 0;
 
-        private Vector2 direction;
+        //private Vector2 direction;
         private Vector2 inputAxis;
         private Vector2 mousePos;
         private new Rigidbody2D rigidbody;
         private Vector2 currentVelocity = Vector2.zero;
         private bool shoot = false;
         private float lastFire = 0;
-        private bool fire = false;
+        private bool firing = false;
         private bool crouch = false;
         private bool stealth = false;
         private bool interact = false;
@@ -172,10 +175,10 @@ namespace HackedDesign
             this.animator.Play("mouse idle");
             this.transform.position = new Vector3(2, 0.275f, 0);
             this.inputAxis = Vector2.zero;
-            direction = Vector2.zero;
+            //direction = Vector2.zero;
             transform.right = Vector2.right;
             rigidbody.velocity = Vector2.zero;
-            fire = false;
+            firing = false;
             shoot = false;
             lastFire = 0;
             crouch = false;
@@ -189,9 +192,22 @@ namespace HackedDesign
         // Update is called once per frame
         public void UpdateBehavior()
         {
-            if (inputAxis.sqrMagnitude > Vector2.kEpsilon)
+            UpdateCrosshair();
+            UpdateInteract();
+            UpdateShoot();            
+            UpdateStealth();
+
+            //Vector2 direction = Vector2.zero;
+
+            Vector2 direction = (crosshair.position - transform.position).normalized;
+
+            
+            if (!firing && inputAxis.sqrMagnitude > Vector2.kEpsilon)
             {
                 direction = inputAxis;
+
+                //if(inputAxis.x != 0)
+                //transform.right = new Vector2(inputAxis.x, 0);
             }
 
             if (direction.x != 0)
@@ -203,10 +219,9 @@ namespace HackedDesign
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, targetVelocity, ref currentVelocity, settings.movementSmoothing);
 
-            UpdateInteract();
-            UpdateShoot();
-            UpdateStealth();
-            UpdateCrosshair();
+
+            
+            
         }
 
         private void UpdateInteract()
@@ -241,15 +256,18 @@ namespace HackedDesign
                 return;
             }
 
+            this.firing = false;
+
             if (shoot)
             {
+                
                 var hitEntity = GetMeleeHit();
 
                 if (hitEntity == null && (Time.time - lastFire > settings.fireRate) && GameManager.Instance.Data.bullets > 0)
                 {
                     GameManager.Instance.ConsumeBullet(1);
                     lastFire = Time.time;
-                    fire = true;
+                    this.firing = true;
                     AudioManager.Instance.PlayGunshot();
                     hitEntity = GetShootHit();
                 }
@@ -259,11 +277,6 @@ namespace HackedDesign
                     hitEntity.Hit();
                 }
             }
-            else
-            {
-                fire = false;
-            }
-
         }
 
         private IEntity GetMeleeHit()
@@ -279,7 +292,7 @@ namespace HackedDesign
 
         private IEntity GetShootHit()
         {
-            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshairAnchor.right, settings.shootDistance, settings.shootMask);
+            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshair.position - crosshairAnchor.position, settings.shootDistance, settings.shootMask);
             if (hit.collider != null && hit.collider.CompareTag("Entity"))
             {
                 return hit.collider.GetComponent<IEntity>();
@@ -316,7 +329,16 @@ namespace HackedDesign
         {
             if (!GameManager.Instance.CurrentState.Battle)
             {
-                crosshairAnchor.gameObject.SetActive(false);
+                //crosshairAnchor.gameObject.SetActive(false);
+                return;
+            }
+
+            if (GameManager.Instance.GameSettings.useMouse)
+            {
+                Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x * (128f / Screen.width), mousePos.y * (72f / Screen.height), 0));
+                worldPos.z = 0;
+                crosshair.position = worldPos;
+
             }
             else
             {
@@ -344,7 +366,7 @@ namespace HackedDesign
             animator.SetBool("dead", this.dead);
             animator.SetBool("sit", this.sit);
             animator.SetBool("outofbattle", !GameManager.Instance.CurrentState.Battle);
-            muzzleAnimator.SetBool("shoot", this.fire);
+            muzzleAnimator.SetBool("shoot", this.firing);
         }
     }
 }

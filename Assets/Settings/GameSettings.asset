@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   invulnerability: 0
+  skipTutorial: 0
   easyAdj: 1
   mediumAdj: 0.8
   hardAdj: 0.6
@@ -21,3 +22,5 @@ MonoBehaviour:
   preludeLightColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   roomLightColor: {r: 0.40000004, g: 0.2392157, b: 0.29803923, a: 1}
   alertLightColor: {r: 0.81568635, g: 0.0627451, b: 0, a: 1}
+  useMouse: 1
+  skipDialog: 1

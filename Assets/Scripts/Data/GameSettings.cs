@@ -16,5 +16,7 @@ namespace HackedDesign
         [SerializeField] public Color preludeLightColor = Color.gray;
         [SerializeField] public Color roomLightColor = Color.gray;
         [SerializeField] public Color alertLightColor = Color.red;
+        [SerializeField] public bool useMouse = false;
+        [SerializeField] public bool skipDialog = true;
     }
 }
