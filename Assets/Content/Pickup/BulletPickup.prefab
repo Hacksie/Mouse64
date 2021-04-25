@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4598387618271957191}
   - component: {fileID: 5875784600625886215}
   m_Layer: 0
-  m_Name: BulletDrop
+  m_Name: BulletPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b6a4a02d847524f80ae2dc68048fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: {fileID: 4822069582178175570}
   bulletRecovery: 1
 --- !u!114 &5875784600625886215
 MonoBehaviour:
@@ -143,6 +142,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   allowRepeats: 0
+  autoInvoke: 1
 --- !u!1 &5046707835185323936
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 200
   m_Sprite: {fileID: 7448113381798972013, guid: e5f1a7109cfb3834798ceb026e09b8d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -11,14 +11,16 @@ namespace HackedDesign
         [SerializeField] private SpriteRenderer sprite = null;
         [SerializeField] private UnityEvent action = null;
         [SerializeField] private bool allowRepeats = false;
+        [SerializeField] private bool autoInvoke = false;
 
         void Awake()
         {
-            if(sprite == null)
+            if (sprite == null)
             {
                 sprite = GetComponentInChildren<SpriteRenderer>();
             }
-            sprite.gameObject.SetActive(false);
+            //HideHover();
+            //sprite.color = GameManager.Instance.GameSettings.defaultInteractColor;
         }
 
         public void Alert()
@@ -26,20 +28,38 @@ namespace HackedDesign
 
         }
 
+        public void ShowHover()
+        {
+            if (sprite != null)
+            {
+                sprite.color = GameManager.Instance.GameSettings.insideRangeInteractColor;
+            }
+        }
+
+
+
+        public void HideHover()
+        {
+            if (sprite != null)
+            {
+                sprite.color = GameManager.Instance.GameSettings.outsideRangeInteractColor;
+                //sprite.color = GameManager.Instance.GameSettings.defaultInteractColor;
+            }
+        }
+
         public void AddEvent(UnityAction action)
-        {  
+        {
             this.action.AddListener(action);
         }
 
         public void Hit()
         {
-            Logger.Log(this, "Hit");
+            Logger.Log(this, "Interact");
             action.Invoke();
-            if(!allowRepeats)
+            if (!allowRepeats)
             {
                 sprite.gameObject.SetActive(false);
                 this.gameObject.SetActive(false);
-
             }
         }
 
@@ -53,13 +73,15 @@ namespace HackedDesign
 
         }
 
-
-
         public void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
-                sprite.gameObject.SetActive(true);
+                ShowHover();
+                if(autoInvoke)
+                {
+                    Hit();
+                }
             }
         }
 
@@ -67,8 +89,10 @@ namespace HackedDesign
         {
             if (other.CompareTag("Player"))
             {
-                sprite.gameObject.SetActive(false);
+                HideHover();
+                
             }
         }
+
     }
 }

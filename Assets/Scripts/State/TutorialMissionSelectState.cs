@@ -42,7 +42,13 @@ namespace HackedDesign
             GameManager.Instance.Data.currentLevel.currentDialogueIndex = 0;
             this.levelPresenter.Show();
             this.levelPresenter.Repaint();
-            ShowDialog();
+            if (!GameManager.Instance.GameSettings.skipDialog)
+            {
+                ShowDialog();
+            }
+            else {
+                EndDialog();
+            }
         }
 
         public void End()
@@ -52,7 +58,7 @@ namespace HackedDesign
             EndDialog();
             this.missionPresenter.Hide();
             this.levelPresenter.Hide();
-            
+
         }
 
         public void Update()
@@ -107,7 +113,7 @@ namespace HackedDesign
             this.dialogPresenter.Hide();
             this.levelPresenter.Hide();
             this.missionPresenter.Show();
-            this.missionPresenter.Repaint();            
+            this.missionPresenter.Repaint();
         }
     }
 }

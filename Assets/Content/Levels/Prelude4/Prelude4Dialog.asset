@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043798769c10d75479155a75731313f6, type: 3}
+  m_Name: Prelude4Dialog
+  m_EditorClassIdentifier: 
+  text:
+  - <color='#B0B0B0'>Before you can twitch, you are surrounded by Nisana Paras.</color>
+  - <color='#B0B0B0'>Then, taking his sweet time, your boss, Manager Lyon, walks
+    up to you.</color>
+  - Search her.
+  - <color='#B0B0B0'>The Paras quickly remove your PP7 and tonight's data shard.</color>
+  - <color='#B0B0B0'>Mr Lyon makes a show of scanning the shard before pocketing
+    it.</color>
+  - Tsk tsk, Ms Hart. I came here personally to inform you, with the recent merger
+    of RKB
+  - your position at Nisana has been restructured. Ms Snow will be replacing you,
+    going forward.
+  - But this is serious, isn't it? A conspiracy to commit espionage against a Nisana
+    subsidary,
+  - possession of an illegal firearm, and, I am informed, possession of banned class
+    C AI Tech.
+  - I could hand you over to the Nisana Paras and be done with you.
+  - But it's christmas and I'm feeling lenient.
+  - All benefits, protections and citizenship provided by the Nisana corporation
+    are
+  - hereby revoked. You are now a free agent of Ruby City. Good luck.

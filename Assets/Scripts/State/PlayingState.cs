@@ -26,10 +26,10 @@ namespace HackedDesign
         public void Begin()
         {
             GameManager.Instance.ParticlesLeft.Play();
-            Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.settings.length + 1);
+            Vector3 rightPos = this.levelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.settings.length + 1,0);
             GameManager.Instance.ParticlesRight.transform.position = rightPos + new Vector3(2.0f, 4, 0);
             GameManager.Instance.ParticlesRight.Play();
-            Cursor.visible = false;
+            //Cursor.visible = false;
             
             this.hudPresenter.Show(); 
         }
@@ -39,7 +39,7 @@ namespace HackedDesign
             GameManager.Instance.ParticlesLeft.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             GameManager.Instance.ParticlesRight.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             this.hudPresenter.Hide();
-            Cursor.visible = true;
+            //Cursor.visible = true;
         }
 
         public void Update()

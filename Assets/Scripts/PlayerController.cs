@@ -10,14 +10,13 @@ namespace HackedDesign
         [SerializeField] private Animator animator = null;
         [SerializeField] private Animator muzzleAnimator = null;
         [SerializeField] private Transform crosshairAnchor = null;
-        [SerializeField] private Transform crosshair = null;
+        //[SerializeField] private Transform crosshair = null;
         [SerializeField] private Camera cam = null;
-        [SerializeField] private RectTransform rect;
+        //[SerializeField] private RectTransform rect;
 
         [Header("Settings")]
         [SerializeField] private PlayerSettings settings = null;
 
-        private float lookAngle = 0;
 
         //private Vector2 direction;
         private Vector2 inputAxis;
@@ -87,7 +86,7 @@ namespace HackedDesign
 
         public void CrouchEvent(InputAction.CallbackContext context)
         {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed || !GameManager.Instance.CurrentState.Battle)
             {
                 this.crouch = false;
                 return;
@@ -105,7 +104,7 @@ namespace HackedDesign
 
         public void FireEvent(InputAction.CallbackContext context)
         {
-            if (!GameManager.Instance.CurrentState.PlayerActionAllowed || !GameManager.Instance.CurrentState.Battle)
+            if (!(GameManager.Instance.CurrentState.PlayerActionAllowed || GameManager.Instance.CurrentState.Battle))
             {
                 this.shoot = false;
                 return;
@@ -147,13 +146,9 @@ namespace HackedDesign
                 return;
             }
 
-            if (context.performed)
+            if (context.started)
             {
                 this.interact = true;
-            }
-            else if (context.canceled)
-            {
-                this.interact = false;
             }
         }
 
@@ -186,28 +181,23 @@ namespace HackedDesign
             interact = false;
             dead = false;
             sit = false;
-            lookAngle = 0;
         }
 
         // Update is called once per frame
         public void UpdateBehavior()
         {
-            UpdateCrosshair();
+            //UpdateCrosshair();
             UpdateInteract();
-            UpdateShoot();            
+            UpdateTarget();
             UpdateStealth();
 
             //Vector2 direction = Vector2.zero;
+            Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x * (128f / Screen.width), mousePos.y * (72f / Screen.height), 0));
+            Vector2 direction = (worldPos - transform.position).normalized;
 
-            Vector2 direction = (crosshair.position - transform.position).normalized;
-
-            
             if (!firing && inputAxis.sqrMagnitude > Vector2.kEpsilon)
             {
                 direction = inputAxis;
-
-                //if(inputAxis.x != 0)
-                //transform.right = new Vector2(inputAxis.x, 0);
             }
 
             if (direction.x != 0)
@@ -218,15 +208,12 @@ namespace HackedDesign
             Vector2 targetVelocity = new Vector2(inputAxis.x * (crouch ? settings.crouchSpeed : settings.runSpeed), rigidbody.velocity.y);
 
             rigidbody.velocity = Vector2.SmoothDamp(rigidbody.velocity, targetVelocity, ref currentVelocity, settings.movementSmoothing);
-
-
-            
-            
         }
 
         private void UpdateInteract()
         {
-            if (interact)
+            //FIXME: Should we trigger everything though?
+            if (this.interact)
             {
                 RaycastHit2D[] hits = Physics2D.RaycastAll(crosshairAnchor.transform.position, crosshairAnchor.right, settings.interactDistance, settings.interactMask);
 
@@ -246,21 +233,23 @@ namespace HackedDesign
                     }
                 }
             }
+
+            this.interact = false;
         }
 
 
-        private void UpdateShoot()
+        private void UpdateTarget()
         {
+            this.firing = false;
+
             if (!GameManager.Instance.CurrentState.Battle)
             {
                 return;
             }
 
-            this.firing = false;
-
             if (shoot)
             {
-                
+
                 var hitEntity = GetMeleeHit();
 
                 if (hitEntity == null && (Time.time - lastFire > settings.fireRate) && GameManager.Instance.Data.bullets > 0)
@@ -292,7 +281,8 @@ namespace HackedDesign
 
         private IEntity GetShootHit()
         {
-            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, crosshair.position - crosshairAnchor.position, settings.shootDistance, settings.shootMask);
+            Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x * (128f / Screen.width), mousePos.y * (72f / Screen.height), 0));
+            RaycastHit2D hit = Physics2D.Raycast(crosshairAnchor.transform.position, worldPos - crosshairAnchor.position, settings.shootDistance, settings.shootMask);
             if (hit.collider != null && hit.collider.CompareTag("Entity"))
             {
                 return hit.collider.GetComponent<IEntity>();
@@ -325,48 +315,17 @@ namespace HackedDesign
             }
         }
 
-        private void UpdateCrosshair()
-        {
-            if (!GameManager.Instance.CurrentState.Battle)
-            {
-                //crosshairAnchor.gameObject.SetActive(false);
-                return;
-            }
-
-            if (GameManager.Instance.GameSettings.useMouse)
-            {
-                Vector3 worldPos = cam.ScreenToWorldPoint(new Vector3(mousePos.x * (128f / Screen.width), mousePos.y * (72f / Screen.height), 0));
-                worldPos.z = 0;
-                crosshair.position = worldPos;
-
-            }
-            else
-            {
-                crosshairAnchor.gameObject.SetActive(true);
-                lookAngle += (inputAxis.y * Time.deltaTime * GameManager.Instance.PlayerPreferences.lookSpeed);
-                lookAngle = Mathf.Clamp(lookAngle, settings.minAngle, settings.maxAngle);
-
-                float newAngle = lookAngle;
-
-                if (transform.right.x < 0)
-                {
-                    newAngle = 180 - lookAngle;
-                }
-
-                crosshairAnchor.rotation = Quaternion.Euler(0, 0, newAngle);
-            }
-        }
-
+        
         private void Animate()
         {
             animator.SetFloat("velocity", Mathf.Abs(inputAxis.x));
-            animator.SetBool("shoot", this.shoot);
+            animator.SetBool("shoot", GameManager.Instance.CurrentState.Battle && this.shoot);
             animator.SetBool("crouch", this.crouch);
             animator.SetBool("stealth", this.stealth);
             animator.SetBool("dead", this.dead);
             animator.SetBool("sit", this.sit);
             animator.SetBool("outofbattle", !GameManager.Instance.CurrentState.Battle);
-            muzzleAnimator.SetBool("shoot", this.firing);
+            muzzleAnimator.SetBool("shoot", GameManager.Instance.CurrentState.Battle && this.firing);
         }
     }
 }

@@ -24,6 +24,7 @@ namespace HackedDesign
             state = EntityState.Dead;
         }
 
+
         public virtual void Alert()
         {
             if (state == EntityState.Idle)
@@ -62,7 +63,7 @@ namespace HackedDesign
                     animator.SetBool("stealth", false);
                     animator.SetBool("alert", false);
                     animator.SetBool("dead", false);
-                    break;                
+                    break;
                 case EntityState.Attack:
                     animator.SetFloat("velocity", 0);
                     animator.SetBool("alert", true);

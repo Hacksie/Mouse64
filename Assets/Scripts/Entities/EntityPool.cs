@@ -29,6 +29,7 @@ namespace HackedDesign
         {
             for (int i = 0; i < entityPool.childCount; i++)
             {
+                entityPool.GetChild(i).gameObject.SetActive(false);
                 Destroy(entityPool.GetChild(i).gameObject);
             }
 

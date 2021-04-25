@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043798769c10d75479155a75731313f6, type: 3}
+  m_Name: 0Dialog
+  m_EditorClassIdentifier: 
+  text:
+  - Take a seat, friend.
+  - A fresh victim of the corp hegemony?
+  - You look like you have the unemployment blues.
+  - <color="#999999">You nod and toss your old Nisana ID on the counter.</color>
+  - <color="#999999">He nods, knowingly.</color> Ah. Such partings can be difficult.
+    Are you hungry?
+  - <color="#999999">You shake your head.</color>
+  - You sure look it, my friend. Toppings?
+  - <color="#999999">You flash him a confused look.</color>
+  - Oh, you look like you could use the works.
+  - <color="#999999">He slides you a hot dog and a napkin.</color>
+  - <color="#999999">Scrawled on it is a name and the address of a corp.</color>
+  - <color="#999999">Underneath, loaded with 6 rounds of .357 magnum, is a Mateba
+    autorevolver.</color>
+  - <color="#999999">A relic of an begone world. A giant fist full of anger. Fitting.</color>
+  - You see? A good evening starts with a fine hotdog, friend.

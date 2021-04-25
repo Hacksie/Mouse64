@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043798769c10d75479155a75731313f6, type: 3}
+  m_Name: ComputerDialog
+  m_EditorClassIdentifier: 
+  text:
+  - <color='#B0B0B0'>Your PC blinks with a message from your Manager, Mr Lyon:</color>
+  - Ms Hart, a change of plans for the RKB job tonight.
+  - You will be joined by a new Nisana contractor, Ms Snow.
+  - Liase with her at the location given on the data shard attached.
+  - <color='#B0B0B0'>...</color>
+  - <color='#B0B0B0'>...Great.</color>
+  - <color='#B0B0B0'>The only thing worse that having to meet in the middle of bumfuck
+    nowhere,</color>
+  - <color='#B0B0B0'>is having to babysit some kid.</color>

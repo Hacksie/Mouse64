@@ -17,6 +17,7 @@ namespace HackedDesign
 
         public void Begin()
         {
+            Cursor.visible = false;
             this.menuPresenter.Show();
             AudioManager.Instance.PlayMenuMusic();
         }

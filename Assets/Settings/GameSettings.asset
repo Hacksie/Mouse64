@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 796a285833f91fb4b9609f490b0c82c9, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  invulnerability: 0
   skipTutorial: 0
   easyAdj: 1
   mediumAdj: 0.8
@@ -22,5 +21,10 @@ MonoBehaviour:
   preludeLightColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   roomLightColor: {r: 0.40000004, g: 0.2392157, b: 0.29803923, a: 1}
   alertLightColor: {r: 0.81568635, g: 0.0627451, b: 0, a: 1}
+  defaultInteractColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  outsideRangeInteractColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  insideRangeInteractColor: {r: 1, g: 0, b: 0.26666668, a: 1}
   useMouse: 1
-  skipDialog: 1
+  invulnerability: 0
+  spawn: 1
+  skipDialog: 0

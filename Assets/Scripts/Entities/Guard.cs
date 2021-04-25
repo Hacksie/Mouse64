@@ -29,6 +29,7 @@ namespace HackedDesign
         [SerializeField] private bool seeStealthed = false;
         [SerializeField] private float bulletDropChance = 0.0f;
         [SerializeField] private bool directional = true;
+        [SerializeField] private bool randomDirection = true;
 
         protected EntityState defaultState = EntityState.Idle;
         protected float reactionTimer = 0;
@@ -43,11 +44,11 @@ namespace HackedDesign
         protected new void Awake()
         {
             defaultState = state;
-            this.direction.x = Random.value > 0.5 ? -1 : 1;
+            this.direction.x = randomDirection ? (Random.value > 0.5 ? -1 : 1) : -1;
             base.Awake();
             this.collider = this.collider ?? GetComponent<Collider2D>();
-            this.patrolMin = GameManager.Instance.LevelRenderer.CalcPosition(1).x;
-            this.patrolMax = GameManager.Instance.LevelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.settings.length - 2).x;
+            this.patrolMin = GameManager.Instance.LevelRenderer.CalcPosition(1,0).x;
+            this.patrolMax = GameManager.Instance.LevelRenderer.CalcPosition(GameManager.Instance.Data.currentLevel.settings.length - 2,0).x;
             rigidbody = GetComponent<Rigidbody2D>();
         }
 
@@ -78,7 +79,7 @@ namespace HackedDesign
         {
             base.UpdateBehaviour();
 
-            if(!GameManager.Instance.CurrentState.PlayerActionAllowed)
+            if (!GameManager.Instance.CurrentState.PlayerActionAllowed)
             {
                 rigidbody.velocity = Vector2.zero;
                 return;
@@ -247,14 +248,14 @@ namespace HackedDesign
             }
 
 
-            if (!reaction && (Time.time - reactionTimer) >= (GameManager.Instance.DifficultyAdjustment* reactionTime))
+            if (!reaction && (Time.time - reactionTimer) >= (GameManager.Instance.DifficultyAdjustment * reactionTime))
             {
                 shootTimer = Time.time;
                 reaction = true;
                 Shoot();
             }
 
-            if (reaction && (Time.time - shootTimer) >= (GameManager.Instance.DifficultyAdjustment* shootTime))
+            if (reaction && (Time.time - shootTimer) >= (GameManager.Instance.DifficultyAdjustment * shootTime))
             {
                 shootTimer = Time.time;
                 Shoot();
@@ -271,7 +272,7 @@ namespace HackedDesign
                     state = this.defaultState;
                     return;
                 }
-                
+
                 /*
                 if (hit.collider == null || !hit.collider.CompareTag("Player"))
                 {

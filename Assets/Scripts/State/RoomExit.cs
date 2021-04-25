@@ -12,7 +12,7 @@ namespace HackedDesign
             //GameManager.Instance.LevelRenderer.LoadRandomLevel(GameManager.Instance.Data.currentLevel);
             //AudioManager.Instance.PlayRandomGameMusic();
             GameManager.Instance.NextLevel();
-            GameManager.Instance.SetTutorialMissionSelect();
+            GameManager.Instance.SetPrelude2();
             //GameManager.Instance.SetMissionSelect();
         }
     }

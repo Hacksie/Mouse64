@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043798769c10d75479155a75731313f6, type: 3}
+  m_Name: TVDialog
+  m_EditorClassIdentifier: 
+  text:
+  - ...and in breaking news in Ruby City, the Nisana corporation today announced
+    meetings
+  - on the purchase of the RKB corp had been highly productive.
+  - The CEO of Nisana, Takamoto Nisana, commented that the takeover will bring new
+  - opportunities for both corps.\nStock in Nisana grew 5.7% at the news...

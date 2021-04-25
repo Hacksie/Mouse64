@@ -6,7 +6,7 @@ namespace HackedDesign
     [CreateAssetMenu(fileName = "GameSettings", menuName = "Mouse/Settings/Game")]
     public class GameSettings : ScriptableObject
     {
-        [SerializeField] public bool invulnerability = true;
+        
         [SerializeField] public bool skipTutorial = false;
         [SerializeField] public float easyAdj = 1.0f;
         [SerializeField] public float mediumAdj = 0.8f;
@@ -16,7 +16,13 @@ namespace HackedDesign
         [SerializeField] public Color preludeLightColor = Color.gray;
         [SerializeField] public Color roomLightColor = Color.gray;
         [SerializeField] public Color alertLightColor = Color.red;
+        [SerializeField] public Color defaultInteractColor = Color.red;
+        [SerializeField] public Color outsideRangeInteractColor = Color.red;
+        [SerializeField] public Color insideRangeInteractColor = Color.red;
         [SerializeField] public bool useMouse = false;
+        [Header("Cheats")]
+        [SerializeField] public bool invulnerability = true;
+        [SerializeField] public bool spawn = true;
         [SerializeField] public bool skipDialog = true;
     }
 }

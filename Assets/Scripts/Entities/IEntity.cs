@@ -8,6 +8,7 @@ namespace HackedDesign
         void UpdateBehaviour();
         void UpdateLateBehaviour();
         void Hit();
+
         void Alert();
     }
 }

@@ -17,7 +17,7 @@ namespace HackedDesign.UI
 
             if (GameManager.Instance.Data.currentLevel.currentDialogueIndex < GameManager.Instance.Data.currentLevel.currentDialogue.text.Count)
             {
-                dialogText.text = GameManager.Instance.Data.currentLevel.currentDialogue.text[GameManager.Instance.Data.currentLevel.currentDialogueIndex];
+                dialogText.text = GameManager.Instance.Data.currentLevel.currentDialogue.text[GameManager.Instance.Data.currentLevel.currentDialogueIndex].Replace("\\n","\n");
             }
         }
 

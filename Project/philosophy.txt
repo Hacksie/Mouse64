@@ -37,7 +37,7 @@ Another victim of the corp
 hegemony?
 <color="#999999">You nod.</color>
 Who did you work for?
-<color="#999999">You flash your Arisana ID.</color>
+<color="#999999">You flash your useless Nisana ID.</color>
 Hungry?
 <color="#999999">You nod again.</color>
 Toppings?

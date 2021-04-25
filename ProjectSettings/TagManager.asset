@@ -9,6 +9,7 @@ TagManager:
   - Interactable
   - Undefined
   - Door
+  - Crosshair
   layers:
   - Default
   - TransparentFX

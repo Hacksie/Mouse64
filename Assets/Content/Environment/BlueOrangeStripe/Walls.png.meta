@@ -173,6 +173,18 @@ TextureImporter:
   - first:
       213: -2977462402128243700
     second: Walls_56
+  - first:
+      213: 3852935775343178047
+    second: Walls_57
+  - first:
+      213: 3395269191903702327
+    second: Walls_58
+  - first:
+      213: -2149052594861736446
+    second: Walls_59
+  - first:
+      213: -1443853764152904855
+    second: Walls_60
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -226,6 +238,8 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
@@ -1464,6 +1478,90 @@ TextureImporter:
       bones: []
       spriteID: c04901578bdeda6d0800000000000000
       internalID: -2977462402128243700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_57
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3179b78ca0687530800000000000000
+      internalID: 3852935775343178047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_58
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73d6f34575b6e1f20800000000000000
+      internalID: 3395269191903702327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_59
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20e72a71d080d22e0800000000000000
+      internalID: -2149052594861736446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walls_60
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9633e00c6a666fbe0800000000000000
+      internalID: -1443853764152904855
       vertices: []
       indices: 
       edges: []

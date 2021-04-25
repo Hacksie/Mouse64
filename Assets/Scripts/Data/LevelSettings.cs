@@ -7,6 +7,7 @@ namespace HackedDesign
         [SerializeField] public GameDifficulty difficulty = GameDifficulty.Easy;
         [SerializeField] public bool randomizeDetails = true;
         [SerializeField] public int length = 2;
+        [SerializeField] public int floors = 1;
         [SerializeField] public int security = 3;
         [SerializeField] public int tech = 4;
         [SerializeField] public int openGuards = 2;

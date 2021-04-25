@@ -112,13 +112,18 @@ namespace HackedDesign
 
         public void SetMainMenu() => CurrentState = new MainMenuState(this.mainMenuPanel);
         public void SetMissionSelect() => CurrentState = new MissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel, this.levelPanel);
-        public void SetTutorialMissionSelect() => CurrentState = new TutorialMissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel, this.levelPanel);
+        
         public void SetMissionComplete() => CurrentState = new MissionCompleteState(this.playerController, this.missionCompletePanel);
         public void SetPlaying() => CurrentState = new PlayingState(this.playerController, this.entityPool, this.levelRenderer, this.hudPanel);
         public void SetStartMenu() => CurrentState = new StartMenuState(this.hudPanel, this.startMenuPanel);
         public void SetDead() => CurrentState = new DeadState(this.playerController, this.deadPanel);
         public void SetGameOver() => CurrentState = new GameOverState(this.playerController, this.entityPool, this.levelRenderer, this.gameOverPanel);
-        public void SetPrelude() => CurrentState = new RoomState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel);
+        public void SetPrelude1() => CurrentState = new Prelude1State(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel);
+        public void SetPrelude2() => CurrentState = new Prelude2State(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel);
+        public void SetPrelude3() => CurrentState = new Prelude3State(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel);
+        public void SetPrelude4() => CurrentState = new Prelude4State(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel);
+        public void SetPrelude5() => CurrentState = new Prelude5State(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel);
+        public void SetTutorialMissionSelect() => CurrentState = new TutorialMissionSelectState(this.playerController, this.entityPool, this.levelRenderer, this.dialogPanel, this.missionPanel, this.levelPanel);
         public void SetQuit() => Application.Quit();
 
         public void LoadSlots()
@@ -201,6 +206,7 @@ namespace HackedDesign
             };
 
             int length = 24;
+            int floors = 1;
             int security = 0;
             int openGuards = 0;
             int drones = 0;
@@ -215,6 +221,7 @@ namespace HackedDesign
             {
                 case GameDifficulty.Hard:
                     length = 26;
+                    floors = 9;
                     security = Random.Range(4, 6);
                     openGuards = Random.Range(3, 6);
                     drones = Random.Range(1, 4);
@@ -227,6 +234,7 @@ namespace HackedDesign
                     break;
                 case GameDifficulty.Medium:
                     length = 24;
+                    floors = 6;
                     security = Random.Range(2, 4);
                     openGuards = Random.Range(2, 5);
                     drones = Random.Range(0, 3);
@@ -240,6 +248,7 @@ namespace HackedDesign
                 case GameDifficulty.Easy:
                 default:
                     length = 24;
+                    floors = 3;
                     security = Random.Range(1, 4);
                     openGuards = Random.Range(2, 4);
                     drones = Random.Range(0, 2);
@@ -256,6 +265,7 @@ namespace HackedDesign
 
             settings.difficulty = difficulty;
             settings.length = length;
+            settings.floors = floors;
             settings.security = security;
             settings.openGuards = openGuards;
             settings.drones = drones;
